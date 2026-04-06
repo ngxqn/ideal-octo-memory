@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản lý Người dùng - Hệ thống Bánh Trung Thu</title>
+    <title>Quản lý người dùng - MORICO</title>
 
     <link rel="stylesheet" href="../assets/css/admin/admin_style.css" />
     <link rel="stylesheet" href="../assets/vendor/bootstrap-5.3.8-dist/css/bootstrap.min.css" />
@@ -46,9 +46,6 @@
                                         class="fa-solid fa-users"></i><span class="d-none d-md-inline">Người
                                         dùng</span></a>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="categories.html"><i
-                                        class="fa-solid fa-tags"></i><span class="d-none d-md-inline">Loại sản
-                                        phẩm</span></a></li>
                             <li class="nav-item"><a class="nav-link" href="products.html"><i
                                         class="fa-solid fa-box"></i><span class="d-none d-md-inline">Sản phẩm</span></a>
                             </li>
@@ -57,7 +54,7 @@
                                         hàng</span></a></li>
                             <li class="nav-item"><a class="nav-link" href="pricing.html"><i
                                         class="fa-solid fa-dollar-sign"></i><span class="d-none d-md-inline">Quản lý
-                                        giá</span></a></li>
+                                        giá bán</span></a></li>
                             <li class="nav-item"><a class="nav-link" href="orders.html"><i
                                         class="fa-solid fa-shopping-cart"></i><span class="d-none d-md-inline">Đơn
                                         hàng</span></a></li>
@@ -74,8 +71,8 @@
             <main class="col col-md-9 col-lg-10 main-content d-flex flex-column p-4">
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom">
                     <h1 class="h3 fw-bold mb-3 mb-md-0" style="color: var(--brand-crimson);">
-                        <i class="fa-solid fa-shopping-cart me-2" style="color: var(--brand-gold);"></i>
-                        Quản lý Khách hàng
+                        <i class="fa-solid fa-users me-2" style="color: var(--brand-gold);"></i>
+                        Quản lý người dùng
                     </h1>
                     <div class="d-flex align-items-center bg-white rounded-pill shadow-sm px-2 py-2 border">
                         <div class="ms-2 me-3">
@@ -144,13 +141,12 @@
                 <div class="card shadow-sm border p-4">
                     <div
                         class="card-header d-flex flex-wrap justify-content-between align-items-center bg-transparent border-bottom-0 pt-3 pb-0">
-                        <h3 class="h5 mb-0 fw-bold"><i class="fa-solid fa-table text-primary me-2"></i> Danh sách Khách
-                            hàng
+                        <h3 class="h5 mb-0 fw-bold"><i class="fa-solid fa-table text-primary me-2"></i> Danh sách Người dùng
                         </h3>
                         <div class="d-flex gap-2 flex-wrap mt-2 mt-sm-0">
                             <button class="btn btn-sm rounded-pill text-white" id="add-user-btn"
                                 style="background-color: #ad21f3;">
-                                <i class="fa-solid fa-user-plus me-1"></i> Thêm KH
+                                <i class="fa-solid fa-user-plus me-1"></i> Thêm Người dùng
                             </button>
                             <button class="btn btn-primary btn-sm rounded-pill py-1" id="refresh-btn">
                                 <i class="fa-solid fa-sync-alt me-1"></i> Làm mới
@@ -166,7 +162,8 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th>ID</th>
-                                        <th>Họ tên</th>
+                                        <th>Tên khách hàng</th>
+                                        <th>Vai trò</th>
                                         <th>Tên đăng nhập</th>
                                         <th>Mật khẩu</th>
                                         <th>Số điện thoại</th>
@@ -257,6 +254,14 @@
                         <select class="form-select" id="new-status">
                             <option value="active">Đang hoạt động</option>
                             <option value="locked">Đã khóa</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="new-role" class="form-label">Vai trò:</label>
+                        <select class="form-select" id="new-role">
+                            <option value="customer">Khách hàng (Customer)</option>
+                            <option value="staff">Nhân viên (Staff)</option>
+                            <option value="admin">Quản trị viên (Admin)</option>
                         </select>
                     </div>
                     <div class="alert alert-danger d-none py-2" id="add-user-error"></div>

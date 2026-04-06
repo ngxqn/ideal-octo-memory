@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản lý Đơn hàng - MoonCake Delight</title>
+    <title>Quản lý đơn hàng - MORICO</title>
 
     <link rel="stylesheet" href="../assets/css/admin/admin_style.css" />
     <link rel="stylesheet" href="../assets/vendor/bootstrap-5.3.8-dist/css/bootstrap.min.css" />
@@ -43,9 +43,6 @@
                                         class="fa-solid fa-users"></i><span class="d-none d-md-inline">Người
                                         dùng</span></a>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="categories.html"><i
-                                        class="fa-solid fa-tags"></i><span class="d-none d-md-inline">Loại sản
-                                        phẩm</span></a></li>
                             <li class="nav-item"><a class="nav-link" href="products.html"><i
                                         class="fa-solid fa-box"></i><span class="d-none d-md-inline">Sản phẩm</span></a>
                             </li>
@@ -54,7 +51,7 @@
                                         hàng</span></a></li>
                             <li class="nav-item"><a class="nav-link" href="pricing.html"><i
                                         class="fa-solid fa-dollar-sign"></i><span class="d-none d-md-inline">Quản lý
-                                        giá</span></a></li>
+                                        giá bán</span></a></li>
                             <li class="nav-item"><a class="nav-link active" href="orders.html"><i
                                         class="fa-solid fa-shopping-cart"></i><span class="d-none d-md-inline">Đơn
                                         hàng</span></a></li>
@@ -72,7 +69,7 @@
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom">
                     <h1 class="h3 fw-bold mb-3 mb-md-0" style="color: var(--brand-crimson);">
                         <i class="fa-solid fa-shopping-cart me-2" style="color: var(--brand-gold);"></i>
-                        Quản lý Đơn hàng
+                        Quản lý đơn hàng
                     </h1>
                     <div class="d-flex align-items-center bg-white rounded-pill shadow-sm px-2 py-2 border">
                         <div class="ms-2 me-3">
@@ -109,7 +106,6 @@
                                     <option value="all">Tất cả trạng thái</option>
                                     <option value="pending">Chờ xác nhận</option>
                                     <option value="confirmed">Đã xác nhận</option>
-                                    <option value="shipping">Đang giao hàng</option>
                                     <option value="delivered">Đã giao thành công</option>
                                     <option value="cancelled">Đã hủy</option>
                                 </select>
@@ -199,6 +195,10 @@
                                 <span class="text-muted">Phương thức thanh toán:</span>
                                 <span class="fw-bold" id="modal-payment"></span>
                             </div>
+                            <div class="col-12 d-flex justify-content-between border-bottom pb-2">
+                                <span class="text-muted">Ghi chú đơn hàng:</span>
+                                <span class="fw-bold" id="modal-note"></span>
+                            </div>
                         </div>
                     </div>
 
@@ -244,7 +244,28 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary d-none" id="btn-update-status" onclick="confirmUpdateStatus()">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal xác nhận thay đổi trạng thái -->
+    <div class="modal fade" id="confirm-status-modal" tabindex="-1" style="z-index: 1060;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title fw-bold"><i class="fa-solid fa-triangle-exclamation me-2"></i>Xác nhận thay đổi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn thay đổi trạng thái đơn hàng này không?</p>
+                    <p class="mb-0">Từ: <span id="confirm-old-status" class="fw-bold"></span></p>
+                    <p>Sang: <span id="confirm-new-status" class="fw-bold text-danger"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" id="btn-confirm-execute">Xác nhận</button>
                 </div>
             </div>
         </div>
@@ -254,6 +275,9 @@
     <script src="../assets/vendor/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let orderDetailModal;
+        let confirmStatusModal;
+        let currentEditingOrderId = null;
+        let originalStatus = null;
 
         // Dữ liệu đơn hàng - sẽ được tải từ localStorage
         let orders = [];
@@ -261,9 +285,15 @@
         const statusMap = {
             'pending': { text: 'Chờ xác nhận', class: 'bg-warning text-dark' },
             'confirmed': { text: 'Đã xác nhận', class: 'bg-info text-dark' },
-            'shipping': { text: 'Đang giao hàng', class: 'bg-primary' },
             'delivered': { text: 'Đã giao thành công', class: 'bg-success' },
             'cancelled': { text: 'Đã hủy', class: 'bg-danger' },
+        };
+
+        const VALID_TRANSITIONS = {
+            'pending': ['confirmed', 'cancelled'],
+            'confirmed': ['delivered', 'cancelled'],
+            'delivered': [],
+            'cancelled': []
         };
 
         // === CÁC HÀM QUẢN LÝ DỮ LIỆU ===
@@ -282,8 +312,9 @@
                         address: '123 Đường ABC, Quận 1, TP.HCM',
                         total: 1250000,
                         status: 'pending',
-                        date: '2023-10-20', // Ngày cũ hơn
+                        date: '2023-10-20',
                         paymentMethod: 'Thanh toán khi nhận hàng (COD)',
+                        note: 'Giao giờ hành chính',
                         products: [
                             { name: 'Bánh Trung Thu Nhân Hạt Sen', quantity: 2, price: 250000, total: 500000 },
                             { name: 'Bánh Trung Thu Nhân Đậu Đỏ', quantity: 3, price: 250000, total: 750000 }
@@ -297,7 +328,7 @@
                         address: '456 Đường XYZ, Quận 3, TP.HCM',
                         total: 850000,
                         status: 'confirmed',
-                        date: '2023-10-22', // Ngày mới hơn
+                        date: '2023-10-22',
                         paymentMethod: 'Chuyển khoản (Momo)',
                         products: [
                             { name: 'Bánh Trung Thu Nhân Thập Cẩm', quantity: 1, price: 300000, total: 300000 },
@@ -311,8 +342,8 @@
                         email: 'levanc@email.com',
                         address: '789 Đường DEF, Quận 5, TP.HCM',
                         total: 250000,
-                        status: 'shipping',
-                        date: '2023-10-21', // Ngày ở giữa
+                        status: 'confirmed',
+                        date: '2023-10-21',
                         paymentMethod: 'Thanh toán khi nhận hàng (COD)',
                         products: [
                             { name: 'Bánh Trung Thu Nhân Đậu Xanh', quantity: 1, price: 250000, total: 250000 }
@@ -326,7 +357,7 @@
                         address: '321 Đường GHI, Quận 10, TP.HCM',
                         total: 1800000,
                         status: 'delivered',
-                        date: '2023-10-19', // Ngày cũ nhất
+                        date: '2023-10-19',
                         paymentMethod: 'Chuyển khoản (Vietcombank)',
                         products: [
                             { name: 'Bánh Trung Thu Nhân Hạt Sen', quantity: 4, price: 250000, total: 1000000 },
@@ -342,7 +373,7 @@
                         address: '654 Đường JKL, Quận Bình Thạnh, TP.HCM',
                         total: 950000,
                         status: 'cancelled',
-                        date: '2023-10-22', // Ngày mới hơn
+                        date: '2023-10-22',
                         paymentMethod: 'Thanh toán khi nhận hàng (COD)',
                         products: [
                             { name: 'Bánh Trung Thu Nhân Đậu Đỏ', quantity: 2, price: 250000, total: 500000 },
@@ -397,6 +428,7 @@
 
             ordersToRender.forEach(order => {
                 const statusInfo = statusMap[order.status] || statusMap['pending'];
+                const isTerminal = ['delivered', 'cancelled'].includes(order.status);
 
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -408,8 +440,7 @@
             <td style="color:var(--muted-brown)">${formatDate(order.date)}</td>
             <td>
               <div class="d-flex gap-1 justify-content-center">
-                  <button class="btn btn-info btn-sm text-white" onclick="viewOrderDetails('${order.id}')" title="Chi tiết"><i class="fa-solid fa-eye"></i></button>
-                  <button class="btn btn-warning btn-sm text-dark" onclick="promptUpdateStatus('${order.id}')" title="Cập nhật"><i class="fa-solid fa-edit"></i></button>
+                  <button class="btn btn-info btn-sm text-white" onclick="viewOrderDetails('${order.id}')" title="Xem chi tiết & Cập nhật"><i class="fa-solid fa-list"></i> Chi tiết</button>
               </div>
             </td>
           `;
@@ -425,13 +456,21 @@
                 document.getElementById('detail-modal-title').textContent = `Chi tiết Đơn hàng #${order.id}`;
                 document.getElementById('modal-order-id').textContent = order.id;
                 document.getElementById('modal-order-date').textContent = formatDate(order.date);
-                document.getElementById('modal-status').innerHTML = `<span class="badge ${statusInfo.class}">${statusInfo.text}</span>`;
+                
+                // Dropdown trạng thái
+                renderStatusDropdown(order);
+                
                 document.getElementById('modal-total').textContent = formatCurrency(order.total);
                 document.getElementById('modal-payment').textContent = order.paymentMethod || 'Chưa có thông tin';
+                document.getElementById('modal-note').textContent = order.note || '(Không có)';
                 document.getElementById('modal-customer').textContent = order.customer;
                 document.getElementById('modal-phone').textContent = order.phone;
                 document.getElementById('modal-address').textContent = order.address;
                 document.getElementById('modal-email').textContent = order.email || 'Chưa có thông tin';
+                
+                currentEditingOrderId = orderId;
+                originalStatus = order.status;
+                document.getElementById('btn-update-status').classList.add('d-none');
 
                 // Hiển thị sản phẩm
                 const productsBody = document.getElementById('modal-products');
@@ -501,18 +540,55 @@
             return date.toLocaleDateString('vi-VN');
         }
 
-        function promptUpdateStatus(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (!order) return;
-
-            const currentStatus = statusMap[order.status].text;
-            const newStatus = prompt(`Cập nhật trạng thái đơn hàng ${orderId}\nTrạng thái hiện tại: ${currentStatus}\n\nNhập trạng thái mới (pending/confirmed/shipping/delivered/cancelled):`);
-
-            if (newStatus && statusMap[newStatus.toLowerCase()]) {
-                updateOrderStatus(orderId, newStatus.toLowerCase());
-            } else if (newStatus) {
-                alert("Trạng thái không hợp lệ! Vui lòng nhập: pending, confirmed, shipping, delivered hoặc cancelled");
+        function renderStatusDropdown(order) {
+            const statusContainer = document.getElementById('modal-status');
+            const nextStatuses = VALID_TRANSITIONS[order.status] || [];
+            
+            if (nextStatuses.length === 0) {
+                // Trạng thái cuối, không cho chọn
+                statusContainer.innerHTML = `<span class="badge ${statusMap[order.status].class}">${statusMap[order.status].text}</span>`;
+                return;
             }
+
+            let html = `<select class="form-select form-select-sm fw-bold" id="select-modal-status" onchange="handleStatusChange(this)">`;
+            html += `<option value="${order.status}" selected>${statusMap[order.status].text} (Hiện tại)</option>`;
+            nextStatuses.forEach(s => {
+                html += `<option value="${s}">${statusMap[s].text}</option>`;
+            });
+            html += `</select>`;
+            statusContainer.innerHTML = html;
+        }
+
+        function handleStatusChange(select) {
+            const newStatus = select.value;
+            const btnUpdate = document.getElementById('btn-update-status');
+            
+            if (newStatus !== originalStatus) {
+                btnUpdate.classList.remove('d-none');
+            } else {
+                btnUpdate.classList.add('d-none');
+            }
+        }
+
+        function confirmUpdateStatus() {
+            const select = document.getElementById('select-modal-status');
+            const newStatus = select.value;
+            
+            document.getElementById('confirm-old-status').textContent = statusMap[originalStatus].text;
+            document.getElementById('confirm-new-status').textContent = statusMap[newStatus].text;
+            
+            document.getElementById('btn-confirm-execute').onclick = function() {
+                updateOrderStatus(currentEditingOrderId, newStatus);
+                confirmStatusModal.hide();
+                orderDetailModal.hide();
+            };
+
+            if (confirmStatusModal) confirmStatusModal.show();
+        }
+
+        function promptUpdateStatus(orderId) {
+            // Đã chuyển chức năng vào modal Chi tiết, hàm này không còn dùng ở bảng
+            viewOrderDetails(orderId);
         }
 
         function updateUserDisplay(username) {
@@ -559,6 +635,11 @@
             const modalEl = document.getElementById('order-detail-modal');
             if (modalEl && typeof bootstrap !== 'undefined') {
                 orderDetailModal = new bootstrap.Modal(modalEl);
+            }
+
+            const confirmModalEl = document.getElementById('confirm-status-modal');
+            if (confirmModalEl && typeof bootstrap !== 'undefined') {
+                confirmStatusModal = new bootstrap.Modal(confirmModalEl);
             }
 
             // Hiển thị danh sách đơn hàng (đã được sắp xếp LIFO)

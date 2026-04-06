@@ -14,12 +14,21 @@ window.onload = function () {
         tbody.innerHTML = "";
         users.forEach(user => {
             const tr = document.createElement("tr");
-            var badgeClass = user.status === "active" ? "bg-success" : "bg-danger";
-            var statusText = user.status === "active" ? "Đang hoạt động" : "Đã khóa";
+            const badgeClass = user.status === "active" ? "bg-success" : "bg-danger";
+            const statusText = user.status === "active" ? "Đang hoạt động" : "Đã khóa";
+            const roleMap = {
+                'admin': { text: 'Quản trị viên', class: 'text-danger' },
+                'staff': { text: 'Nhân viên', class: 'text-primary' },
+                'customer': { text: 'Khách hàng', class: 'text-secondary' }
+            };
+            const roleInfo = roleMap[user.role] || roleMap['customer'];
+            const loggedInUser = localStorage.getItem("loggedInUser");
+            const isSelf = user.username === loggedInUser;
 
             tr.innerHTML = `
                 <td><span class="fw-bold text-primary">#${user.id}</span></td>
                 <td><span class="fw-bold">${user.fullname}</span></td>
+                <td><span class="fw-bold ${roleInfo.class}">${roleInfo.text}</span></td>
                 <td>${user.username}</td>
                 <td><span class="text-muted" style="letter-spacing: 2px;">••••••</span></td>
                 <td>${user.phone}</td>
@@ -29,7 +38,10 @@ window.onload = function () {
                     <button class="btn btn-sm btn-outline-warning btn-reset" style="padding: 0.2rem 0.5rem; font-size: 0.8rem;" data-username="${user.username}">
                         <i class="fas fa-key me-1"></i> Đặt lại
                     </button>
-                    <button class="btn btn-sm ${user.status === "active" ? "btn-outline-danger btn-lock" : "btn-outline-success btn-unlock"}" style="padding: 0.2rem 0.5rem; font-size: 0.8rem;" data-id="${user.id}">
+                    <button class="btn btn-sm ${user.status === "active" ? "btn-outline-danger btn-lock" : "btn-outline-success btn-unlock"}" 
+                        style="padding: 0.2rem 0.5rem; font-size: 0.8rem;" 
+                        data-id="${user.id}" 
+                        ${isSelf ? 'disabled title="Không thể tự khóa tài khoản của mình"' : ''}>
                         ${user.status === "active" ? '<i class="fas fa-lock me-1"></i> Khóa' : '<i class="fas fa-unlock me-1"></i> Mở khóa'}
                     </button>
                 </td>
@@ -56,6 +68,7 @@ window.onload = function () {
         const password = document.getElementById("new-user-password").value.trim();
         const phone = document.getElementById("new-phone").value.trim();
         const status = document.getElementById("new-status").value;
+        const role = document.getElementById("new-role").value;
         const errorBox = document.getElementById("add-user-error");
 
         errorBox.style.display = "none";
@@ -86,7 +99,8 @@ window.onload = function () {
             password,
             phone,
             date: new Date().toLocaleDateString("vi-VN"),
-            status
+            status,
+            role
         };
 
         users.push(newUser);
@@ -134,7 +148,9 @@ window.onload = function () {
                     }
 
                     user.password = newPass;
+                    user.password = newPass;
                     localStorage.setItem("users", JSON.stringify(users));
+                    alert("Đặt lại mật khẩu thành công!");
                     renderUsers();
                     if (resetPassModal) resetPassModal.hide();
 
@@ -142,6 +158,31 @@ window.onload = function () {
                     document.getElementById("confirm-password").value = "";
                 };
             });
+        });
+    }
+
+    // Logic Khởi tạo mẫu (nếu cần)
+    const initBtn = document.getElementById("init-sample-btn");
+    if (initBtn) {
+        initBtn.addEventListener("click", () => {
+            if (confirm("Bạn có muốn khởi tạo dữ liệu mẫu (ghi đè dữ liệu hiện tại)?")) {
+                const sampleUsers = [
+                    { id: 1, fullname: "Quản trị viên", username: "admin", password: "123", phone: "0123456789", date: "01/01/2023", status: "active", role: "admin" },
+                    { id: 2, fullname: "Nhân viên Kho", username: "staff", password: "123", phone: "0987654321", date: "02/01/2023", status: "active", role: "staff" },
+                    { id: 3, fullname: "Nguyễn Văn Khách", username: "customer1", password: "123", phone: "0909123456", date: "05/01/2023", status: "active", role: "customer" }
+                ];
+                localStorage.setItem("users", JSON.stringify(sampleUsers));
+                users = sampleUsers;
+                renderUsers();
+            }
+        });
+    }
+
+    const refreshBtn = document.getElementById("refresh-btn");
+    if (refreshBtn) {
+        refreshBtn.addEventListener("click", () => {
+            users = JSON.parse(localStorage.getItem("users")) || [];
+            renderUsers();
         });
     }
 

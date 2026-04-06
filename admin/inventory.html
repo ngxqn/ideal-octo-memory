@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản lý Tồn kho - MoonCake Delight</title>
+    <title>Quản lý tồn kho - MORICO</title>
 
     <link rel="stylesheet" href="../assets/css/admin/admin_style.css" />
     <link rel="stylesheet" href="../assets/vendor/bootstrap-5.3.8-dist/css/bootstrap.min.css" />
@@ -39,9 +39,6 @@
                                         class="fa-solid fa-users"></i><span class="d-none d-md-inline">Người
                                         dùng</span></a>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="categories.html"><i
-                                        class="fa-solid fa-tags"></i><span class="d-none d-md-inline">Loại sản
-                                        phẩm</span></a></li>
                             <li class="nav-item"><a class="nav-link" href="products.html"><i
                                         class="fa-solid fa-box"></i><span class="d-none d-md-inline">Sản phẩm</span></a>
                             </li>
@@ -50,7 +47,7 @@
                                         hàng</span></a></li>
                             <li class="nav-item"><a class="nav-link" href="pricing.html"><i
                                         class="fa-solid fa-dollar-sign"></i><span class="d-none d-md-inline">Quản lý
-                                        giá</span></a></li>
+                                        giá bán</span></a></li>
                             <li class="nav-item"><a class="nav-link" href="orders.html"><i
                                         class="fa-solid fa-shopping-cart"></i><span class="d-none d-md-inline">Đơn
                                         hàng</span></a></li>
@@ -68,7 +65,7 @@
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom">
                     <h1 class="h3 fw-bold mb-3 mb-md-0" style="color: var(--brand-crimson);">
                         <i class="fa-solid fa-warehouse me-2" style="color: var(--brand-gold);"></i>
-                        Quản Lý Tồn Kho
+                        Quản lý tồn kho
                     </h1>
                     <div class="d-flex align-items-center bg-white rounded-pill shadow-sm px-2 py-2 border">
                         <div class="ms-2 me-3">
@@ -88,70 +85,57 @@
                     </div>
                 </div>
 
-                <!-- Phần tra cứu và báo cáo -->
-                <div class="row g-4 mb-4">
-                    <div class="col-12 col-xl-6">
-                        <div class="card shadow-sm border h-100">
-                            <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0">
-                                <h3 class="h5 mb-0 fw-bold text-secondary"><i class="fa-solid fa-search me-2"></i> Tra
-                                    Cứu
-                                    Tồn Kho</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="row g-3 align-items-end">
-                                    <div class="col-md-5">
-                                        <label for="productSelect" class="form-label fw-bold">Chọn sản phẩm</label>
-                                        <select id="productSelect" class="form-select">
-                                            <option value="">-- Tất cả --</option>
-                                        </select>
+                <!-- Phần Tra Cứu & Báo Cáo (Thu gọn) -->
+                <div class="accordion mb-4 shadow-sm" id="accordionInventory">
+                    <div class="accordion-item border">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-bold text-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAnalytics">
+                                <i class="fa-solid fa-chart-pie me-2"></i> Tra cứu & Báo cáo Nhập - Xuất - Tồn
+                            </button>
+                        </h2>
+                        <div id="collapseAnalytics" class="accordion-collapse collapse" data-bs-parent="#accordionInventory">
+                            <div class="accordion-body bg-light">
+                                <div class="row g-4">
+                                    <div class="col-md-6 border-end">
+                                        <h6 class="fw-bold mb-3"><i class="fa-solid fa-search me-2"></i> Tra cứu lịch sử SP</h6>
+                                        <div class="row g-2 align-items-end">
+                                            <div class="col-md-8">
+                                                <label class="small fw-bold">Sản phẩm</label>
+                                                <select id="productSelect" class="form-select form-select-sm">
+                                                    <option value="">-- Tất cả --</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button class="btn btn-primary btn-sm w-100" id="searchBtn">Tra cứu</button>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="small fw-bold">Từ ngày</label>
+                                                <input type="date" id="startDate" class="form-control form-control-sm">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="small fw-bold">Đến ngày</label>
+                                                <input type="date" id="endDate" class="form-control form-control-sm">
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <label for="startDate" class="form-label fw-bold">Từ ngày</label>
-                                        <input type="date" id="startDate" class="form-control">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="endDate" class="form-label fw-bold">Đến ngày</label>
-                                        <input type="date" id="endDate" class="form-control">
-                                    </div>
-                                    <div class="col-md-1">
-                                        <button class="btn btn-primary" id="searchBtn" style="width: 100%;">
-                                            <i class="fa-solid fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div id="searchResults" class="mt-4">
-                                    <!-- Kết quả tra cứu sẽ hiển thị ở đây -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-xl-6">
-                        <div class="card shadow-sm border h-100">
-                            <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0">
-                                <h3 class="h5 mb-0 fw-bold text-secondary"><i class="fa-solid fa-chart-line me-2"></i>
-                                    Báo
-                                    Cáo Nhập - Xuất - Tồn</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="row g-3 align-items-end">
-                                    <div class="col-md-4">
-                                        <label for="reportStartDate" class="form-label fw-bold">Từ ngày</label>
-                                        <input type="date" id="reportStartDate" class="form-control">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="reportEndDate" class="form-label fw-bold">Đến ngày</label>
-                                        <input type="date" id="reportEndDate" class="form-control">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button class="btn btn-primary w-100" id="generateReportBtn">
-                                            <i class="fa-solid fa-chart-bar"></i> Tạo Báo Cáo
-                                        </button>
+                                    <div class="col-md-6">
+                                        <h6 class="fw-bold mb-3"><i class="fa-solid fa-file-export me-2"></i> Báo cáo tổng hợp</h6>
+                                        <div class="row g-2 align-items-end">
+                                            <div class="col-md-5">
+                                                <label class="small fw-bold">Từ ngày</label>
+                                                <input type="date" id="reportStartDate" class="form-control form-control-sm">
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label class="small fw-bold">Đến ngày</label>
+                                                <input type="date" id="reportEndDate" class="form-control form-control-sm">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button class="btn btn-success btn-sm w-100" id="generateReportBtn"><i class="fa-solid fa-play"></i></button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div id="reportResults" class="mt-4">
-                                    <!-- Báo cáo sẽ hiển thị ở đây -->
-                                </div>
+                                <div id="analyticsResults" class="mt-3"></div>
                             </div>
                         </div>
                     </div>
@@ -170,15 +154,44 @@
                                     <tr>
                                         <th>Mã SP</th>
                                         <th>Tên Bánh</th>
-                                        <th class="text-center">Số lượng</th>
-                                        <th class="text-center">Trạng Thái</th>
-                                        <th class="text-center">Cập Nhật</th>
+                                        <th class="text-center">Tồn kho</th>
+                                        <th class="text-center">Cảnh báo</th>
+                                        <th class="text-center">Cập nhật cuối</th>
                                         <th class="text-center">Hành động</th>
                                     </tr>
                                 </thead>
                                 <tbody id="inventoryTableBody">
                                     <tr>
                                         <td colspan="6" class="text-center text-muted">Đang tải dữ liệu tồn kho...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bảng Lịch sử tồn kho (Inventory Ledger) -->
+                <div class="card shadow-sm border mb-4">
+                    <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0 d-flex justify-content-between align-items-center">
+                        <h3 class="h5 mb-0 fw-bold text-secondary"><i class="fa-solid fa-history me-2"></i> Nhật Ký Biến Động Kho (Ledger)</h3>
+                        <button class="btn btn-sm btn-outline-primary" onclick="initSampleLedger()"><i class="fa-solid fa-magic-wand-sparkles me-1"></i> Tạo mẫu</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Thời gian</th>
+                                        <th>Sản phẩm</th>
+                                        <th class="text-center">Loại</th>
+                                        <th class="text-center">Thay đổi</th>
+                                        <th class="text-center">Tồn cuối</th>
+                                        <th>Tham chiếu</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ledgerTableBody">
+                                    <tr>
+                                        <td colspan="6" class="text-center text-muted">Chưa có nhật ký biến động.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -212,48 +225,8 @@
          * @param {string} productName - Tên sản phẩm.
          */
         function handleImport(productId, productName) {
-            const inputElement = document.getElementById(`inputQty_${productId}`);
-            const qty = parseInt(inputElement.value);
-
-            if (isNaN(qty) || qty <= 0) {
-                // Sử dụng hàm showNotification từ admin_actions.js
-                if (typeof showNotification === 'function') {
-                    showNotification("Vui lòng nhập số lượng hợp lệ (> 0) để nhập thêm.", 'error');
-                } else {
-                    alert("Vui lòng nhập số lượng hợp lệ (> 0) để nhập thêm.");
-                }
-                return;
-            }
-
-            // SỬ DỤNG HÀM getData() TỪ main.js
-            let data = getData();
-            if (!data || !data.products) {
-                alert("Lỗi: Không tìm thấy dữ liệu sản phẩm.");
-                return;
-            }
-
-            const productIndex = data.products.findIndex((p) => p.id === productId);
-
-            if (productIndex > -1) {
-                const currentStock = data.products[productIndex].stock || 0;
-
-                data.products[productIndex].stock = currentStock + qty;
-                data.products[productIndex].lastStockUpdate = new Date().toISOString();
-
-                if (data.products[productIndex].status === "inactive") {
-                    data.products[productIndex].status = "active";
-                }
-
-                // SỬ DỤNG HÀM saveData(data) TỪ main.js
-                if (saveData(data)) {
-                    if (typeof showNotification === 'function') {
-                        showNotification(`Đã nhập thêm ${qty} cuốn "${productName}". Tồn kho mới: ${currentStock + qty}.`, 'success');
-                    } else {
-                        alert(`✅ Đã nhập thêm ${qty} cuốn sách "${productName}". Tồn kho mới: ${currentStock + qty}.`);
-                    }
-                    renderInventoryTable(generateInventoryReport());
-                }
-            }
+            alert('Chức năng nhập hàng trực tiếp đã được gỡ bỏ. Vui lòng tạo Phiếu Nhập Hàng để cập nhật tồn kho.');
+            window.location.href = 'purchase-orders.html';
         }
 
         /**
@@ -334,27 +307,13 @@
                         `<span class="badge bg-secondary rounded-pill">KHÓA/DỪNG BÁN</span>`;
                     rowClass = "row-inactive";
 
-                    // Nút Bán Lại (Màu xanh lá cây - btn-success)
-                    actionElements = `<button class="btn btn-success btn-sm" onclick="handleToggleStatus(${p.id
-                        }, '${p.name.replace(
-                            /'/g,
-                            "\\'"
-                        )}', '${status}')"><i class="fa-solid fa-play"></i> Bán Lại</button>`;
+                    actionElements = `<button class="btn btn-success btn-sm w-100" onclick="handleToggleStatus(${p.id}, '${p.name.replace(/'/g, "\\'")}', '${status}')"><i class="fa-solid fa-play"></i> Bán Lại</button>`;
                 } else {
                     // Đang active
-                    // Thêm ô nhập số lượng
-                    actionElements += `<input type="number" id="inputQty_${p.id}" class="form-control form-control-sm d-inline-block text-center me-1" style="width: 70px;" value="10" min="1">`;
-
-                    // Nút Nhập Thêm (btn-primary)
-                    actionElements += `<button class="btn btn-primary btn-sm me-1" onclick="handleImport(${p.id
-                        }, '${p.name.replace(/'/g, "\\'")}')"><i class="fa-solid fa-plus"></i> Nhập Thêm</button>`;
-
-                    // Nút Dừng Bán (btn-danger)
-                    actionElements += `<button class="btn btn-warning btn-sm text-dark" onclick="handleToggleStatus(${p.id
-                        }, '${p.name.replace(
-                            /'/g,
-                            "\\'"
-                        )}', '${status}')"><i class="fa-solid fa-ban"></i> Dừng Bán</button>`;
+                    actionElements = `<div class="d-flex gap-1 justify-content-center">
+                        <button class="btn btn-info btn-sm text-white" onclick="viewProductLedger(${p.id})" title="Xem lịch sử biến động"><i class="fa-solid fa-history"></i></button>
+                        <button class="btn btn-warning btn-sm text-dark" onclick="handleToggleStatus(${p.id}, '${p.name.replace(/'/g, "\\'")}', '${status}')" title="Dừng bán"><i class="fa-solid fa-ban"></i></button>
+                    </div>`;
                 }
 
                 const productCode = p.sku || `MCD${String(p.id).padStart(3, '0')}`;
@@ -415,12 +374,7 @@
             const data = getData();
             const products = data.products || [];
 
-            // Xóa các option hiện tại (trừ option đầu tiên)
-            while (productSelect.children.length > 1) {
-                productSelect.removeChild(productSelect.lastChild);
-            }
-
-            // Thêm các sản phẩm vào dropdown
+            productSelect.innerHTML = '<option value="">-- Tất cả --</option>';
             products.forEach(product => {
                 const option = document.createElement('option');
                 option.value = product.id;
@@ -430,51 +384,97 @@
         }
 
         /**
-         * Tra cứu tồn kho theo thời gian
+         * LEDGER LOGIC: Nhật ký biến động
          */
+        function renderLedger(ledgerData) {
+            const tbody = document.getElementById("ledgerTableBody");
+            if (!tbody) return;
+
+            let html = "";
+            if (!ledgerData || ledgerData.length === 0) {
+                html = '<tr><td colspan="6" class="text-center text-muted">Chưa có nhật ký biến động.</td></tr>';
+            } else {
+                // Sắp xếp thời gian mới nhất lên đầu
+                ledgerData.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                
+                ledgerData.forEach(entry => {
+                    const typeBadge = entry.type === 'IN' ? 'bg-success' : 'bg-danger';
+                    const typeText = entry.type === 'IN' ? 'NHẬP' : 'XUẤT';
+                    const diffText = entry.type === 'IN' ? `+${entry.diff}` : `-${entry.diff}`;
+                    
+                    html += `
+                        <tr>
+                            <td class="small">${typeof formatDateTime === 'function' ? formatDateTime(entry.timestamp) : entry.timestamp}</td>
+                            <td class="fw-bold">${entry.productName}</td>
+                            <td class="text-center"><span class="badge ${typeBadge}">${typeText}</span></td>
+                            <td class="text-center fw-bold ${entry.type === 'IN' ? 'text-success' : 'text-danger'}">${diffText}</td>
+                            <td class="text-center fw-bold">${entry.lastStock}</td>
+                            <td class="small text-muted">${entry.reference || '-'}</td>
+                        </tr>
+                    `;
+                });
+            }
+            tbody.innerHTML = html;
+        }
+
+        function initSampleLedger() {
+            const data = getData();
+            const products = data.products || [];
+            if (products.length === 0) return;
+
+            const sampleLedger = [
+                { timestamp: new Date(Date.now() - 86400000 * 2).toISOString(), productName: products[0]?.name, type: 'IN', diff: 100, lastStock: 100, reference: 'PN-SAMPLE-01' },
+                { timestamp: new Date(Date.now() - 86400000).toISOString(), productName: products[0]?.name, type: 'OUT', diff: 5, lastStock: 95, reference: 'ORD-SAMPLE-01' },
+                { timestamp: new Date(Date.now() - 3600000).toISOString(), productName: products[1]?.name || 'Sản phẩm 2', type: 'IN', diff: 50, lastStock: 50, reference: 'PN-SAMPLE-02' }
+            ];
+            
+            localStorage.setItem('inventoryLedger', JSON.stringify(sampleLedger));
+            renderLedger(sampleLedger);
+            alert("Đã tạo nhật ký mẫu thành công!");
+        }
+
+        function viewProductLedger(productId) {
+            const data = getData();
+            const product = data.products.find(p => p.id == productId);
+            const ledger = JSON.parse(localStorage.getItem('inventoryLedger')) || [];
+            const filtered = ledger.filter(e => e.productName === product.name);
+            
+            // Mở accordion và focus
+            const collapse = document.getElementById('collapseAnalytics');
+            if (collapse) {
+                const bsCollapse = new bootstrap.Collapse(collapse, { toggle: false });
+                bsCollapse.show();
+            }
+            
+            renderLedger(filtered);
+            if (filtered.length === 0) {
+                alert(`Chưa có lịch sử biến động cho sản phẩm "${product.name}".`);
+            }
+        }
+
         function searchInventoryHistory() {
             const productId = document.getElementById('productSelect').value;
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
+            const resultsContainer = document.getElementById('analyticsResults');
 
-            const resultsContainer = document.getElementById('searchResults');
-
-            // Kiểm tra điều kiện đầu vào
             if (!startDate || !endDate) {
-                resultsContainer.innerHTML = '<div class="no-data">Vui lòng chọn khoảng thời gian để tra cứu.</div>';
+                alert("Vui lòng chọn khoảng thời gian.");
                 return;
             }
 
             const data = getData();
-            const products = data.products || [];
-            const orders = data.orders || [];
-            const purchaseOrders = data.purchaseOrders || [];
+            const ledger = JSON.parse(localStorage.getItem('inventoryLedger')) || [];
+            
+            let filtered = ledger.filter(entry => {
+                const d = entry.timestamp.split('T')[0];
+                const matchDate = d >= startDate && d <= endDate;
+                const matchProduct = productId ? (data.products.find(p=>p.id == productId)?.name === entry.productName) : true;
+                return matchDate && matchProduct;
+            });
 
-            let results = [];
-
-            // Nếu chọn tất cả sản phẩm
-            if (!productId) {
-                products.forEach(product => {
-                    const history = getProductInventoryHistory(product.id, startDate, endDate, orders, purchaseOrders);
-                    results.push({
-                        product: product,
-                        history: history
-                    });
-                });
-            } else {
-                // Chỉ tra cứu một sản phẩm
-                const product = products.find(p => p.id == productId);
-                if (product) {
-                    const history = getProductInventoryHistory(product.id, startDate, endDate, orders, purchaseOrders);
-                    results.push({
-                        product: product,
-                        history: history
-                    });
-                }
-            }
-
-            // Hiển thị kết quả
-            displaySearchResults(results);
+            renderLedger(filtered);
+            resultsContainer.innerHTML = `<div class="alert alert-info py-2">Tìm thấy ${filtered.length} bản ghi phù hợp.</div>`;
         }
 
         /**
@@ -584,115 +584,59 @@
         function generateInventoryReportByPeriod() {
             const startDate = document.getElementById('reportStartDate').value;
             const endDate = document.getElementById('reportEndDate').value;
+            const resultsContainer = document.getElementById('analyticsResults');
 
-            const reportContainer = document.getElementById('reportResults');
-
-            // Kiểm tra điều kiện đầu vào
             if (!startDate || !endDate) {
-                reportContainer.innerHTML = '<div class="no-data">Vui lòng chọn khoảng thời gian để tạo báo cáo.</div>';
+                alert("Vui lòng chọn khoảng thời gian.");
                 return;
             }
 
             const data = getData();
             const products = data.products || [];
+            const ledger = JSON.parse(localStorage.getItem('inventoryLedger')) || [];
 
-            // Tạo dữ liệu báo cáo giả lập
-            const reportData = [];
             let totalImport = 0;
             let totalExport = 0;
-            let totalStock = 0;
+            let reportData = [];
 
             products.forEach(product => {
-                // Giả lập dữ liệu nhập, xuất trong khoảng thời gian
-                const importQty = Math.floor(Math.random() * 100) + 10;
-                const exportQty = Math.floor(Math.random() * 80) + 5;
-                const currentStock = product.stock || 0;
+                const pLedger = ledger.filter(e => e.productName === product.name && e.timestamp.split('T')[0] >= startDate && e.timestamp.split('T')[0] <= endDate);
+                const imp = pLedger.filter(e => e.type === 'IN').reduce((s, e) => s + e.diff, 0);
+                const exp = pLedger.filter(e => e.type === 'OUT').reduce((s, e) => s + e.diff, 0);
 
-                totalImport += importQty;
-                totalExport += exportQty;
-                totalStock += currentStock;
+                totalImport += imp;
+                totalExport += exp;
 
                 reportData.push({
                     product: product,
-                    import: importQty,
-                    export: exportQty,
-                    stock: currentStock
+                    import: imp,
+                    export: exp,
+                    stock: product.stock || 0
                 });
             });
 
-            // Hiển thị báo cáo
-            displayInventoryReport(reportData, totalImport, totalExport, totalStock, startDate, endDate);
+            displayInventoryReport(reportData, totalImport, totalExport, 0, startDate, endDate);
         }
 
         /**
          * Hiển thị báo cáo nhập - xuất - tồn
          */
         function displayInventoryReport(reportData, totalImport, totalExport, totalStock, startDate, endDate) {
-            const reportContainer = document.getElementById('reportResults');
-
+            const reportContainer = document.getElementById('analyticsResults');
             let html = `
-          <div class="row g-3 mb-4 text-center">
-            <div class="col-md-4">
-              <div class="card bg-light border-success shadow-sm">
-                <div class="card-body py-3">
-                  <h6 class="text-secondary mb-1">Tổng Nhập</h6>
-                  <h3 class="mb-0 text-success fw-bold">+${totalImport}</h3>
+                <div class="row g-2 mb-3">
+                    <div class="col-6"><div class="p-2 border rounded bg-white text-center"><h6>Tổng Nhập</h6><h4 class="text-success">+${totalImport}</h4></div></div>
+                    <div class="col-6"><div class="p-2 border rounded bg-white text-center"><h6>Tổng Xuất</h6><h4 class="text-danger">-${totalExport}</h4></div></div>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card bg-light border-danger shadow-sm">
-                <div class="card-body py-3">
-                  <h6 class="text-secondary mb-1">Tổng Xuất</h6>
-                  <h3 class="mb-0 text-danger fw-bold">-${totalExport}</h3>
+                <div class="table-responsive" style="max-height: 300px;">
+                    <table class="table table-sm table-bordered bg-white">
+                        <thead class="table-light sticky-top"><tr><th>Sản phẩm</th><th>Nhập</th><th>Xuất</th><th>Tồn</th></tr></thead>
+                        <tbody>
+                            ${reportData.map(d => `<tr><td>${d.product.name}</td><td class="text-center text-success">+${d.import}</td><td class="text-center text-danger">-${d.export}</td><td class="text-center fw-bold">${d.stock}</td></tr>`).join('')}
+                        </tbody>
+                    </table>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card bg-light border-primary shadow-sm">
-                <div class="card-body py-3">
-                  <h6 class="text-secondary mb-1">Tổng Tồn</h6>
-                  <h3 class="mb-0 text-primary fw-bold">${totalStock}</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="table-responsive">
-            <table class="table table-bordered table-hover align-middle">
-              <thead class="table-light">
-                <tr>
-                  <th>Mã SP</th>
-                  <th>Tên Sản Phẩm</th>
-                  <th class="text-center">Nhập</th>
-                  <th class="text-center">Xuất</th>
-                  <th class="text-center">Tồn</th>
-                </tr>
-              </thead>
-              <tbody>
-        `;
-
-            reportData.forEach(item => {
-                const product = item.product;
-                const productCode = product.sku || `MCD${String(product.id).padStart(3, '0')}`;
-
-                html += `
-            <tr>
-              <td>${productCode}</td>
-              <td>${product.name}</td>
-              <td class="text-center text-success fw-bold">${item.import}</td>
-              <td class="text-center text-danger fw-bold">${item.export}</td>
-              <td class="text-center fw-bold">${item.stock}</td>
-            </tr>
-          `;
-            });
-
-            html += `
-              </tbody>
-            </table>
-          </div>
-        `;
-
+            `;
             reportContainer.innerHTML = html;
         }
 
@@ -715,6 +659,9 @@
 
             const report = generateInventoryReport();
             renderInventoryTable(report);
+            
+            const ledger = JSON.parse(localStorage.getItem('inventoryLedger')) || [];
+            renderLedger(ledger);
 
             // Khởi tạo chức năng tra cứu và báo cáo
             initializeProductSelect();

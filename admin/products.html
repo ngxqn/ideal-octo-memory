@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản Lý Sản Phẩm & Nhập Hàng</title>
+    <title>Quản lý sản phẩm - MORICO</title>
 
     <link rel="stylesheet" href="../assets/css/admin/admin_style.css" />
     <link rel="stylesheet" href="../assets/vendor/bootstrap-5.3.8-dist/css/bootstrap.min.css" />
@@ -32,9 +32,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="dashboard.html">
                                     <i class="fa-solid fa-home"></i>
-                                    <span class="d-none d-md-inline">
-                                        Trang chủ
-                                    </span>
+                                    <span class="d-none d-md-inline">Trang chủ</span>
                                 </a>
                             </li>
                         </ul>
@@ -43,28 +41,41 @@
                     <div class="nav-section mt-3">
                         <div class="nav-title d-none d-md-block">Quản lý</div>
                         <ul class="nav flex-column">
-                            <li class="nav-item"><a class="nav-link" href="users.html"><i
-                                        class="fa-solid fa-users"></i><span class="d-none d-md-inline">Người
-                                        dùng</span></a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="users.html">
+                                    <i class="fa-solid fa-users"></i>
+                                    <span class="d-none d-md-inline">Người dùng</span>
+                                </a>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="categories.html"><i
-                                        class="fa-solid fa-tags"></i><span class="d-none d-md-inline">Loại sản
-                                        phẩm</span></a></li>
-                            <li class="nav-item"><a class="nav-link active" href="products.html"><i
-                                        class="fa-solid fa-box"></i><span class="d-none d-md-inline">Sản phẩm</span></a>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="products.html">
+                                    <i class="fa-solid fa-box"></i>
+                                    <span class="d-none d-md-inline">Sản phẩm</span>
+                                </a>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="purchase-orders.html"><i
-                                        class="fa-solid fa-truck-loading"></i><span class="d-none d-md-inline">Nhập
-                                        hàng</span></a></li>
-                            <li class="nav-item"><a class="nav-link" href="pricing.html"><i
-                                        class="fa-solid fa-dollar-sign"></i><span class="d-none d-md-inline">Quản lý
-                                        giá</span></a></li>
-                            <li class="nav-item"><a class="nav-link" href="orders.html"><i
-                                        class="fa-solid fa-shopping-cart"></i><span class="d-none d-md-inline">Đơn
-                                        hàng</span></a></li>
-                            <li class="nav-item"><a class="nav-link" href="inventory.html"><i
-                                        class="fa-solid fa-warehouse"></i><span class="d-none d-md-inline">Tồn
-                                        kho</span></a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="purchase-orders.html">
+                                    <i class="fa-solid fa-truck-loading"></i>
+                                    <span class="d-none d-md-inline">Nhập hàng</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pricing.html">
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                    <span class="d-none d-md-inline">Quản lý giá bán</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="orders.html">
+                                    <i class="fa-solid fa-shopping-cart"></i>
+                                    <span class="d-none d-md-inline">Đơn hàng</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="inventory.html">
+                                    <i class="fa-solid fa-warehouse"></i>
+                                    <span class="d-none d-md-inline">Tồn kho</span>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -75,81 +86,116 @@
             <main class="col col-md-9 col-lg-10 main-content d-flex flex-column p-4">
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3 border-bottom">
                     <h1 class="h3 fw-bold mb-3 mb-md-0" style="color: var(--brand-crimson);">
-                        <i class="fa-solid fa-box me-2" style="color: var(--brand-gold);"></i> Quản lý Danh Mục Sản Phẩm
+                        <i class="fa-solid fa-box me-2" style="color: var(--brand-gold);"></i> Quản lý sản phẩm
                     </h1>
                     <div class="d-flex align-items-center bg-white rounded-pill shadow-sm px-2 py-2 border">
                         <div class="ms-2 me-3">
                             <i class="fa-solid fa-user" style="font-size: 1.2rem; color: var(--brand-crimson);"></i>
                         </div>
                         <div class="me-2 d-none d-sm-block text-start" style="line-height: 1.2;">
-                            <div class="fw-bold" style="color: var(--brand-crimson);" id="header-username">
-                                admin
-                            </div>
-                            <div class="text-muted" style="font-size: 0.78rem;" id="header-role">
-                                Quản trị viên
-                            </div>
+                            <div class="fw-bold" style="color: var(--brand-crimson);" id="header-username">admin</div>
+                            <div class="text-muted" style="font-size: 0.78rem;" id="header-role">Quản trị viên</div>
                         </div>
-                        <button class="btn btn-danger btn-sm rounded-pill px-3 py-1 fw-bold ms-3 me-1" id="logout-btn">
-                            Đăng xuất
-                        </button>
+                        <button class="btn btn-danger btn-sm rounded-pill px-3 py-1 fw-bold ms-3 me-1" id="logout-btn">Đăng xuất</button>
                     </div>
                 </div>
 
-                <!-- Quản lý Loại sản phẩm -->
-                <div class="card shadow-sm border-0 mb-4">
-                    <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0">
-                        <h3 class="h5 mb-0 fw-bold"><i class="fa-solid fa-tags text-primary me-2"></i> Thống kê Loại sản
-                            phẩm
-                        </h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex gap-3 flex-wrap" id="category-stats">
-                            <!-- Sẽ được cập nhật bằng JavaScript -->
+                <!-- Bootstrap Tabs -->
+                <ul class="nav nav-tabs mb-4 px-3" id="catalogueTabs" role="tablist" style="border-bottom: 2px solid #e0e0e0;">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active fw-bold px-4" id="products-tab-btn" data-bs-toggle="tab" data-bs-target="#products-pane" type="button" role="tab">
+                            <i class="fa-solid fa-box me-2"></i>Sản phẩm
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link fw-bold px-4" id="categories-tab-btn" data-bs-toggle="tab" data-bs-target="#categories-pane" type="button" role="tab">
+                            <i class="fa-solid fa-tags me-2"></i>Loại sản phẩm
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="catalogueTabContent">
+                    <!-- Tab 1: Sản phẩm -->
+                    <div class="tab-pane fade show active" id="products-pane" role="tabpanel">
+                        <!-- Quản lý Loại sản phẩm (Thống kê nhanh) -->
+                        <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0">
+                                <h3 class="h5 mb-0 fw-bold"><i class="fa-solid fa-chart-line text-primary me-2"></i> Thống kê nhanh Loại</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex gap-3 flex-wrap" id="category-stats">
+                                    <!-- Dynamic content -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quản lý Sản phẩm -->
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header d-flex flex-wrap justify-content-between align-items-center bg-transparent border-bottom-0 pt-3 pb-0">
+                                <h3 class="h5 mb-0 fw-bold"><i class="fa-solid fa-box text-primary me-2"></i> Danh sách Sản phẩm</h3>
+                                <button class="btn btn-success btn-sm rounded-pill px-3 mt-2 mt-sm-0" onclick="openProductModal()">
+                                    <i class="fa-solid fa-plus me-1"></i> Thêm Sản phẩm
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle mb-0 border-top mt-2">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Mã SP</th>
+                                                <th>Tên Sản phẩm</th>
+                                                <th>Loại</th>
+                                                <th>Giá bán</th>
+                                                <th>Tồn kho</th>
+                                                <th>Trạng thái</th>
+                                                <th class="text-center">Hành động</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="product-table-body"></tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Quản lý Sản phẩm -->
-                <div class="card border-0 shadow-sm mb-4">
-                    <div
-                        class="card-header d-flex flex-wrap justify-content-between align-items-center bg-transparent border-bottom-0 pt-3 pb-0">
-                        <h3 class="h5 mb-0 fw-bold"><i class="fa-solid fa-box text-primary me-2"></i> Quản lý Sản phẩm
-                        </h3>
-                        <button class="btn btn-success btn-sm rounded-pill px-3 mt-2 mt-sm-0"
-                            onclick="openProductModal()">
-                            <i class="fa-solid fa-plus me-1"></i> Thêm Sản phẩm
-                        </button>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle mb-0 border-top mt-2">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Mã SP</th>
-                                        <th>Tên Sản phẩm</th>
-                                        <th>Loại</th>
-                                        <th>Giá bán</th>
-                                        <th>Tồn kho</th>
-                                        <th>Trạng thái</th>
-                                        <th class="text-center">Hành động</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="product-table-body">
-                                </tbody>
-                            </table>
+                    <!-- Tab 2: Loại sản phẩm -->
+                    <div class="tab-pane fade" id="categories-pane" role="tabpanel">
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header d-flex flex-wrap justify-content-between align-items-center bg-transparent border-bottom-0 pt-3 pb-0">
+                                <h3 class="h5 mb-0 fw-bold"><i class="fa-solid fa-tags text-primary me-2"></i> Quản lý Loại sản phẩm</h3>
+                                <button class="btn btn-primary btn-sm rounded-pill px-3 mt-2 mt-sm-0" onclick="openCategoryModal()">
+                                    <i class="fa-solid fa-plus me-1"></i> Thêm Loại sản phẩm
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle mb-0 border-top mt-2">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="width: 10%">ID</th>
+                                                <th style="width: 30%">Tên Loại sản phẩm</th>
+                                                <th style="width: 25%">Số lượng Sản phẩm</th>
+                                                <th style="width: 15%">Trạng thái</th>
+                                                <th class="text-center" style="width: 20%">Hành động</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="category-table-body"></tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="mt-auto text-center py-3 text-muted small border-top">
-                    <p class="text-muted small mb-0">© 2023 Hệ thống Quản lý Bánh Trung Thu MORICO | Phiên bản 2.1.0</p>
+                    <p class="mb-0">© 2023 Hệ thống Quản lý Bánh Trung Thu MORICO | Phiên bản 2.1.0</p>
                 </div>
             </main>
         </div>
     </div>
 
-    <!-- Modal Sản phẩm (Bootstrap 5) -->
-    <div class="modal fade" id="product-modal" tabindex="-1" aria-labelledby="product-modal-title" aria-hidden="true">
+    <!-- Modal Sản phẩm -->
+    <div class="modal fade" id="product-modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content border-top border-5 border-warning shadow">
                 <div class="modal-header">
@@ -161,48 +207,32 @@
                 <div class="modal-body">
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Mã sản phẩm:</label>
+                            <label class="form-label fw-bold">Mã sản phẩm: <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="product-code" placeholder="SP001">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Tên sản phẩm:</label>
-                            <input type="text" class="form-control" id="product-name"
-                                placeholder="Bánh Trung Thu Nhân Hạt Sen">
+                            <label class="form-label fw-bold">Tên sản phẩm: <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="product-name" placeholder="Tên sản phẩm">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Loại:</label>
-                            <select class="form-select" id="product-category">
-                                <option value="ngot">Bánh Ngọt</option>
-                                <option value="man">Bánh Mặn</option>
-                                <option value="chay">Bánh Chay</option>
-                            </select>
+                            <label class="form-label fw-bold">Loại: <span class="text-danger">*</span></label>
+                            <select class="form-select" id="product-category"></select>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Giá nhập (giá vốn):</label>
-                            <input type="number" class="form-control" id="product-cost" placeholder="150000"
-                                onchange="calculatePrice()">
+                            <label class="form-label fw-bold">Giá nhập (giá vốn): <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="product-cost" onchange="calculatePrice()">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">% Lợi nhuận:</label>
-                            <input type="number" class="form-control" id="product-profit-margin" placeholder="40"
-                                min="0" max="200" step="0.5" onchange="calculatePrice()">
+                            <label class="form-label fw-bold">% Lợi nhuận: <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="product-profit-margin" value="40" onchange="calculatePrice()">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-bold">Giá bán (tự động tính):</label>
-                            <input type="number" class="form-control" id="product-price" placeholder="250000" readonly
-                                style="background-color: #f5f5f5;">
+                            <input type="number" class="form-control" id="product-price" readonly style="background-color: #f5f5f5;">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Tồn kho:</label>
-                            <input type="number" class="form-control" id="product-stock" placeholder="100">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">Trạng thái tồn kho:</label>
-                            <select class="form-select" id="product-stock-status">
-                                <option value="in-stock">Còn hàng</option>
-                                <option value="low-stock">Sắp hết</option>
-                                <option value="out-of-stock">Hết hàng</option>
-                            </select>
+                            <label class="form-label fw-bold">Tồn kho: <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="product-stock" value="100">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-bold">Trạng thái hiển thị:</label>
@@ -213,13 +243,11 @@
                         </div>
                         <div class="col-12">
                             <label class="form-label fw-bold">Mô tả:</label>
-                            <textarea class="form-control" id="product-desc" rows="3"
-                                placeholder="Mô tả sản phẩm..."></textarea>
+                            <textarea class="form-control" id="product-desc" rows="3"></textarea>
                         </div>
                         <div class="col-12">
                             <label class="form-label fw-bold">Hình ảnh URL:</label>
-                            <input type="text" class="form-control" id="product-image"
-                                placeholder="../assets/image/product/banh-trung-thu-golden-plum.png">
+                            <input type="text" class="form-control" id="product-image">
                         </div>
                     </div>
                 </div>
@@ -231,430 +259,129 @@
         </div>
     </div>
 
-    <!-- Modal Nhập hàng (Bootstrap 5) -->
-    <div class="modal fade" id="import-modal" tabindex="-1" aria-labelledby="import-modal-title" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content border-top border-5 border-warning shadow">
+    <!-- Modal Loại sản phẩm -->
+    <div class="modal fade" id="category-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-top border-5 border-primary shadow">
                 <div class="modal-header">
-                    <h5 class="modal-title fw-bold" id="import-modal-title" style="color: var(--brand-crimson);">
-                        <i class="fa-solid fa-file-invoice me-2"></i> Tạo Phiếu Nhập hàng
+                    <h5 class="modal-title fw-bold" id="category-modal-title">
+                        <i class="fa-solid fa-tags me-2"></i> Thêm Loại sản phẩm
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row g-3 mb-4">
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold">Mã phiếu nhập:</label>
-                            <input type="text" class="form-control" id="import-code" placeholder="PN001" readonly>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold">Ngày nhập:</label>
-                            <input type="date" class="form-control" id="import-date">
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold">Nhà cung cấp:</label>
-                            <input type="text" class="form-control" id="import-supplier" placeholder="Nhà cung cấp">
-                        </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">ID Loại (slug):</label>
+                        <input type="text" class="form-control" id="category-id" placeholder="vi-du: banh-ngot">
                     </div>
-
-                    <div class="bg-light rounded p-3 mb-3">
-                        <h6 class="fw-bold mb-2"><i class="fa-solid fa-search me-1"></i> Thêm sản phẩm nhập</h6>
-                        <div class="d-flex gap-2 mb-2">
-                            <input type="text" class="form-control" id="product-search"
-                                placeholder="Tìm kiếm sản phẩm theo tên hoặc mã...">
-                            <button class="btn btn-primary" onclick="searchProduct()">Tìm kiếm</button>
-                        </div>
-                        <div class="border rounded overflow-auto" style="max-height: 200px;"
-                            id="product-search-results"></div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Tên Loại sản phẩm:</label>
+                        <input type="text" class="form-control" id="category-name" placeholder="Ví dụ: Bánh Ngọt">
                     </div>
-
-                    <div class="bg-light rounded p-3 mb-3">
-                        <h6 class="fw-bold mb-2"><i class="fa-solid fa-list me-1"></i> Danh sách sản phẩm nhập</h6>
-                        <div class="table-responsive">
-                            <table class="table table-hover table-bordered align-middle mb-0">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Mã SP</th>
-                                        <th>Tên SP</th>
-                                        <th>Giá nhập</th>
-                                        <th>Số lượng</th>
-                                        <th>Thành tiền</th>
-                                        <th>Hành động</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="import-products-list">
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="text-end mt-2 fw-bold">
-                            Tổng tiền: <span id="import-total" class="text-danger">0</span> VNĐ
-                        </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Trạng thái:</label>
+                        <select class="form-select" id="category-status-select">
+                            <option value="active">Đang hoạt động</option>
+                            <option value="hidden">Đã ẩn</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button class="btn btn-primary" onclick="saveImport()">Lưu Phiếu Nhập</button>
+                    <button class="btn btn-primary" onclick="saveCategory()">Lưu Loại sản phẩm</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="../assets/vendor/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // ==========================
-        // 📦 DANH SÁCH SẢN PHẨM (đã bổ sung trường `stock`)
-        // ==========================
+        // DATA MANAGEMENT
         let products = JSON.parse(localStorage.getItem('morico_products')) || [
-            {
-                id: 1,
-                code: "SP001",
-                name: "Bánh Trung Thu Golden Plum",
-                price: 189000,
-                cost: 120000,
-                thumbnail: "../assets/image/product/banh-trung-thu-golden-plum.png",
-                category: "ngot",
-                stock: 25,
-                stockStatus: "in-stock",
-                status: "active",
-                details: {
-                    "Thương hiệu": "Mor'dan Bakery",
-                    "Loại bánh": "Bánh nướng – nhân ngọt",
-                    "Trọng lượng": "150g",
-                    "Thành phần": "Mận vàng cao cấp, bột mì, bơ, trứng gà, đường...",
-                    "Hạn sử dụng": "Xem trên bao bì sản phẩm"
-                },
-                description: `<p>Tinh tế và mới mẻ, <strong>bánh Trung Thu Golden Plum</strong> là sự kết hợp hài hòa giữa vị ngọt của mận vàng và lớp vỏ bánh nướng thơm mềm. Lớp vỏ bánh vàng óng, mềm mịn ôm trọn phần nhân mận dẻo thơm, mang đến trải nghiệm vị giác quen mà lạ.</p>`
-            },
-            {
-                id: 2,
-                code: "SP002",
-                name: "Bánh Trung Thu Hotate XO Mixed Nuts",
-                price: 139000,
-                cost: 90000,
-                thumbnail: "../assets/image/product/banh-trung-thu-hotate-xo-mixed-nuts.png",
-                category: "man",
-                stock: 12,
-                stockStatus: "low-stock",
-                status: "active",
-                details: {
-                    "Thương hiệu": "Mor'dan Bakery",
-                    "Loại bánh": "Bánh nướng – nhân mặn",
-                    "Trọng lượng": "150g",
-                    "Thành phần": "Sò điệp XO, các loại hạt (hạt điều, hạt dưa...), lạp xưởng...",
-                    "Hạn sử dụng": "Xem trên bao bì sản phẩm"
-                },
-                description: `<p>Một sự phá cách độc đáo cho mùa Trung Thu, <strong>bánh Hotate XO Mixed Nuts</strong> kết hợp vị mặn đậm đà của sốt sò điệp XO cay nhẹ cùng sự bùi béo của các loại hạt dinh dưỡng. Đây là lựa chọn hoàn hảo cho những ai tìm kiếm hương vị mới lạ.</p>`
-            },
-            {
-                id: 3,
-                code: "SP003",
-                name: "Bánh Trung Thu Matcha",
-                price: 99000,
-                cost: 65000,
-                thumbnail: "../assets/image/product/banh-trung-thu-matcha.png",
-                category: "ngot",
-                stock: 40,
-                stockStatus: "in-stock",
-                status: "active",
-                details: {
-                    "Thương hiệu": "Mor'dan Bakery",
-                    "Loại bánh": "Bánh nướng – nhân trà xanh",
-                    "Trọng lượng": "150g",
-                    "Thành phần": "Bột matcha, bột mì, trứng, bơ, đậu xanh, đường...",
-                    "Hạn sử dụng": "Xem trên bao bì sản phẩm"
-                },
-                description: `<p><strong>Bánh Trung Thu Matcha</strong> mang đậm hương vị thanh mát của trà xanh Nhật Bản. Hương thơm nhẹ, vị ngọt dịu, cùng lớp nhân đậu xanh hòa quyện matcha tinh tế, tạo nên cảm giác nhẹ nhàng và thư giãn.</p>`
-            },
-            {
-                id: 4,
-                code: "SP004",
-                name: "Bánh Trung Thu Murasaki Imo",
-                price: 115000,
-                cost: 75000,
-                thumbnail: "../assets/image/product/banh-trung-thu-murasaki-imo.png",
-                category: "ngot",
-                stock: 30,
-                stockStatus: "in-stock",
-                status: "active",
-                details: {
-                    "Thương hiệu": "Mor'dan Bakery",
-                    "Loại bánh": "Bánh nướng – nhân ngọt",
-                    "Thành phần": "Khoai lang tím Nhật, bột mì, đường, trứng, bơ...",
-                    "Trọng lượng": "150g",
-                    "Hạn sử dụng": "Xem trên bao bì sản phẩm"
-                },
-                description: `<p><strong>Bánh Trung Thu Murasaki Imo</strong> mang sắc tím dịu dàng của khoai lang Nhật Bản. Nhân khoai dẻo mịn, thơm nhẹ vị ngọt tự nhiên, hòa quyện cùng lớp vỏ bánh mềm vàng hấp dẫn.</p>`
-            },
-            {
-                id: 5,
-                code: "SP005",
-                name: "Bánh Trung Thu Mushroom Mixed Nuts",
-                price: 129000,
-                cost: 85000,
-                thumbnail: "../assets/image/product/banh-trung-thu-mushroom-mixed-nuts.png",
-                category: "chay",
-                stock: 18,
-                stockStatus: "low-stock",
-                stockStatus: "in-stock",
-                status: "active",
-                details: {
-                    "Thương hiệu": "Mor'dan Bakery",
-                    "Loại bánh": "Bánh chay – nhân mặn nhẹ",
-                    "Trọng lượng": "150g",
-                    "Thành phần": "Nấm hương, hạt điều, hạt sen, đậu xanh, bột mì...",
-                    "Hạn sử dụng": "Xem trên bao bì sản phẩm"
-                },
-                description: `<p><strong>Bánh Trung Thu Mushroom Mixed Nuts</strong> là lựa chọn thanh đạm và dinh dưỡng cho người ăn chay. Hương thơm của nấm hòa quyện cùng vị bùi béo của các loại hạt, tạo nên hương vị tự nhiên, nhẹ nhàng.</p>`
-            },
-            {
-                id: 6,
-                code: "SP006",
-                name: "Bánh Trung Thu Hạt Sen Dừa Non",
-                price: 105000,
-                cost: 70000,
-                thumbnail: "../assets/image/product/banh-trung-thu-pink-nocturne.png",
-                category: "ngot",
-                stock: 50,
-                stockStatus: "in-stock",
-                status: "active",
-                details: {
-                    "Thương hiệu": "Mor'dan Bakery",
-                    "Loại bánh": "Bánh nướng – nhân ngọt",
-                    "Trọng lượng": "150g",
-                    "Thành phần": "Hạt sen, dừa non, bột mì, trứng, bơ, đường...",
-                    "Hạn sử dụng": "Xem trên bao bì sản phẩm"
-                },
-                description: `<p><strong>Bánh Trung Thu Hạt Sen Dừa Non</strong> mang vị ngọt thanh, bùi béo của hạt sen hòa cùng mùi thơm nhẹ của dừa non, tạo cảm giác mềm mịn dễ chịu.</p>`
-            },
-            {
-                id: 7,
-                code: "SP007",
-                name: "Bánh Trung Thu Đậu Đỏ Trứng Muối",
-                price: 125000,
-                cost: 80000,
-                thumbnail: "../assets/image/product/banh-trung-thu-takesumi-orange.png",
-                category: "man",
-                stock: 0,
-                stockStatus: "out-of-stock",
-                status: "active",
-                details: {
-                    "Thương hiệu": "Mor'dan Bakery",
-                    "Loại bánh": "Bánh nướng – nhân mặn",
-                    "Trọng lượng": "150g",
-                    "Thành phần": "Đậu đỏ, trứng muối, bột mì, đường, dầu thực vật...",
-                    "Hạn sử dụng": "Xem trên bao bì sản phẩm"
-                },
-                description: `<p><strong>Bánh Trung Thu Đậu Đỏ Trứng Muối</strong> có vị mặn ngọt hài hòa, nhân đậu đỏ bùi quyện cùng trứng muối tan chảy, mang lại cảm giác trọn vị truyền thống và hiện đại.</p>`
-            },
-            {
-                id: 8,
-                code: "SP008",
-                name: "Bánh Trung Thu Xôi Gấc",
-                price: 95000,
-                cost: 60000,
-                thumbnail: "../assets/image/product/banh-trung-thu-xoi-gac.png",
-                category: "ngot",
-                stock: 35,
-                stockStatus: "in-stock",
-                status: "hidden",
-                details: {
-                    "Thương hiệu": "Mor'dan Bakery",
-                    "Loại bánh": "Bánh dẻo – nhân ngọt",
-                    "Trọng lượng": "150g",
-                    "Thành phần": "Gạo nếp, gấc tươi, nhân đậu xanh, dừa nạo...",
-                    "Hạn sử dụng": "Xem trên bao bì sản phẩm"
-                },
-                description: `<p><strong>Bánh Trung Thu Xôi Gấc</strong> có màu đỏ tự nhiên từ gấc, tượng trưng cho may mắn và hạnh phúc. Hương thơm của nếp quyện cùng vị ngọt nhẹ của đậu xanh và dừa, mang đến cảm giác truyền thống thân quen.</p>`
-            }
+            { id: 1, code: "SP001", name: "Bánh Trung Thu Golden Plum", price: 189000, cost: 120000, thumbnail: "../assets/image/product/banh-trung-thu-golden-plum.png", category: "ngot", stock: 25, status: "active", is_deleted: 0 },
+            { id: 2, code: "SP002", name: "Bánh Trung Thu Hotate XO Mixed Nuts", price: 139000, cost: 90000, thumbnail: "../assets/image/product/banh-trung-thu-hotate-xo-mixed-nuts.png", category: "man", stock: 12, status: "active", is_deleted: 0 }
         ];
 
-        let importOrders = JSON.parse(localStorage.getItem('morico_imports')) || [
-            { id: 1, code: 'PN001', date: '2024-01-15', supplier: 'Công ty ABC', totalProducts: 5, totalAmount: 1250000, status: 'completed' }
+        let categories = JSON.parse(localStorage.getItem('morico_categories')) || [
+            { id: 'ngot', name: 'Bánh Ngọt', status: 'active', is_deleted: 0 },
+            { id: 'man', name: 'Bánh Mặn', status: 'active', is_deleted: 0 },
+            { id: 'chay', name: 'Bánh Chay', status: 'active', is_deleted: 0 }
         ];
 
-        let currentEditingId = null;
-        let selectedProducts = [];
+        let currentEditingProductId = null;
+        let currentEditingCategoryId = null;
 
-        // Định nghĩa các loại sản phẩm
-        const categories = [
-            { id: 'ngot', name: 'Bánh Ngọt', status: 'active' },
-            { id: 'man', name: 'Bánh Mặn', status: 'active' },
-            { id: 'chay', name: 'Bánh Chay', status: 'active' }
-        ];
-
-        // Lưu dữ liệu vào localStorage
         function saveDataToStorage() {
             localStorage.setItem('morico_products', JSON.stringify(products));
-            localStorage.setItem('morico_imports', JSON.stringify(importOrders));
             localStorage.setItem('morico_categories', JSON.stringify(categories));
         }
 
-        // Khởi tạo dữ liệu mẫu lần đầu nếu localStorage trống
-        function initializeSampleData() {
-            const existingData = localStorage.getItem('morico_products');
-
-            // Kiểm tra nếu chưa có data HOẶC data là empty array
-            if (!existingData || JSON.parse(existingData).length === 0) {
-                console.log('🚀 Khởi tạo dữ liệu mẫu lần đầu...');
-                saveDataToStorage();
-                // Reload lại products từ localStorage sau khi save
-                products = JSON.parse(localStorage.getItem('morico_products')) || products;
-                console.log('✅ Đã khởi tạo ' + products.length + ' sản phẩm');
-            }
-        }
-
         document.addEventListener('DOMContentLoaded', function () {
-            // Khởi tạo dữ liệu mẫu lần đầu
-            initializeSampleData();
+            refreshCatalogueUI();
 
-            // Cập nhật tên người dùng (nếu có đăng nhập)
-            const currentUser = localStorage.getItem('loggedInUser');
-            if (currentUser) {
-                updateUserDisplay(currentUser);
+            const searchInput = document.getElementById('admin-search');
+            if (searchInput) {
+                searchInput.addEventListener('input', function () {
+                    const term = this.value.toLowerCase().trim();
+                    const activeTab = document.querySelector('.nav-link.active').id;
+                    if (activeTab === 'products-tab-btn') {
+                        renderProductTable(products.filter(p => !p.is_deleted && (p.name.toLowerCase().includes(term) || p.code.toLowerCase().includes(term))));
+                    } else {
+                        renderCategoryTable(categories.filter(c => !c.is_deleted && (c.name.toLowerCase().includes(term) || c.id.toLowerCase().includes(term))));
+                    }
+                });
             }
 
-            // Xử lý đăng xuất
-            document.getElementById('logout-btn').addEventListener('click', function () {
-                localStorage.removeItem('loggedInUser');
-                localStorage.removeItem('adminLoggedIn');
-                localStorage.removeItem('adminUsername');
-                window.location.href = 'index.html';
-            });
-
-            // Hiển thị dữ liệu
-            renderCategoryStats();
-            renderProducts();
-            renderImportOrders();
-
-            // Tạo mã phiếu nhập tự động
-            generateImportCode();
-
-            // Tìm kiếm sản phẩm
-            document.getElementById('admin-search').addEventListener('input', function () {
-                searchProductsAdmin(this.value);
+            const tabs = document.querySelectorAll('button[data-bs-toggle="tab"]');
+            tabs.forEach(tab => {
+                tab.addEventListener('shown.bs.tab', function (e) {
+                    if (e.target.id === 'products-tab-btn') renderProductTable();
+                    else renderCategoryTable();
+                });
             });
         });
-        function updateUserDisplay(username) {
-            document.getElementById('header-username').textContent = username;
 
-            let role = 'Nhân viên';
-            if (username === 'admin') role = 'Quản trị viên';
-            else if (username === 'staff') role = 'Nhân viên bán hàng';
-
-            document.getElementById('header-role').textContent = role;
+        function refreshCatalogueUI() {
+            renderCategoryStats();
+            renderProductTable();
+            renderCategoryTable();
+            updateCategoryDropdown();
         }
-        // Hiển thị thống kê loại sản phẩm
+
+        // CATEGORY LOGIC
         function renderCategoryStats() {
             const container = document.getElementById('category-stats');
             container.innerHTML = '';
-
-            categories.forEach(category => {
-                const categoryProducts = products.filter(p => p.category === category.id);
-                const activeProducts = categoryProducts.filter(p => p.status === 'active');
-                const hiddenProducts = categoryProducts.filter(p => p.status === 'hidden');
-
-                const statCard = document.createElement('div');
-                statCard.className = 'category-stat-card bg-white rounded p-3 border-start border-4 border-warning shadow-sm flex-fill min-vw-20';
-                statCard.innerHTML = `
-                    <h4 class="text-muted mb-2" style="font-size: 0.9rem;">${category.name}</h4>
-                    <div class="fs-4 fw-bold text-danger mb-2">${categoryProducts.length} sản phẩm</div>
-                    <div class="small text-muted mb-3">
-                        <span class="text-success">${activeProducts.length} đang bán</span> | 
-                        <span class="text-secondary">${hiddenProducts.length} đã ẩn</span>
-                    </div>
-                    <div class="d-flex gap-2 mt-auto">
-                        <button class="btn btn-${category.status === 'active' ? 'secondary' : 'success'} btn-sm" 
-                                onclick="toggleCategoryStatus('${category.id}')">
-                            <i class="fa-solid fa-${category.status === 'active' ? 'eye-slash' : 'eye'} me-1"></i> 
-                            ${category.status === 'active' ? 'Ẩn tất cả' : 'Hiện tất cả'}
-                        </button>
-                        <button class="btn btn-warning btn-sm text-dark" onclick="viewCategoryProducts('${category.id}')">
-                            <i class="fa-solid fa-list me-1"></i> Xem
-                        </button>
-                    </div>
+            categories.filter(c => !c.is_deleted).forEach(cat => {
+                const count = products.filter(p => p.category === cat.id && !p.is_deleted).length;
+                const card = document.createElement('div');
+                card.className = 'category-stat-card bg-white rounded p-3 border-start border-4 border-warning shadow-sm flex-fill';
+                card.style.minWidth = '180px';
+                card.innerHTML = `
+                    <h4 class="text-muted mb-1" style="font-size: 0.85rem;">${cat.name}</h4>
+                    <div class="fs-5 fw-bold text-danger">${count} SP</div>
+                    <button class="btn btn-link btn-sm p-0 mt-1 text-warning text-decoration-none" onclick="filterByCat('${cat.id}')">Lọc SP</button>
                 `;
-                container.appendChild(statCard);
+                container.appendChild(card);
             });
         }
 
-        // Ẩn/hiện toàn bộ sản phẩm theo loại
-        function toggleCategoryStatus(categoryId) {
-            const category = categories.find(c => c.id === categoryId);
-            if (!category) return;
-
-            const newStatus = category.status === 'active' ? 'hidden' : 'active';
-            const actionText = newStatus === 'active' ? 'hiện' : 'ẩn';
-
-            if (confirm(`Bạn có chắc muốn ${actionText} toàn bộ sản phẩm ${category.name}?`)) {
-                // Cập nhật trạng thái loại
-                category.status = newStatus;
-
-                // Cập nhật tất cả sản phẩm thuộc loại này
-                products.forEach(product => {
-                    if (product.category === categoryId) {
-                        product.status = newStatus;
-                    }
-                });
-
-                saveDataToStorage();
-                renderCategoryStats();
-                renderProducts();
-                alert(`Đã ${actionText} toàn bộ sản phẩm ${category.name}!`);
-            }
-        }
-
-        // Xem sản phẩm theo loại
-        function viewCategoryProducts(categoryId) {
-            const category = categories.find(c => c.id === categoryId);
-            if (!category) return;
-
-            const categoryProducts = products.filter(p => p.category === categoryId);
-            renderProducts(categoryProducts);
-
-            // Hiển thị thông báo
-            const searchInput = document.getElementById('admin-search');
-            searchInput.value = '';
-            searchInput.placeholder = `Đang xem ${category.name} (${categoryProducts.length} sản phẩm)`;
-        }
-
-        // Tìm kiếm sản phẩm trong admin
-        function searchProductsAdmin(searchTerm) {
-            if (!searchTerm.trim()) {
-                renderProducts();
-                document.getElementById('admin-search').placeholder = 'Tìm kiếm...';
-                return;
-            }
-
-            const normalizedSearchTerm = searchTerm.toLowerCase().trim();
-            const searchResults = products.filter(product => {
-                return product.name.toLowerCase().includes(normalizedSearchTerm) ||
-                    product.code.toLowerCase().includes(normalizedSearchTerm);
-            });
-
-            renderProducts(searchResults);
-        }
-
-        // ===== QUẢN LÝ SẢN PHẨM =====
-        function renderProducts(productList = products) {
-            const tbody = document.getElementById('product-table-body');
+        function renderCategoryTable(list = categories.filter(c => !c.is_deleted)) {
+            const tbody = document.getElementById('category-table-body');
             tbody.innerHTML = '';
-
-            productList.forEach(product => {
+            list.forEach(cat => {
+                const count = products.filter(p => p.category === cat.id && !p.is_deleted).length;
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${product.code}</td>
-                    <td><strong>${product.name}</strong></td>
-                    <td>${getCategoryText(product.category)}</td>
-                    <td>${formatCurrency(product.price)}</td>
-                    <td>${product.stock}</td>
-                    <td><span class="badge ${getStatusClass(product)}">${getProductStatusText(product)}</span></td>
-                    <td>
-                        <div class="d-flex gap-1 justify-content-center">
-                            <button class="btn btn-warning btn-sm" onclick="editProduct(${product.id})"><i class="fa-solid fa-edit"></i></button>
-                            <button class="btn btn-${product.status === 'active' ? 'secondary' : 'success'} btn-sm" onclick="toggleProductStatus(${product.id})">
-                                <i class="fa-solid fa-${product.status === 'active' ? 'eye-slash' : 'eye'}"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})"><i class="fa-solid fa-trash-alt"></i></button>
+                    <td><code>${cat.id}</code></td>
+                    <td><strong>${cat.name}</strong></td>
+                    <td class="text-center">${count}</td>
+                    <td><span class="badge ${cat.status === 'active' ? 'bg-success' : 'bg-secondary'}">${cat.status === 'active' ? 'Hoạt động' : 'Ẩn'}</span></td>
+                    <td class="text-center">
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-warning" onclick="editCategory('${cat.id}')"><i class="fa-solid fa-edit"></i></button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteCategory('${cat.id}')"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </td>
                 `;
@@ -662,369 +389,185 @@
             });
         }
 
-        function getCategoryText(category) {
-            switch (category) {
-                case 'ngot': return 'Bánh Ngọt';
-                case 'man': return 'Bánh Mặn';
-                case 'chay': return 'Bánh Chay';
-                default: return category;
+        function openCategoryModal() {
+            currentEditingCategoryId = null;
+            document.getElementById('category-id').value = '';
+            document.getElementById('category-id').disabled = false;
+            document.getElementById('category-name').value = '';
+            new bootstrap.Modal(document.getElementById('category-modal')).show();
+        }
+
+        function editCategory(id) {
+            const cat = categories.find(c => c.id === id);
+            currentEditingCategoryId = id;
+            document.getElementById('category-id').value = cat.id;
+            document.getElementById('category-id').disabled = true;
+            document.getElementById('category-name').value = cat.name;
+            new bootstrap.Modal(document.getElementById('category-modal')).show();
+        }
+
+        function saveCategory() {
+            const id = document.getElementById('category-id').value.trim();
+            const name = document.getElementById('category-name').value.trim();
+            const status = document.getElementById('category-status-select').value;
+            if (!id || !name) return alert('Nhập đủ thông tin');
+
+            if (!currentEditingCategoryId) categories.push({ id, name, status, is_deleted: 0 });
+            else {
+                const idx = categories.findIndex(c => c.id === currentEditingCategoryId);
+                categories[idx] = { ...categories[idx], name, status };
+            }
+            saveDataToStorage();
+            refreshCatalogueUI();
+            bootstrap.Modal.getInstance(document.getElementById('category-modal')).hide();
+        }
+
+        function deleteCategory(id) {
+            if (products.some(p => p.category === id && !p.is_deleted)) return alert('Vẫn còn SP thuộc loại này');
+            if (confirm('Xác nhận xóa?')) {
+                const idx = categories.findIndex(c => c.id === id);
+                categories[idx].is_deleted = 1;
+                saveDataToStorage();
+                refreshCatalogueUI();
             }
         }
 
-        function getStatusClass(product) {
-            if (product.status === 'hidden') return 'bg-secondary';
-            switch (product.stockStatus) {
-                case 'in-stock': return 'bg-success';
-                case 'low-stock': return 'bg-warning text-dark';
-                case 'out-of-stock': return 'bg-danger';
-                default: return 'bg-secondary';
-            }
-        }
-
-        function getProductStatusText(product) {
-            if (product.status === 'hidden') return 'Đã ẩn';
-
-            switch (product.stockStatus) {
-                case 'in-stock': return 'Còn hàng';
-                case 'low-stock': return 'Sắp hết';
-                case 'out-of-stock': return 'Hết hàng';
-                default: return 'N/A';
-            }
+        // PRODUCT LOGIC
+        function renderProductTable(list = products.filter(p => !p.is_deleted)) {
+            const tbody = document.getElementById('product-table-body');
+            tbody.innerHTML = '';
+            list.forEach(p => {
+                const cat = categories.find(c => c.id === p.category);
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><code>${p.code}</code></td>
+                    <td><strong>${p.name}</strong></td>
+                    <td>${cat ? cat.name : p.category}</td>
+                    <td class="text-end fw-bold">${formatCurrency(p.price)}</td>
+                    <td class="text-center">${p.stock}</td>
+                    <td><span class="badge ${p.status === 'active' ? 'bg-success' : 'bg-secondary'}">${p.status === 'active' ? 'Còn hàng' : 'Ẩn'}</span></td>
+                    <td class="text-center">
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-warning" onclick="editProduct(${p.id})"><i class="fa-solid fa-edit"></i></button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteProduct(${p.id})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
         }
 
         function calculatePrice() {
             const cost = parseFloat(document.getElementById('product-cost').value) || 0;
-            const profitMargin = parseFloat(document.getElementById('product-profit-margin').value) || 0;
-            const price = Math.round(cost * (1 + profitMargin / 100));
-            document.getElementById('product-price').value = price;
+            const margin = parseFloat(document.getElementById('product-profit-margin').value) || 0;
+            document.getElementById('product-price').value = Math.round(cost * (1 + margin / 100));
         }
 
-        // Bootstrap Modal instances
-        const productModalEl = document.getElementById('product-modal');
-        const productModal = new bootstrap.Modal(productModalEl);
-        const importModalEl = document.getElementById('import-modal');
-        const importModal = new bootstrap.Modal(importModalEl);
-
         function openProductModal() {
-            currentEditingId = null;
+            currentEditingProductId = null;
             document.getElementById('product-modal-title').innerHTML = '<i class="fa-solid fa-box me-2"></i> Thêm Sản phẩm';
-            // Reset form
             document.getElementById('product-code').value = '';
             document.getElementById('product-name').value = '';
-            document.getElementById('product-category').value = 'ngot';
             document.getElementById('product-cost').value = '';
             document.getElementById('product-profit-margin').value = '40';
             document.getElementById('product-price').value = '';
-            document.getElementById('product-stock').value = '';
-            document.getElementById('product-stock-status').value = 'in-stock';
+            document.getElementById('product-stock').value = '0';
             document.getElementById('product-status').value = 'active';
             document.getElementById('product-desc').value = '';
             document.getElementById('product-image').value = '';
-            productModal.show();
-        }
-
-        function closeProductModal() {
-            productModal.hide();
-        }
-
-        function saveProduct() {
-            const code = document.getElementById('product-code').value;
-            const name = document.getElementById('product-name').value;
-            const category = document.getElementById('product-category').value;
-            const cost = parseFloat(document.getElementById('product-cost').value);
-            const profitMargin = parseFloat(document.getElementById('product-profit-margin').value) || 0;
-            const price = parseFloat(document.getElementById('product-price').value);
-            const stock = parseInt(document.getElementById('product-stock').value) || 0;
-            const stockStatus = document.getElementById('product-stock-status').value;
-            const status = document.getElementById('product-status').value;
-            const description = document.getElementById('product-desc').value;
-            const thumbnail = document.getElementById('product-image').value;
-
-            if (!code || !name || !category) {
-                alert('Vui lòng nhập đầy đủ thông tin bắt buộc!');
-                return;
-            }
-
-            // TỰ ĐỘNG CẬP NHẬT TRẠNG THÁI TỒN KHO (3 trạng thái)
-            let autoStockStatus;
-            if (stock === 0) {
-                autoStockStatus = 'out-of-stock';
-            } else if (stock <= 20) {
-                autoStockStatus = 'low-stock';
-            } else {
-                autoStockStatus = 'in-stock';
-            }
-
-            const productData = {
-                code, name, category, cost, price, stock,
-                profitMargin, // Thêm % lợi nhuận
-                stockStatus: autoStockStatus, // Sử dụng trạng thái tự động
-                status,
-                description, thumbnail,
-                details: {
-                    "Thương hiệu": "Mor'dan Bakery",
-                    "Loại bánh": category === 'ngot' ? 'Bánh nướng – nhân ngọt' :
-                        category === 'man' ? 'Bánh nướng – nhân mặn' : 'Bánh chay',
-                    "Trọng lượng": "150g",
-                    "Thành phần": "Thành phần cao cấp...",
-                    "Hạn sử dụng": "Xem trên bao bì sản phẩm"
-                }
-            };
-
-            if (currentEditingId) {
-                // Sửa sản phẩm
-                const index = products.findIndex(p => p.id === currentEditingId);
-                products[index] = { ...products[index], ...productData };
-            } else {
-                // Thêm mới
-                const newProduct = {
-                    id: products.length + 1,
-                    ...productData
-                };
-                products.push(newProduct);
-            }
-
-            saveDataToStorage();
-            renderCategoryStats();
-            renderProducts();
-            closeProductModal();
-            alert(currentEditingId ? 'Đã cập nhật sản phẩm!' : 'Đã thêm sản phẩm mới!');
+            updateCategoryDropdown();
+            new bootstrap.Modal(document.getElementById('product-modal')).show();
         }
 
         function editProduct(id) {
-            const product = products.find(p => p.id === id);
-            if (product) {
-                currentEditingId = id;
-                document.getElementById('product-modal-title').innerHTML = '<i class="fa-solid fa-edit me-2"></i> Sửa Sản phẩm';
-                document.getElementById('product-code').value = product.code;
-                document.getElementById('product-name').value = product.name;
-                document.getElementById('product-category').value = product.category;
-                document.getElementById('product-cost').value = product.cost;
-                document.getElementById('product-profit-margin').value = product.profitMargin || 0;
-                document.getElementById('product-price').value = product.price;
-                document.getElementById('product-stock').value = product.stock;
-                document.getElementById('product-stock-status').value = product.stockStatus;
-                document.getElementById('product-status').value = product.status;
-                document.getElementById('product-desc').value = product.description || '';
-                document.getElementById('product-image').value = product.thumbnail;
-                productModal.show();
-            }
+            const p = products.find(prod => prod.id === id);
+            if (!p) return;
+            currentEditingProductId = id;
+            document.getElementById('product-modal-title').innerHTML = '<i class="fa-solid fa-edit me-2"></i> Sửa Sản phẩm';
+            document.getElementById('product-code').value = p.code;
+            document.getElementById('product-name').value = p.name;
+            document.getElementById('product-category').value = p.category;
+            document.getElementById('product-cost').value = p.cost;
+            document.getElementById('product-profit-margin').value = p.profitMargin || 40;
+            document.getElementById('product-price').value = p.price;
+            document.getElementById('product-stock').value = p.stock;
+            document.getElementById('product-status').value = p.status;
+            document.getElementById('product-desc').value = p.description || '';
+            document.getElementById('product-image').value = p.thumbnail || '';
+            updateCategoryDropdown();
+            new bootstrap.Modal(document.getElementById('product-modal')).show();
         }
 
-        function toggleProductStatus(id) {
-            const product = products.find(p => p.id === id);
-            if (product) {
-                product.status = product.status === 'active' ? 'hidden' : 'active';
-                saveDataToStorage();
-                renderCategoryStats();
-                renderProducts();
-                alert(`Đã ${product.status === 'active' ? 'hiện' : 'ẩn'} sản phẩm!`);
+        function saveProduct() {
+            const data = {
+                code: document.getElementById('product-code').value.trim(),
+                name: document.getElementById('product-name').value.trim(),
+                category: document.getElementById('product-category').value,
+                cost: parseFloat(document.getElementById('product-cost').value) || 0,
+                profitMargin: parseFloat(document.getElementById('product-profit-margin').value) || 0,
+                price: parseFloat(document.getElementById('product-price').value) || 0,
+                stock: parseInt(document.getElementById('product-stock').value) || 0,
+                status: document.getElementById('product-status').value,
+                description: document.getElementById('product-desc').value.trim(),
+                thumbnail: document.getElementById('product-image').value.trim(),
+                is_deleted: 0
+            };
+
+            // Validation: Required fields
+            if (!data.code) return alert('Vui lòng nhập mã sản phẩm!');
+            if (!data.name) return alert('Vui lòng nhập tên sản phẩm!');
+            if (!data.category) return alert('Vui lòng chọn loại sản phẩm!');
+            if (isNaN(data.cost) || data.cost <= 0) return alert('Giá nhập phải lớn hơn 0!');
+            if (isNaN(data.profitMargin) || data.profitMargin < 0) return alert('Phần trăm lợi nhuận không được âm!');
+            if (isNaN(data.stock) || data.stock < 0) return alert('Số lượng tồn kho không được âm!');
+
+            // Check for duplicate product code
+            const isDuplicate = products.some(p => 
+                !p.is_deleted && 
+                p.code.toLowerCase() === data.code.toLowerCase() && 
+                p.id !== currentEditingProductId
+            );
+
+            if (isDuplicate) {
+                return alert(`Mã sản phẩm "${data.code}" đã tồn tại! Vui lòng chọn mã khác.`);
             }
+
+            if (!currentEditingProductId) {
+                data.id = Date.now();
+                products.push(data);
+            } else {
+                const idx = products.findIndex(p => p.id === currentEditingProductId);
+                products[idx] = { ...products[idx], ...data };
+            }
+            saveDataToStorage();
+            refreshCatalogueUI();
+            bootstrap.Modal.getInstance(document.getElementById('product-modal')).hide();
+            alert('Đã lưu thông tin sản phẩm thành công!');
         }
 
         function deleteProduct(id) {
-            if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
-                products = products.filter(p => p.id !== id);
+            if (confirm('Xóa SP này?')) {
+                const idx = products.findIndex(p => p.id === id);
+                products[idx].is_deleted = 1;
                 saveDataToStorage();
-                renderCategoryStats();
-                renderProducts();
-                alert('Đã xóa sản phẩm!');
+                refreshCatalogueUI();
             }
         }
 
-        // ===== QUẢN LÝ NHẬP HÀNG =====
-        function renderImportOrders() {
-            const tbody = document.getElementById('import-table-body');
-            tbody.innerHTML = '';
-
-            importOrders.forEach(order => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${order.code}</td>
-                    <td>${order.date}</td>
-                    <td>${order.supplier}</td>
-                    <td>${order.totalProducts}</td>
-                    <td>${formatCurrency(order.totalAmount)}</td>
-                    <td><span class="badge bg-success">Hoàn thành</span></td>
-                    <td>
-                        <div class="d-flex gap-1 justify-content-center">
-                            <button class="btn btn-info btn-sm text-white"><i class="fa-solid fa-eye"></i></button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteImportOrder(${order.id})"><i class="fa-solid fa-trash-alt"></i></button>
-                        </div>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
+        function updateCategoryDropdown() {
+            const sel = document.getElementById('product-category');
+            if (!sel) return;
+            sel.innerHTML = categories.filter(c => !c.is_deleted && c.status === 'active').map(c => `<option value="${c.id}">${c.name}</option>`).join('');
         }
 
-        function generateImportCode() {
-            const nextId = importOrders.length + 1;
-            document.getElementById('import-code').value = `PN${nextId.toString().padStart(3, '0')}`;
+        function filterByCat(id) {
+            renderProductTable(products.filter(p => !p.is_deleted && p.category === id));
+            bootstrap.Tab.getInstance(document.getElementById('products-tab-btn')).show();
         }
 
-        function openImportModal() {
-            document.getElementById('import-modal-title').innerHTML = '<i class="fa-solid fa-file-invoice me-2"></i> Tạo Phiếu Nhập hàng';
-            document.getElementById('import-date').value = new Date().toISOString().split('T')[0];
-            document.getElementById('import-supplier').value = '';
-            selectedProducts = [];
-            renderImportProducts();
-            generateImportCode();
-            importModal.show();
-        }
-
-        function closeImportModal() {
-            importModal.hide();
-        }
-
-        function searchProduct() {
-            const searchTerm = document.getElementById('product-search').value.toLowerCase();
-            const results = products.filter(p =>
-                p.name.toLowerCase().includes(searchTerm) ||
-                p.code.toLowerCase().includes(searchTerm)
-            );
-
-            const resultsDiv = document.getElementById('product-search-results');
-            resultsDiv.innerHTML = '';
-
-            results.forEach(product => {
-                const div = document.createElement('div');
-                div.className = 'list-group-item list-group-item-action py-2 px-3';
-                div.style.cursor = 'pointer';
-                div.innerHTML = `
-                    <strong>${product.code}</strong> - ${product.name} 
-                    (${formatCurrency(product.price)})
-                `;
-                div.onclick = () => addProductToImport(product);
-                resultsDiv.appendChild(div);
-            });
-        }
-
-        function addProductToImport(product) {
-            if (!selectedProducts.find(p => p.id === product.id)) {
-                selectedProducts.push({
-                    ...product,
-                    importQuantity: 1,
-                    importPrice: product.cost,
-                    total: product.cost
-                });
-                renderImportProducts();
-                calculateImportTotal();
-            }
-        }
-
-        function renderImportProducts() {
-            const tbody = document.getElementById('import-products-list');
-            tbody.innerHTML = '';
-
-            selectedProducts.forEach((product, index) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${product.code}</td>
-                    <td>${product.name}</td>
-                    <td>
-                        <input type="number" class="form-control form-control-sm text-center" style="width: 100px;" value="${product.importPrice}" 
-                               onchange="updateImportPrice(${index}, this.value)">
-                    </td>
-                    <td>
-                        <input type="number" class="form-control form-control-sm text-center" style="width: 80px;" value="${product.importQuantity}" 
-                               onchange="updateImportQuantity(${index}, this.value)">
-                    </td>
-                    <td>${formatCurrency(product.total)}</td>
-                    <td>
-                        <button class="btn btn-danger btn-sm" onclick="removeImportProduct(${index})">
-                            <i class="fa-solid fa-times"></i>
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function updateImportQuantity(index, quantity) {
-            selectedProducts[index].importQuantity = parseInt(quantity) || 0;
-            selectedProducts[index].total = selectedProducts[index].importPrice * selectedProducts[index].importQuantity;
-            renderImportProducts();
-            calculateImportTotal();
-        }
-
-        function updateImportPrice(index, price) {
-            selectedProducts[index].importPrice = parseInt(price) || 0;
-            selectedProducts[index].total = selectedProducts[index].importPrice * selectedProducts[index].importQuantity;
-            renderImportProducts();
-            calculateImportTotal();
-        }
-
-        function removeImportProduct(index) {
-            selectedProducts.splice(index, 1);
-            renderImportProducts();
-            calculateImportTotal();
-        }
-
-        function calculateImportTotal() {
-            const total = selectedProducts.reduce((sum, product) => sum + product.total, 0);
-            document.getElementById('import-total').textContent = formatCurrency(total);
-        }
-
-        function saveImport() {
-            const code = document.getElementById('import-code').value;
-            const date = document.getElementById('import-date').value;
-            const supplier = document.getElementById('import-supplier').value;
-
-            if (!supplier || selectedProducts.length === 0) {
-                alert('Vui lòng nhập đầy đủ thông tin và thêm ít nhất một sản phẩm!');
-                return;
-            }
-
-            const totalAmount = selectedProducts.reduce((sum, product) => sum + product.total, 0);
-            const totalProducts = selectedProducts.reduce((sum, product) => sum + product.importQuantity, 0);
-
-            const newImport = {
-                id: importOrders.length + 1,
-                code,
-                date,
-                supplier,
-                totalProducts,
-                totalAmount,
-                status: 'completed',
-                products: [...selectedProducts]
-            };
-
-            importOrders.push(newImport);
-
-            // Cập nhật tồn kho sản phẩm
-            selectedProducts.forEach(importProduct => {
-                const product = products.find(p => p.id === importProduct.id);
-                if (product) {
-                    product.stock += importProduct.importQuantity;
-                    product.cost = importProduct.importPrice;
-
-                    // Cập nhật trạng thái tồn kho (3 trạng thái)
-                    if (product.stock === 0) {
-                        product.stockStatus = 'out-of-stock';
-                    } else if (product.stock <= 20) {
-                        product.stockStatus = 'low-stock';
-                    } else {
-                        product.stockStatus = 'in-stock';
-                    }
-                }
-            });
-
-            saveDataToStorage();
-            renderImportOrders();
-            renderProducts();
-            closeImportModal();
-            alert('Đã tạo phiếu nhập hàng thành công!');
-        }
-
-        function deleteImportOrder(id) {
-            if (confirm('Bạn có chắc chắn muốn xóa phiếu nhập hàng này?')) {
-                importOrders = importOrders.filter(o => o.id !== id);
-                saveDataToStorage();
-                renderImportOrders();
-                alert('Đã xóa phiếu nhập hàng!');
-            }
+        function formatCurrency(num) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(num);
         }
     </script>
 </body>
-
 </html>
