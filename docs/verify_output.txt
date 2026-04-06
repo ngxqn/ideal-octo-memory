@@ -1,0 +1,27 @@
+carts	fk_carts_users	FOREIGN KEY
+carts	PRIMARY	PRIMARY KEY
+carts	uq_carts_user_id	UNIQUE
+cart_items	fk_cart_items_carts	FOREIGN KEY
+cart_items	fk_cart_items_products	FOREIGN KEY
+cart_items	PRIMARY	PRIMARY KEY
+cart_items	uq_cart_items_cart_product	UNIQUE
+categories	PRIMARY	PRIMARY KEY
+categories	uq_categories_name	UNIQUE
+goods_receipts	fk_goods_receipts_users	FOREIGN KEY
+goods_receipts	PRIMARY	PRIMARY KEY
+goods_receipt_details	fk_goods_receipt_details_products	FOREIGN KEY
+goods_receipt_details	fk_goods_receipt_details_receipts	FOREIGN KEY
+goods_receipt_details	PRIMARY	PRIMARY KEY
+inventory_logs	fk_inventory_logs_products	FOREIGN KEY
+inventory_logs	PRIMARY	PRIMARY KEY
+orders	fk_orders_users	FOREIGN KEY
+orders	PRIMARY	PRIMARY KEY
+order_details	fk_order_details_orders	FOREIGN KEY
+order_details	fk_order_details_products	FOREIGN KEY
+order_details	PRIMARY	PRIMARY KEY
+products	fk_products_categories	FOREIGN KEY
+products	PRIMARY	PRIMARY KEY
+products	uq_products_sku	UNIQUE
+users	PRIMARY	PRIMARY KEY
+users	uq_users_username	UNIQUE
+users	uq_users_email	UNIQUE
