@@ -40,4 +40,9 @@ interface ProductRepositoryInterface
      * @return Product The newly created product instance
      */
     public function create(array $data): Product;
+
+    /**
+     * Adjust the stock quantity by a specific delta (positive or negative).
+     */
+    public function adjustStock(int $id, int $amount): int;
 }

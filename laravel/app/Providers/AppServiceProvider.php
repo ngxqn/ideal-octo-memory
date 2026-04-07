@@ -19,6 +19,14 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Interfaces\InventoryLogRepositoryInterface::class,
             \App\Repositories\InventoryLogRepository::class
         );
+        $this->app->bind(
+            \App\Repositories\Interfaces\OrderRepositoryInterface::class,
+            \App\Repositories\OrderRepository::class
+        );
+        $this->app->bind(
+            \App\Repositories\Interfaces\OrderDetailRepositoryInterface::class,
+            \App\Repositories\OrderDetailRepository::class
+        );
     }
 
     /**

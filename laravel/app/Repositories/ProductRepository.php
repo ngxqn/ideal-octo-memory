@@ -53,4 +53,18 @@ class ProductRepository implements ProductRepositoryInterface
     {
         return Product::create($data);
     }
+
+    /**
+     * Adjust the stock quantity by a specific delta (positive or negative).
+     */
+    public function adjustStock(int $id, int $amount): int
+    {
+        if ($amount == 0) return 0;
+        
+        if ($amount > 0) {
+            return Product::where('id', $id)->increment('stock_quantity', $amount);
+        }
+        
+        return Product::where('id', $id)->decrement('stock_quantity', abs($amount));
+    }
 }
