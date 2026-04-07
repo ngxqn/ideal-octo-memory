@@ -15,4 +15,9 @@ interface OrderRepositoryInterface
      * Update the status of an order.
      */
     public function updateStatus(int $id, string $status): bool;
+
+    /**
+     * Create a new order.
+     */
+    public function create(array $data): Order;
 }

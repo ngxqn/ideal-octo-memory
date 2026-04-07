@@ -12,4 +12,9 @@ class OrderDetailRepository implements OrderDetailRepositoryInterface
     {
         return OrderDetail::where('order_id', $orderId)->get();
     }
+
+    public function create(array $data): OrderDetail
+    {
+        return OrderDetail::create($data);
+    }
 }

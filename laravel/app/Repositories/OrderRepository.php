@@ -16,4 +16,9 @@ class OrderRepository implements OrderRepositoryInterface
     {
         return Order::where('id', $id)->update(['status' => $status]) > 0;
     }
+
+    public function create(array $data): Order
+    {
+        return Order::create($data);
+    }
 }
