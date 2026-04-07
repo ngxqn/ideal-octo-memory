@@ -32,4 +32,12 @@ interface ProductRepositoryInterface
      * @return int Number of affected rows
      */
     public function decrementStock(int $id, int $amount): int;
+
+    /**
+     * Create a new product.
+     *
+     * @param array $data The data for the product
+     * @return Product The newly created product instance
+     */
+    public function create(array $data): Product;
 }

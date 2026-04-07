@@ -42,4 +42,15 @@ class ProductRepository implements ProductRepositoryInterface
     {
         return Product::where('id', $id)->decrement('stock_quantity', $amount);
     }
+
+    /**
+     * Create a new product.
+     *
+     * @param array $data The data for the product
+     * @return Product The newly created product instance
+     */
+    public function create(array $data): Product
+    {
+        return Product::create($data);
+    }
 }

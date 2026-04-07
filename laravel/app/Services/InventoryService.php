@@ -5,16 +5,21 @@ namespace App\Services;
 use App\Models\Product;
 use App\Models\InventoryLog;
 use App\Repositories\Interfaces\InventoryLogRepositoryInterface;
+use App\Repositories\Interfaces\ProductRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 use Exception;
 
 class InventoryService
 {
     protected InventoryLogRepositoryInterface $inventoryLogRepo;
+    protected ProductRepositoryInterface $productRepo;
 
-    public function __construct(InventoryLogRepositoryInterface $inventoryLogRepo)
-    {
+    public function __construct(
+        InventoryLogRepositoryInterface $inventoryLogRepo,
+        ProductRepositoryInterface $productRepo
+    ) {
         $this->inventoryLogRepo = $inventoryLogRepo;
+        $this->productRepo = $productRepo;
     }
 
     /**
@@ -28,12 +33,12 @@ class InventoryService
     public function createProduct(array $data): Product
     {
         return DB::transaction(function () use ($data) {
-            // Bước 1: Khai sinh sản phẩm. Eloquent sẽ tự throw QueryException nếu thất bại do Mass Assignment hoặc Schema constraint.
-            // Nếu muốn ném Custom Exception, ta có thể tự bắt, nhưng mặc nhiên nếu throw, transaction sẽ rollback.
-            $product = Product::create($data);
+            // Bước 1: Khai sinh sản phẩm qua Repository (Rule 1.1 + Rule 2.2).
+            // Eloquent sẽ tự throw QueryException nếu thất bại do Mass Assignment hoặc Schema constraint.
+            $product = $this->productRepo->create($data);
 
             if (!$product || !$product->id) {
-                throw new Exception("Lỗi: Không thể khởi tạo sản phẩm mới.");
+                throw new Exception("Lỗi: Không thể khởi tạo sản phẩm mới qua Repository.");
             }
 
             $initialStock = (int) ($data['stock_quantity'] ?? 0);
