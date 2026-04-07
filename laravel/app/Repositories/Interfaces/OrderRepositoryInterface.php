@@ -7,6 +7,11 @@ use App\Models\Order;
 interface OrderRepositoryInterface
 {
     /**
+     * Find an order by ID.
+     */
+    public function findById(int $id): ?Order;
+
+    /**
      * Find an order by ID and apply a pessimistic lock (SELECT FOR UPDATE).
      */
     public function findByIdWithLock(int $id): ?Order;

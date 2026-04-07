@@ -7,6 +7,11 @@ use App\Repositories\Interfaces\OrderRepositoryInterface;
 
 class OrderRepository implements OrderRepositoryInterface
 {
+    public function findById(int $id): ?Order
+    {
+        return Order::where('id', $id)->first();
+    }
+
     public function findByIdWithLock(int $id): ?Order
     {
         return Order::where('id', $id)->lockForUpdate()->first();

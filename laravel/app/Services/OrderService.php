@@ -120,4 +120,42 @@ class OrderService
             return $order;
         });
     }
+
+    /**
+     * Hủy đơn hàng và tự động hoàn kho (trường hợp áp dụng Guard C1).
+     * 
+     * @param int $orderId
+     * @param User $actor
+     * @return void
+     * @throws Exception
+     * @throws \App\Exceptions\OrderAlreadyCancelledException
+     */
+    public function cancelOrder(int $orderId, User $actor): void
+    {
+        DB::transaction(function () use ($orderId, $actor) {
+            // (1) Lock row với SELECT ... FOR UPDATE
+            $order = $this->orderRepo->findByIdWithLock($orderId);
+
+            if (!$order) {
+                throw new Exception("Không tìm thấy đơn hàng để hủy.");
+            }
+
+            // Kiểm tra quyền: chỉ admin hoặc chủ đơn mới được hủy
+            if ($actor->role !== 'admin' && $order->user_id !== $actor->id) {
+                throw new Exception("Bạn không có quyền hủy đơn hàng này.");
+            }
+
+            // (2) Kiểm tra & (3) Ném exception nếu đã cancelled hoặc delivered
+            if ($order->status === 'cancelled') {
+                throw new \App\Exceptions\OrderAlreadyCancelledException("Đơn hàng số #{$orderId} đã bị hủy trước đó.");
+            }
+            if ($order->status === 'delivered') {
+                throw new Exception("Nghiêm cấm hủy đơn: Đơn hàng số #{$orderId} đã được giao thành công.");
+            }
+
+            // (4) Gọi InventoryService để tự động quét toàn bộ order_details và hoàn lại tồn kho
+            // (InventoryService::restock cũng tự động update luôn trạng thái đơn về cancelled sau khi trừ xong).
+            $this->inventoryService->restock($order);
+        });
+    }
 }
