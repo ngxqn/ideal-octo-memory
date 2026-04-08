@@ -40,15 +40,7 @@ function saveData(dataObject) {
     return false;
 }
 
-// Hàm khởi tạo người dùng (ví dụ)
-function initializeSampleUser() {
-    if (!localStorage.getItem('loggedInUser')) {
-        localStorage.setItem('loggedInUser', 'admin');
-    }
-}
-
-// Khởi tạo user khi trang load
-document.addEventListener('DOMContentLoaded', initializeSampleUser);
+// initializeSampleUser removed as it conflicts with Laravel Auth
 
 // [Optional: Thêm các hàm utility khác như formatCurrency, formatDate nếu cần]
 

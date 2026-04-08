@@ -78,8 +78,8 @@
                             <a href="{{ route('products.show', $product->id) }}" class="action-icon">
                                 <i class="fa-solid fa-eye"></i>
                             </a>
-                            <button class="action-icon border-0 bg-transparent" 
-                                    onclick="addToCart({{ $product->id }})"
+                            <button class="action-icon border-0 bg-transparent btn-add-to-cart" 
+                                    data-id="{{ $product->id }}"
                                     {{ $product->stock_quantity <= 0 ? 'disabled' : '' }}
                                     style="{{ $product->stock_quantity <= 0 ? 'opacity:0.5; cursor:not-allowed;' : '' }}">
                                 <i class="fa-solid fa-cart-shopping"></i>
@@ -104,9 +104,16 @@
 
 @section('scripts')
 <script>
-    // Placeholder for addToCart (will be fully implemented in Batch 4/Cart)
-    function addToCart(id) {
-        alert('Chức năng thêm vào giỏ hàng sẽ được hoàn thiện ở Batch 4. Sản phẩm ID: ' + id);
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+        // Placeholder for addToCart (will be fully implemented in Batch 4/Cart)
+        const addToCartBtns = document.querySelectorAll('.btn-add-to-cart');
+        
+        addToCartBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                alert('Chức năng thêm vào giỏ hàng sẽ được hoàn thiện ở Batch 4. Sản phẩm ID: ' + id);
+            });
+        });
+    });
 </script>
 @endsection

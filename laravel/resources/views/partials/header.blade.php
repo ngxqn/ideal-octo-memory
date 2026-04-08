@@ -31,11 +31,20 @@
 
             <div class="user-menu">
                 @auth
-                    <i class="fa-solid fa-user user-icon" id="userIcon"></i>
+                    <div class="d-flex align-items-center gap-2" id="userIcon" style="cursor: pointer;">
+                        <div class="user-avatar-circle">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <span class="d-none d-md-inline fw-bold" style="color: var(--primary-color);">{{ Auth::user()->full_name }}</span>
+                    </div>
                     <div class="dropdown" id="userDropdown">
                         <a href="{{ route('profile.edit') }}">Tài khoản</a>
-                        <a href="{{ route('orders.index') }}">Lịch sử mua hàng</a>
-                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Đăng xuất</a>
+                        @if(Auth::user()->role === 'customer')
+                            <a href="{{ route('orders.index') }}">Lịch sử mua hàng</a>
+                        @else
+                            <a href="{{ route('admin.dashboard') }}">Quản trị Admin</a>
+                        @endif
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="color: #8B0000;">Đăng xuất</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>

@@ -50,10 +50,10 @@
                     </div>
 
                     <div class="action-buttons">
-                        <button class="btn-add-cart" onclick="addToCart({{ $product->id }})" {{ $product->stock_quantity <= 0 ? 'disabled' : '' }}>
+                        <button class="btn-add-cart" id="btn-add-cart" data-id="{{ $product->id }}" {{ $product->stock_quantity <= 0 ? 'disabled' : '' }}>
                             Thêm Vào Giỏ Hàng
                         </button>
-                        <button class="btn-buy-now" onclick="buyNow({{ $product->id }})" {{ $product->stock_quantity <= 0 ? 'disabled' : '' }}>
+                        <button class="btn-buy-now" id="btn-buy-now" data-id="{{ $product->id }}" {{ $product->stock_quantity <= 0 ? 'disabled' : '' }}>
                             Mua Ngay
                         </button>
                     </div>
@@ -109,11 +109,24 @@
 
 @section('scripts')
 <script>
-    function addToCart(id) {
-        alert('Chức năng thêm vào giỏ hàng sẽ được hoàn thiện ở Batch 4. Sản phẩm ID: ' + id);
-    }
-    function buyNow(id) {
-        alert('Chức năng mua ngay sẽ được hoàn thiện ở Batch 4. Sản phẩm ID: ' + id);
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+        const btnAddCart = document.getElementById('btn-add-cart');
+        const btnBuyNow = document.getElementById('btn-buy-now');
+
+        if (btnAddCart) {
+            btnAddCart.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const quantity = document.getElementById('quantity').value;
+                alert('Chức năng thêm vào giỏ hàng sẽ được hoàn thiện ở Batch 4. Sản phẩm ID: ' + id + ', Số lượng: ' + quantity);
+            });
+        }
+
+        if (btnBuyNow) {
+            btnBuyNow.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                alert('Chức năng mua ngay sẽ được hoàn thiện ở Batch 4. Sản phẩm ID: ' + id);
+            });
+        }
+    });
 </script>
 @endsection

@@ -1,24 +1,28 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
     /**
-     * Show the login form.
+     * Show the admin login form.
      */
     public function showLoginForm()
     {
-        return view('auth.login');
+        if (Auth::check() && Auth::user()->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+
+        return view('admin.auth.login');
     }
 
     /**
-     * Handle a login request.
+     * Handle an admin login request.
      */
     public function login(Request $request)
     {
@@ -27,26 +31,26 @@ class LoginController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        // Attempt to log the user in
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
             $user = Auth::user();
 
-            // Check if account is active
-            if (!$user->is_active) {
+            if ($user->role !== 'admin') {
                 Auth::logout();
                 throw ValidationException::withMessages([
-                    'username' => 'Tài khoản của bạn đã bị khóa. Vui lòng liên hệ 0909 123 456 để được hỗ trợ.',
+                    'username' => 'Bạn không có quyền truy cập trang quản trị.',
                 ]);
             }
 
-            // Redirection based on role
-            if ($user->role === 'admin') {
-                return redirect()->intended(route('admin.dashboard'));
+            if (!$user->is_active) {
+                Auth::logout();
+                throw ValidationException::withMessages([
+                    'username' => 'Tài khoản quản trị của bạn đã bị khóa.',
+                ]);
             }
 
-            return redirect()->intended(route('home'));
+            return redirect()->intended(route('admin.dashboard'));
         }
 
         throw ValidationException::withMessages([
@@ -55,15 +59,14 @@ class LoginController extends Controller
     }
 
     /**
-     * Log the user out of the application.
+     * Log the admin out.
      */
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('admin.login');
     }
 }

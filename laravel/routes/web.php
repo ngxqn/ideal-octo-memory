@@ -82,10 +82,8 @@ Route::middleware('auth', 'role:customer')->group(function () {
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    Route::middleware('guest')->group(function () {
-        Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
-        Route::post('/login', [AdminAuthController::class, 'login']);
-    });
+    Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AdminAuthController::class, 'login']);
 
     Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');

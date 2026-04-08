@@ -21,6 +21,7 @@
 
     @include('partials.footer')
 
+    <script src="{{ asset('assets/vendor/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/user/header.js') }}"></script>
     <script src="{{ asset('assets/js/user/search.js') }}"></script>
     <script src="{{ asset('assets/js/user/main.js') }}"></script>
