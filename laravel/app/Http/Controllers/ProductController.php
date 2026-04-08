@@ -8,11 +8,11 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return "Danh Sách Sản Phẩm (Đang hoàn thiện ở Batch 2)";
+        return "Trang Sản Phẩm (Sẽ hoàn thiện ở Batch 2)";
     }
 
-    public function show($product)
+    public function show($id)
     {
-        return "Chi tiết sản phẩm " . $product;
+        return "Chi tiết Sản Phẩm ID: $id (Sẽ hoàn thiện ở Batch 2)";
     }
 }
