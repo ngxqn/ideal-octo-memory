@@ -5,13 +5,21 @@
             <span>MORICO</span>
         </a>
 
-        <div class="search-bar">
-            <input type="text" placeholder="Bạn muốn tìm bánh gì...">
-            <button>
+        <form action="{{ route('products.index') }}" method="GET" class="search-bar">
+            @if(request('category'))
+                <input type="hidden" name="category" value="{{ request('category') }}">
+            @endif
+            @if(request('min_price'))
+                <input type="hidden" name="min_price" value="{{ request('min_price') }}">
+            @endif
+            @if(request('max_price'))
+                <input type="hidden" name="max_price" value="{{ request('max_price') }}">
+            @endif
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Bạn muốn tìm bánh gì...">
+            <button type="submit">
                 <i class="fa-solid fa-magnifying-glass" style="color: white;"></i>
             </button>
-        </div>
-        <div class="search-results"></div>
+        </form>
 
         <div class="icon-group">
             @auth

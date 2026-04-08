@@ -30,7 +30,7 @@ class OrderSeeder extends Seeder
         $cart = Cart::firstOrCreate(['user_id' => $customer->id]);
 
         // 1. Create a sample order for Customer
-        $product = Product::where('sku', 'BN001')->first();
+        $product = Product::where('sku', 'SP001')->first();
         if ($product) {
             // Manually add to cart to simulate placeOrder requirements
             CartItem::updateOrCreate(
