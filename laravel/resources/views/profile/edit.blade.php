@@ -42,7 +42,7 @@
                 </div>
                 
                 <div class="col-12">
-                    <div id="changePwSection" class="collapse mt-2 p-3 border rounded shadow-sm {{ $errors->hasAny(['current_password', 'password']) ? 'show' : '' }}">
+                    <div id="changePwSection" class="collapse mt-2 p-3 border rounded shadow-sm {{ ($errors->has('current_password') || $errors->has('password')) ? 'show' : '' }}">
                         <form action="{{ route('profile.password') }}" method="POST">
                             @csrf
                             @method('PUT')
@@ -143,7 +143,7 @@
         });
         
         // Show editing state if there are errors (form was submitted and failed)
-        const hasErrors = @json($errors->hasAny(['full_name', 'email', 'phone', 'address', 'commune', 'city']));
+        const hasErrors = {{ $errors->hasAny(['full_name', 'email', 'phone', 'address', 'commune', 'city']) ? 'true' : 'false' }};
         if (hasErrors) {
              personalInputs.forEach(input => input.disabled = false);
              editBtn.textContent = 'Hủy';

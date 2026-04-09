@@ -4,24 +4,6 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/user/product-detail.css') }}">
-<style>
-    .related-product-card {
-        background-color: #FFFBE6;
-        border: 1.5px solid var(--primary-color);
-        border-radius: 10px;
-        padding: 15px;
-        text-align: center;
-        transition: transform 0.3s;
-    }
-    .related-product-card:hover { transform: translateY(-5px); }
-    .related-product-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 5px; margin-bottom: 10px; }
-    .related-product-card h4 { font-size: 16px; color: var(--text-dark); margin: 10px 0; }
-    .related-product-card .price { color: var(--primary-color); font-weight: bold; margin-bottom: 10px; }
-    .related-product-card button { 
-        background-color: var(--primary-color); 
-        color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer; 
-    }
-</style>
 @endsection
 
 @section('content')
@@ -91,13 +73,13 @@
             @if($relatedProducts->count() > 0)
                 <div class="related-products">
                     <h2>CÓ THỂ BẠN QUAN TÂM</h2>
-                    <div class="related-grid" id="related-products" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 20px;">
+                    <div class="related-grid" id="related-products">
                         @foreach($relatedProducts as $related)
                             <div class="related-product-card">
                                 <img src="{{ asset($related->image) }}" alt="{{ $related->name }}" onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
                                 <h4>{{ $related->name }}</h4>
                                 <div class="price">{{ number_format($related->sell_price, 0, ',', '.') }}&nbsp;₫</div>
-                                <a href="{{ route('products.show', $related->id) }}" class="btn btn-sm btn-outline-primary" style="color: var(--primary-color); border-color: var(--primary-color);">Xem Chi Tiết</a>
+                                <a href="{{ route('products.show', $related->id) }}" class="view-detail-btn">Xem Chi Tiết</a>
                             </div>
                         @endforeach
                     </div>

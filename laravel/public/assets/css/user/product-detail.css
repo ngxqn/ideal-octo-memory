@@ -270,7 +270,7 @@
     background-color: white;
     border: 2px solid var(--primary-color);
     border-radius: 10px;
-    padding: 20px;
+    padding: 15px;
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -305,7 +305,8 @@
     margin-bottom: 15px;
 }
 
-.related-product-card button {
+.related-product-card button,
+.related-product-card .view-detail-btn {
     background-color: var(--primary-color);
     color: white;
     border: none;
@@ -316,10 +317,15 @@
     width: 100%;
     font-size: 14px;
     font-weight: bold;
+    display: block;
+    text-decoration: none;
+    text-align: center;
 }
 
-.related-product-card button:hover {
+.related-product-card button:hover,
+.related-product-card .view-detail-btn:hover {
     background-color: var(--primary-hover);
+    color: white;
 }
 
 .loading {

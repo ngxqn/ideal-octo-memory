@@ -90,7 +90,7 @@ header {
 .icon-group {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 24px;
 }
 
 .icon-link {
@@ -110,7 +110,8 @@ header {
 
 .icon-link i:hover,
 .icon-link svg:hover,
-.user-icon:hover {
+.user-icon:hover,
+.user-profile-btn:hover {
     transform: scale(1.1);
     color: var(--primary-hover);
     fill: var(--primary-hover);
@@ -147,6 +148,29 @@ header {
 /* MENU NGƯỜI DÙNG */
 .user-menu {
     position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.user-profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.3s, color 0.3s;
+    color: #ffffff;
+}
+
+.user-profile-btn i {
+    font-size: 24px;
+    color: inherit;
+}
+
+.user-profile-btn .user-name {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: "Labrada", serif;
+    color: inherit;
 }
 
 .dropdown {
@@ -228,7 +252,8 @@ header {
     font-family: "Labrada", serif;
 }
 
-.nav-bar a:hover {
+.nav-bar a:hover,
+.nav-bar a.active {
     color: var(--primary-color);
     text-decoration: underline;
 }

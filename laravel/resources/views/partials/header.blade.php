@@ -37,11 +37,9 @@
 
             <div class="user-menu">
                 @auth
-                    <div class="d-flex align-items-center gap-2" id="userIcon" style="cursor: pointer;">
-                        <div class="user-avatar-circle">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <span class="d-none d-md-inline fw-bold" style="color: var(--primary-color);">{{ Auth::user()->full_name }}</span>
+                    <div class="user-profile-btn" id="userIcon">
+                        <i class="fa-solid fa-user"></i>
+                        <span class="user-name d-none d-md-inline">{{ Auth::user()->full_name }}</span>
                     </div>
                     <div class="dropdown" id="userDropdown">
                         <a href="{{ route('profile.edit') }}">Tài khoản</a>
