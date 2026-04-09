@@ -29,7 +29,7 @@
         <div id="product-content">
             <div class="product-detail">
                 <div class="product-image">
-                    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" onerror="this.src='{{ asset('assets/image/products/default.jpg') }}'">
+                    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
                 </div>
 
                 <div class="product-info">
@@ -94,7 +94,7 @@
                     <div class="related-grid" id="related-products" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 20px;">
                         @foreach($relatedProducts as $related)
                             <div class="related-product-card">
-                                <img src="{{ asset($related->image) }}" alt="{{ $related->name }}" onerror="this.src='{{ asset('assets/image/products/default.jpg') }}'">
+                                <img src="{{ asset($related->image) }}" alt="{{ $related->name }}" onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
                                 <h4>{{ $related->name }}</h4>
                                 <div class="price">{{ number_format($related->sell_price, 0, ',', '.') }}&nbsp;₫</div>
                                 <a href="{{ route('products.show', $related->id) }}" class="btn btn-sm btn-outline-primary" style="color: var(--primary-color); border-color: var(--primary-color);">Xem Chi Tiết</a>

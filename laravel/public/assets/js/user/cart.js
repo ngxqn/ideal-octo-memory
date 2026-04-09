@@ -65,7 +65,7 @@ function renderCart() {
         let imagePath = item.thumbnail;
         
         if (!imagePath.startsWith('/') && !imagePath.startsWith('../') && !imagePath.startsWith('http')) {
-            imagePath = `../assets/image/product/${item.thumbnail}`; 
+            imagePath = `../assets/image/products/${item.thumbnail}`; 
         }
         
         html += `

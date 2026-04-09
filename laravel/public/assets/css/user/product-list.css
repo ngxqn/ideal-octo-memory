@@ -203,28 +203,48 @@
 }
 
 /* ===== ICONS ACTION (XEM CHI TIẾT & GIỎ HÀNG) ===== */
-.product-actions {
+.products-grid .product-card .product-actions {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 15px;
     margin-top: 10px;
 }
 
-.product-actions .action-icon {
+.products-grid .product-card .product-actions .action-icon {
     width: 36px;
     height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform 0.2s, color 0.2s;
+    border: none;
+    background: transparent;
+    background-color: transparent;
+    padding: 0;
+    color: var(--primary-color);
+    text-decoration: none;
+    line-height: 1;
+    outline: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
-.product-actions .action-icon svg {
-    width: 100%;
-    height: 100%;
-    fill: var(--primary-color);
+.products-grid .product-card .product-actions .action-icon i,
+.products-grid .product-card .product-actions .action-icon svg {
+    font-size: 20px;
+    color: inherit;
+    fill: currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
 }
 
-.product-actions .action-icon:hover svg {
-    fill: var(--primary-hover);
+.products-grid .product-card .product-actions .action-icon:hover {
+    color: var(--primary-hover);
     transform: scale(1.1);
 }
 

@@ -48,7 +48,7 @@
                     <div class="item-details d-flex align-items-center gap-3">
                         <img src="{{ asset($item->product->image) }}" alt="{{ $item->product->name }}" 
                              style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;"
-                             onerror="this.src='{{ asset('assets/image/products/default.jpg') }}'">
+                             onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
                         <span class="fw-bold">{{ $item->product->name }}</span>
                     </div>
 

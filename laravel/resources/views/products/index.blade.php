@@ -19,8 +19,7 @@
                     @foreach($categories as $category)
                         <div class="filter-option">
                             <input type="checkbox" id="category_{{ $category->slug }}" name="category" value="{{ $category->slug }}" 
-                                {{ request('category') == $category->slug ? 'checked' : '' }}
-                                onchange="this.form.submit()">
+                                {{ request('category') == $category->slug ? 'checked' : '' }}>
                             <label for="category_{{ $category->slug }}">{{ $category->name }}</label>
                         </div>
                     @endforeach
@@ -62,7 +61,7 @@
                             <div class="stock-badge">Hết hàng</div>
                         @endif
 
-                        <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="product-img" onerror="this.src='{{ asset('assets/image/products/default.jpg') }}'">
+                        <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="product-img" onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
                         
                         <h3>{{ $product->name }}</h3>
                         
@@ -78,7 +77,7 @@
                             <a href="{{ route('products.show', $product->id) }}" class="action-icon">
                                 <i class="fa-solid fa-eye"></i>
                             </a>
-                            <button class="action-icon border-0 bg-transparent btn-add-to-cart" 
+                            <button class="action-icon btn-add-to-cart" 
                                     data-id="{{ $product->id }}"
                                     {{ $product->stock_quantity <= 0 ? 'disabled' : '' }}
                                     style="{{ $product->stock_quantity <= 0 ? 'opacity:0.5; cursor:not-allowed;' : '' }}">

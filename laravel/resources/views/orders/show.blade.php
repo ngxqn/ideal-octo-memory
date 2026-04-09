@@ -91,9 +91,9 @@
                     <tr>
                         <td>
                             <div class="d-flex align-items-center gap-3">
-                                <img src="{{ asset($detail->product ? $detail->product->image : 'assets/image/products/default.jpg') }}" 
+                                <img src="{{ asset($detail->product ? $detail->product->image : 'assets/image/products/default.png') }}" 
                                      class="item-img border shadow-sm"
-                                     onerror="this.src='{{ asset('assets/image/products/default.jpg') }}'">
+                                     onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
                                 <span class="fw-bold">{{ $detail->product_name }}</span>
                             </div>
                         </td>
