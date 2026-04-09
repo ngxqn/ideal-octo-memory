@@ -3,25 +3,36 @@ const cartCountBadge = document.getElementById("cartCountBadge");
 const cartLink = document.getElementById("cartLink");
 
 /**
- * Update cart count display (Reads from localStorage)
- * In Batch 4, this might move to a server-side session or API.
+ * Update cart count display (Reads from Server API)
  */
-function updateCartCount() {
+async function updateCartCount() {
     if (!cartLink || !cartCountBadge) return;
 
-    // 1. Get cart from localStorage
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    try {
+        const url = cartCountBadge.getAttribute('data-url');
+        if (!url) return;
 
-    // 2. Calculate total quantity
-    const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const response = await fetch(url, {
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        });
 
-    // 3. Update UI
-    if (totalCount > 0) {
-        cartCountBadge.textContent = totalCount;
-        cartCountBadge.classList.add("visible");
-    } else {
-        cartCountBadge.textContent = "0";
-        cartCountBadge.classList.remove("visible");
+        if (response.ok) {
+            const data = await response.json();
+            const totalCount = data.count || 0;
+
+            if (totalCount > 0) {
+                cartCountBadge.textContent = totalCount;
+                cartCountBadge.classList.add("visible");
+            } else {
+                cartCountBadge.textContent = "0";
+                cartCountBadge.classList.remove("visible");
+            }
+        }
+    } catch (error) {
+        console.error("Lỗi khi cập nhật số lượng giỏ hàng:", error);
     }
 }
 

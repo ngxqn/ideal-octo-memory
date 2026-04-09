@@ -26,4 +26,11 @@ class OrderRepository implements OrderRepositoryInterface
     {
         return Order::create($data);
     }
+
+    public function findByUser(int $userId): \Illuminate\Database\Eloquent\Collection
+    {
+        return Order::where('user_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
 }

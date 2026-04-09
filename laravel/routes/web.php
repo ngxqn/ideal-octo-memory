@@ -55,7 +55,7 @@ Route::middleware('guest')->group(function () {
 |--------------------------------------------------------------------------
 */
 
-Route::middleware('auth', 'role:customer')->group(function () {
+Route::middleware(['auth', 'role:customer'])->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -66,6 +66,7 @@ Route::middleware('auth', 'role:customer')->group(function () {
     Route::post('/cart/items', [CartController::class, 'store'])->name('cart.items.store');
     Route::put('/cart/items/{cartItem}', [CartController::class, 'update'])->name('cart.items.update');
     Route::delete('/cart/items/{cartItem}', [CartController::class, 'destroy'])->name('cart.items.destroy');
+    Route::get('/api/cart/count', [CartController::class, 'getCount'])->name('cart.count');
 
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');

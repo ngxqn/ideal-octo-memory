@@ -25,7 +25,13 @@
             @auth
             <a href="{{ route('cart.index') }}" class="icon-link" id="cartLink">
                 <i class="fa-solid fa-cart-shopping"></i>
-                <span id="cartCountBadge" class="cart-count">0</span>
+                @php
+                    $cartCount = Auth::user()->cart ? Auth::user()->cart->cartItems()->sum('quantity') : 0;
+                @endphp
+                <span id="cartCountBadge" class="cart-count {{ $cartCount > 0 ? 'visible' : '' }}" 
+                      data-url="{{ url('/api/cart/count') }}">
+                    {{ $cartCount }}
+                </span>
             </a>
             @endauth
 

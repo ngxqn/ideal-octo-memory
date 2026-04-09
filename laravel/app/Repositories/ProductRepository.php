@@ -67,4 +67,12 @@ class ProductRepository implements ProductRepositoryInterface
         
         return Product::where('id', $id)->decrement('stock_quantity', abs($amount));
     }
+
+    /**
+     * Find a product by its ID.
+     */
+    public function find(int $id): ?Product
+    {
+        return Product::find($id);
+    }
 }

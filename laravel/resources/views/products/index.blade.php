@@ -109,9 +109,38 @@
         const addToCartBtns = document.querySelectorAll('.btn-add-to-cart');
         
         addToCartBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', async function() {
                 const id = this.getAttribute('data-id');
-                alert('Chức năng thêm vào giỏ hàng sẽ được hoàn thiện ở Batch 4. Sản phẩm ID: ' + id);
+                
+                try {
+                    const response = await fetch('{{ route("cart.items.store") }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({ product_id: id, quantity: 1 })
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        alert(data.message);
+                        if (typeof updateCartCount === 'function') {
+                            updateCartCount();
+                        }
+                    } else {
+                        // Nếu chưa đăng nhập, redirect về login
+                        if (response.status === 401) {
+                            window.location.href = '{{ route("login") }}';
+                        } else {
+                            alert(data.message || 'Có lỗi xảy ra.');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error adding to cart:', error);
+                    alert('Không thể thêm sản phẩm vào giỏ hàng.');
+                }
             });
         });
     });

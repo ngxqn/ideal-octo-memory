@@ -25,4 +25,9 @@ interface OrderRepositoryInterface
      * Create a new order.
      */
     public function create(array $data): Order;
+
+    /**
+     * Lấy tất cả đơn hàng của một người dùng.
+     */
+    public function findByUser(int $userId): \Illuminate\Database\Eloquent\Collection;
 }

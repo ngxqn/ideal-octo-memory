@@ -6,19 +6,36 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    /**
-     * User's order history.
-     */
-    public function index()
+    protected \App\Repositories\Interfaces\OrderRepositoryInterface $orderRepo;
+
+    public function __construct(\App\Repositories\Interfaces\OrderRepositoryInterface $orderRepo)
     {
-        return "Lịch sử mua hàng (Đang hoàn thiện ở Batch 4)";
+        $this->orderRepo = $orderRepo;
     }
 
     /**
-     * User's order detail.
+     * Lịch sử mua hàng của người dùng.
      */
-    public function show($id)
+    public function index(Request $request)
     {
-        return "Chi tiết đơn hàng ID: $id (Đang hoàn thiện ở Batch 4)";
+        $orders = $this->orderRepo->findByUser($request->user()->id);
+        return view('orders.index', compact('orders'));
+    }
+
+    /**
+     * Chi tiết đơn hàng của người dùng.
+     */
+    public function show($id, Request $request)
+    {
+        $order = $this->orderRepo->findById((int)$id);
+
+        if (!$order || $order->user_id !== $request->user()->id) {
+            abort(403, 'Bạn không có quyền xem đơn hàng này.');
+        }
+
+        // Tải kèm orderDetails và product để hiển thị
+        $order->load('orderDetails.product');
+
+        return view('orders.show', compact('order'));
     }
 }

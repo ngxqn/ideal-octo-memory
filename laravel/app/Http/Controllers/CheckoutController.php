@@ -17,10 +17,20 @@ class CheckoutController extends Controller
         $this->orderService = $orderService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        // Placeholder cho bước render UI
-        return view('pages.checkout');
+        $user = $request->user();
+        $cart = $user->cart;
+
+        if (!$cart || $cart->cartItems->isEmpty()) {
+            return redirect()->route('cart.index')->with('warning', 'Giỏ hàng của bạn đang trống.');
+        }
+
+        $total = $cart->cartItems->reduce(function ($carry, $item) {
+            return $carry + ($item->product->sell_price * $item->quantity);
+        }, 0);
+
+        return view('checkout.index', compact('user', 'cart', 'total'));
     }
 
     public function store(PlaceOrderRequest $request)

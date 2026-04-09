@@ -15,6 +15,11 @@ interface ProductRepositoryInterface
     public function findActive(): Collection;
 
     /**
+     * Find a product by ID.
+     */
+    public function find(int $id): ?Product;
+
+    /**
      * Find a product by ID and secure the row for stock updates using pessimistic locking (forUpdate).
      * Useful when inside DB::transaction() to prevent race conditions.
      *

@@ -35,6 +35,14 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Interfaces\GoodsReceiptDetailRepositoryInterface::class,
             \App\Repositories\GoodsReceiptDetailRepository::class
         );
+        $this->app->bind(
+            \App\Repositories\Interfaces\CartRepositoryInterface::class,
+            \App\Repositories\CartRepository::class
+        );
+        $this->app->bind(
+            \App\Repositories\Interfaces\CartItemRepositoryInterface::class,
+            \App\Repositories\CartItemRepository::class
+        );
     }
 
     /**

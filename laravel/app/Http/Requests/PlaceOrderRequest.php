@@ -19,7 +19,7 @@ class PlaceOrderRequest extends FormRequest
             'shipping_address' => 'required|string|max:255',
             'shipping_commune' => 'required|string|max:100',
             'shipping_city' => 'required|string|max:100',
-            'payment_method' => 'required|string|in:cod,transfer',
+            'payment_method' => 'required|string|in:cod,transfer,online',
             'note' => 'nullable|string|max:1000',
         ];
     }
