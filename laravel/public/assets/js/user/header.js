@@ -36,6 +36,23 @@ async function updateCartCount() {
     }
 }
 
+/**
+ * Optimistically adjust cart count locally
+ */
+function adjustCartCountLocally(delta) {
+    if (!cartCountBadge) return;
+    let currentCount = parseInt(cartCountBadge.textContent) || 0;
+    let newCount = currentCount + delta;
+    if (newCount < 0) newCount = 0;
+
+    cartCountBadge.textContent = newCount;
+    if (newCount > 0) {
+        cartCountBadge.classList.add("visible");
+    } else {
+        cartCountBadge.classList.remove("visible");
+    }
+}
+
 // --- DOM CONTENT LOADED ---
 document.addEventListener("DOMContentLoaded", () => {
     // Sync cart count on load

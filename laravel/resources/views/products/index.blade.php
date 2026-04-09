@@ -124,21 +124,21 @@
 
                     const data = await response.json();
                     if (data.success) {
-                        alert(data.message);
-                        if (typeof updateCartCount === 'function') {
-                            updateCartCount();
+                        showNotification(data.message);
+                        if (typeof adjustCartCountLocally === 'function') {
+                            adjustCartCountLocally(1);
                         }
                     } else {
                         // Nếu chưa đăng nhập, redirect về login
                         if (response.status === 401) {
                             window.location.href = '{{ route("login") }}';
                         } else {
-                            alert(data.message || 'Có lỗi xảy ra.');
+                            showNotification(data.message || 'Có lỗi xảy ra.', 'error');
                         }
                     }
                 } catch (error) {
                     console.error('Error adding to cart:', error);
-                    alert('Không thể thêm sản phẩm vào giỏ hàng.');
+                    showNotification('Không thể thêm sản phẩm vào giỏ hàng.', 'error');
                 }
             });
         });

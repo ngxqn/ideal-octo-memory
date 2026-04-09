@@ -114,12 +114,30 @@
     color: white;
 }
 
-.quantity-control span {
+.quantity-control button.btn-disabled {
+    background-color: #eee;
+    color: #bbb;
+    cursor: not-allowed;
+    border-color: #ddd;
+}
+
+.quantity-control .qty-input {
     font-weight: bold;
     color: var(--primary-color);
-    width: 30px;
+    width: 45px;
+    height: 32px;
     text-align: center;
+    border: 1px solid var(--btn-soft-border);
+    border-radius: 4px;
+    background: white;
     padding: 0;
+    -moz-appearance: textfield; /* Firefox */
+}
+
+.quantity-control .qty-input::-webkit-outer-spin-button,
+.quantity-control .qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .remove-btn {

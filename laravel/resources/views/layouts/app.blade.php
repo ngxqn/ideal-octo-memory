@@ -19,6 +19,11 @@
         @yield('content')
     </main>
 
+    <!-- Notification Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+        <!-- Toasts will be injected here by main.js -->
+    </div>
+
     @include('partials.footer')
 
     <script src="{{ asset('assets/vendor/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js') }}"></script>

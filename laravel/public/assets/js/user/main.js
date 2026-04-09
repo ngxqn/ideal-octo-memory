@@ -64,3 +64,53 @@ function formatDateTime(dateString) {
         return "";
     }
 }
+
+/**
+ * Global Notification Helper using Bootstrap Toasts
+ * Creates and stacks toasts in the .toast-container
+ */
+function showNotification(message, type = 'success') {
+    const container = document.querySelector('.toast-container');
+    if (!container) return;
+
+    // Create toast element
+    const toastId = 'toast-' + Date.now();
+    let bgClass = 'text-bg-success';
+    if (type === 'error' || type === 'danger') bgClass = 'text-bg-danger';
+    if (type === 'warning') bgClass = 'text-bg-warning';
+    if (type === 'info') bgClass = 'text-bg-info';
+    
+    const toastHtml = `
+        <div id="${toastId}" class="toast align-items-center border-0 ${bgClass}" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    ${message}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    `;
+
+    // Append to container
+    container.insertAdjacentHTML('beforeend', toastHtml);
+
+    // Initialize and show
+    const toastEl = document.getElementById(toastId);
+    if (!toastEl) return;
+
+    // Use window.bootstrap if bootstrap is not directly available
+    const bs = window.bootstrap || bootstrap;
+    if (bs && bs.Toast) {
+        const toast = new bs.Toast(toastEl, { delay: 3000 });
+        toast.show();
+
+        // Remove from DOM after hide
+        toastEl.addEventListener('hidden.bs.toast', () => {
+            toastEl.remove();
+        });
+    } else {
+        console.error('Bootstrap Toast API not found.');
+        // Fallback to alert if toast fails
+        if (type === 'error') alert(message);
+    }
+}
