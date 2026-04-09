@@ -37,7 +37,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**
@@ -62,4 +61,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(GoodsReceipt::class, 'created_by');
     }
+
+    /**
+     * Disable 'Remember Me' feature.
+     */
+    public function getRememberToken() { return null; }
+    public function setRememberToken($value) {}
+    public function getRememberTokenName() { return ''; }
 }

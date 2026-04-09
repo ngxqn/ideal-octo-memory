@@ -101,11 +101,11 @@
                         <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" id="address" value="{{ old('address', $user->address) }}" disabled required>
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Phường/Xã <span class="text-danger">*</span></label>
+                        <label class="form-label">Phường/xã/đặc khu <span class="text-danger">*</span></label>
                         <input type="text" name="commune" class="form-control @error('commune') is-invalid @enderror" id="commune" value="{{ old('commune', $user->commune) }}" disabled required>
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Tỉnh/Thành <span class="text-danger">*</span></label>
+                        <label class="form-label">Tỉnh/thành phố <span class="text-danger">*</span></label>
                         <input type="text" name="city" class="form-control @error('city') is-invalid @enderror" id="city" value="{{ old('city', $user->city) }}" disabled required>
                     </div>
                 </div>

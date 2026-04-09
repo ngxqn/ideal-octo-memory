@@ -4,101 +4,81 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/user/cart.css') }}">
-<style>
-    .quantity-control button {
-        border: 1px solid #ddd;
-        background: white;
-        padding: 5px 10px;
-        cursor: pointer;
-    }
-    .quantity-control span {
-        padding: 0 15px;
-        font-weight: bold;
-    }
-    /* Thêm style cho nút xóa */
-    .remove-btn {
-        background: none;
-        border: none;
-        color: #dc3545;
-        font-size: 1.2rem;
-        cursor: pointer;
-    }
-    .remove-btn:hover { color: #a71d2a; }
-</style>
 @endsection
 
 @section('content')
     <h1 class="page-title">Giỏ hàng của bạn</h1>
     
-    <div id="cart-container" class="container mb-5">
-        <div class="cart-header d-none d-md-grid" style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr; padding: 15px; background: #f8f9fa; font-weight: bold; border-bottom: 2px solid #ddd;">
-            <div>Sản phẩm</div>
-            <div class="text-center">Đơn giá</div>
-            <div class="text-center">Số lượng</div>
-            <div class="text-center">Tổng tiền</div>
-            <div class="text-center">Thao tác</div>
-        </div>
+    <div id="cart-container">
+        @if($cart->cartItems->count() > 0)
+            <div class="cart-header">
+                <div>Sản phẩm</div>
+                <div>Đơn giá</div>
+                <div>Số lượng</div>
+                <div>Tổng tiền</div>
+                <div>Thao tác</div>
+            </div>
+        @endif
 
-        <div id="cart-items-list" class="mt-3">
+        <div id="cart-items-list">
             @forelse($cart->cartItems as $item)
-                <div class="cart-item py-3 border-bottom d-flex flex-column d-md-grid" 
-                     data-id="{{ $item->id }}"
-                     style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr; align-items: center;">
-                    
-                    <div class="item-details d-flex align-items-center gap-3">
+                <div class="cart-item" data-id="{{ $item->id }}">
+                    <div class="item-details">
                         <img src="{{ asset($item->product->image) }}" alt="{{ $item->product->name }}" 
-                             style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;"
                              onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
-                        <span class="fw-bold">{{ $item->product->name }}</span>
+                        <span>{{ $item->product->name }}</span>
                     </div>
 
-                    <div class="text-center">
-                        <span class="d-md-none fw-bold">Đơn giá: </span>
+                    <div class="item-unit-price">
                         {{ number_format($item->product->sell_price, 0, ',', '.') }}&nbsp;₫
                     </div>
 
-                    <div class="quantity-control d-flex justify-content-center align-items-center">
+                    <div class="quantity-control">
                         <button class="btn-qty-minus" data-id="{{ $item->id }}"><i class="fa-solid fa-minus"></i></button>
                         <span class="qty-val">{{ $item->quantity }}</span>
                         <button class="btn-qty-plus" data-id="{{ $item->id }}"><i class="fa-solid fa-plus"></i></button>
                     </div>
 
-                    <div class="text-center">
-                        <span class="d-md-none fw-bold">Tổng tiền: </span>
+                    <div class="item-total-price">
                         <span class="item-total-price">{{ number_format($item->product->sell_price * $item->quantity, 0, ',', '.') }}&nbsp;₫</span>
                     </div>
 
-                    <div class="text-center">
+                    <div class="remove-btn-container">
                         <button class="remove-btn" data-id="{{ $item->id }}">
                             <i class="fa-regular fa-trash-can"></i>
                         </button>
                     </div>
                 </div>
             @empty
-                <div class="empty-cart text-center py-5">
-                    <i class="fa-solid fa-cart-shopping fa-3x mb-3" style="color: #ddd;"></i>
+                <div class="empty-cart">
+                    <i class="fa-solid fa-cart-shopping"></i>
                     <p>Giỏ hàng của bạn đang trống</p>
-                    <a href="{{ route('products.index') }}" class="btn btn-morico mt-3">Tiếp tục mua sắm</a>
+                    <a href="{{ route('products.index') }}" 
+                       style="display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 5px;">
+                       Tiếp tục mua sắm
+                    </a>
                 </div>
             @endforelse
         </div>
 
         @if($cart->cartItems->count() > 0)
-            <div class="summary-box mt-4 p-4 border rounded shadow-sm d-flex flex-column align-items-end" id="summary-box">
-                <div class="summary-row mb-3">
-                    <span class="total-label fs-5 fw-bold">Tổng cộng:</span>
-                    <span class="total-amount fs-4 fw-bold text-danger ms-3" id="final-total">
+            <div class="summary-box" id="summary-box">
+                <div class="summary-row">
+                    <span class="total-label">Tổng cộng:</span>
+                    <span class="total-amount" id="final-total">
                         {{ number_format($total, 0, ',', '.') }}&nbsp;₫
                     </span>
                 </div>
                 <div class="checkout-group">
-                    <a href="{{ route('checkout.index') }}" class="btn btn-morico btn-lg px-5 py-2">Thanh toán</a>
+                    <a href="{{ route('checkout.index') }}" class="order-btn" style="text-decoration: none; display: block; text-align: center;">
+                        Thanh toán
+                    </a>
                 </div>
             </div>
         @endif
 
-        <div class="mt-4">
-            <a href="{{ route('products.index') }}" class="continue-shopping text-decoration-none text-muted">
+        <div>
+            <a href="{{ route('products.index') }}" class="continue-shopping">
                 <i class="fa-solid fa-arrow-left me-2"></i>Tiếp tục mua hàng
             </a>
         </div>
@@ -163,7 +143,7 @@
                     if (res.success) {
                         qtySpan.textContent = newQty;
                         // Cập nhật thành tiền của dòng này
-                        const unitPriceText = row.querySelector('.text-center').textContent;
+                        const unitPriceText = row.querySelector('.item-unit-price').textContent;
                         const unitPrice = parseInt(unitPriceText.replace(/[^\d]/g, ''));
                         row.querySelector('.item-total-price').textContent = formatCurrency(unitPrice * newQty);
                         updateSummary();

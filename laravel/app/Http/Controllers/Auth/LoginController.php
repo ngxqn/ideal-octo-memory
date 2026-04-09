@@ -28,7 +28,7 @@ class LoginController extends Controller
         ]);
 
         // Attempt to log the user in
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
             $user = Auth::user();

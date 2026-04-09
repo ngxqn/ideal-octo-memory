@@ -43,10 +43,7 @@
                     @enderror
                 </div>
 
-                <div class="form-check mb-2">
-                    <input type="checkbox" name="remember" class="form-check-input" id="rememberMe">
-                    <label class="form-check-label fw-normal" for="rememberMe" style="color: var(--primary-color);">Ghi nhớ đăng nhập</label>
-                </div>
+
 
                 <button type="submit" class="btn btn-morico w-100 py-2">Đăng nhập</button>
             </form>

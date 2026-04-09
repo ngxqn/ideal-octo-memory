@@ -31,28 +31,28 @@
                     <h2><i class="fas fa-truck me-2"></i> Thông tin nhận hàng</h2>
                     
                     <div class="row g-3">
-                        <div class="col-12">
-                            <label class="form-label fw-bold">Họ tên người nhận</label>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Họ tên người nhận <span class="text-danger">*</span></label>
                             <input type="text" name="receiver_name" class="form-control" value="{{ old('receiver_name', $user->full_name) }}" required>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label fw-bold">Số điện thoại</label>
+                            <label class="form-label fw-bold">Số điện thoại <span class="text-danger">*</span></label>
                             <input type="text" name="receiver_phone" class="form-control" value="{{ old('receiver_phone', $user->phone) }}" required>
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">Tỉnh/Thành phố</label>
-                            <input type="text" name="shipping_city" class="form-control" value="{{ old('shipping_city', $user->city) }}" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold">Quận/Huyện - Phường/Xã</label>
-                            <input type="text" name="shipping_commune" class="form-control" value="{{ old('shipping_commune', $user->commune) }}" required placeholder="Ví dụ: Phường 1, Quận 1">
-                        </div>
-                        <div class="col-md-12">
-                            <label class="form-label fw-bold">Địa chỉ chi tiết (Số nhà, tên đường)</label>
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Số nhà, tên đường/phố <span class="text-danger">*</span></label>
                             <input type="text" name="shipping_address" class="form-control" value="{{ old('shipping_address', $user->address_detail) }}" required>
                         </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Phường/xã/đặc khu <span class="text-danger">*</span></label>
+                            <input type="text" name="shipping_commune" class="form-control" value="{{ old('shipping_commune', $user->commune) }}" required placeholder="Ví dụ: Phường 1, Quận 1">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Tỉnh/thành phố <span class="text-danger">*</span></label>
+                            <input type="text" name="shipping_city" class="form-control" value="{{ old('shipping_city', $user->city) }}" required>
+                        </div>
                         <div class="col-12 mt-4">
-                            <label class="form-label fw-bold"><i class="fas fa-pen-to-square me-2"></i> Ghi chú đơn hàng</label>
+                            <label class="form-label fw-bold"><i class="fas fa-pen-to-square me-2"></i>Ghi chú đơn hàng</label>
                             <textarea name="note" class="form-control" rows="3" placeholder="Ví dụ: Giao giờ hành chính, lời nhắn cho cửa hàng...">{{ old('note') }}</textarea>
                         </div>
                     </div>
