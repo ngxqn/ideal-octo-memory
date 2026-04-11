@@ -15,8 +15,7 @@ use App\Http\Controllers\Auth\RegisterController;
 
 // ── Admin Controllers ────────────────────────────────────────────
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ProductController as AdminProductController;
-use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\CatalogueController;
 use App\Http\Controllers\Admin\PricingController;
 use App\Http\Controllers\Admin\GoodsReceiptController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
@@ -91,14 +90,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');
-        Route::post('/products', [AdminProductController::class, 'store'])->name('products.store');
-        Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');
-        Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
-
-        Route::post('/categories', [AdminCategoryController::class, 'store'])->name('categories.store');
-        Route::put('/categories/{category}', [AdminCategoryController::class, 'update'])->name('categories.update');
-        Route::delete('/categories/{category}', [AdminCategoryController::class, 'destroy'])->name('categories.destroy');
+        // ── Catalogue Management (Unified Products + Categories) ──
+        Route::get('/catalogue', [CatalogueController::class, 'index'])->name('catalogue.index');
+        Route::post('/catalogue/products', [CatalogueController::class, 'storeProduct'])->name('catalogue.products.store');
+        Route::put('/catalogue/products/{product}', [CatalogueController::class, 'updateProduct'])->name('catalogue.products.update');
+        Route::delete('/catalogue/products/{product}', [CatalogueController::class, 'destroyProduct'])->name('catalogue.products.destroy');
+        
+        Route::post('/catalogue/categories', [CatalogueController::class, 'storeCategory'])->name('catalogue.categories.store');
+        Route::put('/catalogue/categories/{category}', [CatalogueController::class, 'updateCategory'])->name('catalogue.categories.update');
+        Route::delete('/catalogue/categories/{category}', [CatalogueController::class, 'destroyCategory'])->name('catalogue.categories.destroy');
 
         Route::get('/pricing', [PricingController::class, 'index'])->name('pricing.index');
         Route::put('/pricing/{product}', [PricingController::class, 'update'])->name('pricing.update');
@@ -107,13 +107,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/goods-receipts', [GoodsReceiptController::class, 'store'])->name('goods-receipts.store');
         Route::get('/goods-receipts/{goodsReceipt}', [GoodsReceiptController::class, 'show'])->name('goods-receipts.show');
         Route::put('/goods-receipts/{goodsReceipt}', [GoodsReceiptController::class, 'update'])->name('goods-receipts.update');
-        Route::put('/goods-receipts/{goodsReceipt}/complete', [GoodsReceiptController::class, 'complete'])
-            ->name('goods-receipts.complete');
+        Route::put('/goods-receipts/{goodsReceipt}/complete', [GoodsReceiptController::class, 'complete'])->name('goods-receipts.complete');
 
         Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
         Route::get('/orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
-        Route::put('/orders/{order}/status', [AdminOrderController::class, 'updateStatus'])
-            ->name('orders.update-status');
+        Route::put('/orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.update-status');
 
         Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
 

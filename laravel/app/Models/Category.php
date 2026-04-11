@@ -20,6 +20,11 @@ class Category extends Model
         ];
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('is_deleted', 0);
+    }
+
     public function products()
     {
         return $this->hasMany(Product::class);

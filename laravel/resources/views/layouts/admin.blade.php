@@ -22,24 +22,32 @@
                     <h1 class="h3 fw-bold mb-3 mb-md-0" style="color: var(--brand-crimson);">
                         @yield('page_title')
                     </h1>
-                    <div class="admin-user-info">
-                        <span class="me-2">Xin chào, <strong>{{ auth()->user()->full_name }}</strong></span>
+                    <div class="admin-user-info d-flex align-items-center bg-white rounded-pill shadow-sm px-2 py-2 border">
+                        <div class="ms-2 me-3">
+                            <i class="fa-solid fa-user" style="font-size: 1.2rem; color: var(--brand-crimson);"></i>
+                        </div>
+                        <div class="me-2 d-none d-sm-block text-start" style="line-height: 1.2;">
+                            <div class="fw-bold" style="color: var(--brand-crimson);">{{ auth()->user()->full_name }}</div>
+                            <div class="text-muted" style="font-size: 0.78rem;">Quản trị viên</div>
+                        </div>
                     </div>
                 </div>
 
                 @if(session('success'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
 
                 @if($errors->any())
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <ul class="mb-0">
                             @foreach($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
 
@@ -48,6 +56,7 @@
         </div>
     </div>
 
+    <script src="{{ asset('assets/vendor/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js') }}"></script>
     @yield('scripts')
 </body>
 </html>

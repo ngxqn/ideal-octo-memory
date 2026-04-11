@@ -30,9 +30,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">
+                    <a class="nav-link {{ request()->routeIs('admin.catalogue.*') ? 'active' : '' }}" href="{{ route('admin.catalogue.index') }}">
                         <i class="fa-solid fa-box"></i>
-                        <span class="d-none d-md-inline">Sản phẩm</span>
+                        <span class="d-none d-md-inline">Sản phẩm & Loại</span>
                     </a>
                 </li>
                 <li class="nav-item">

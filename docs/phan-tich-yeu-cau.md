@@ -31,8 +31,8 @@ Hệ thống có 2 tác nhân chính: **Người dùng cuối (Khách hàng)** v
 - **Đăng nhập riêng biệt**: Truy cập qua URL riêng, không dùng chung giao diện với người mua. Có menu chức năng dành riêng cho admin.
 - **Quản lý Tài khoản**: 
   - Thêm tài khoản quản trị/nhân viên, khởi tạo mật khẩu, khóa (ngừng kích hoạt) tài khoản. (*Lưu ý: KHÔNG cho phép Sửa hay Xóa tài khoản*).
-- **Quản lý Danh mục & Sản phẩm**:
-  - Thêm, Sửa, Xóa danh mục sản phẩm (loại sản phẩm). (*Luật xóa áp dụng tương tự như sản phẩm*).
+- **Quản lý Danh mục (Loại sản phẩm & Sản phẩm)**:
+  - Thêm, Sửa, Xóa loại sản phẩm. (*Luật xóa áp dụng tương tự như sản phẩm*).
   - Thêm, Sửa sản phẩm (Mã, tên, loại, mô tả, ảnh, số lượng đầu, tỷ lệ lợi nhuận, nhà cung cấp, hiện trạng bán...). (*Lưu ý: Trường "Nhà cung cấp" chỉ mang tính hình thức, không dùng khi nhập hàng*).
   - *Luật xóa sản phẩm và danh mục*: 
     - Xóa cứng (Hard delete) khỏi database nếu chưa từng phát sinh giao dịch (chưa nhập/bán).
