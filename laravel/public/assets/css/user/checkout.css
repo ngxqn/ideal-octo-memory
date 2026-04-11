@@ -1,54 +1,12 @@
 /* ===== CHECKOUT PAGE SPECIFIC CSS ===== */
 
-.header {
-    text-align: center;
-    margin-bottom: 30px;
-    padding: 20px;
-}
-
-.header .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 10px;
-}
-
-.header .logo i {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-}
-
-.logo-text {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--primary-color);
-}
+/* Header handled by .m-page-header in common.css */
 
 
 /* Unified page title handled by common.css */
 
-#checkout-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    background-color: var(--card-white);
-    border: 2px solid var(--primary-color);
-    border-radius: 15px;
-    box-shadow: 0 8px 30px rgba(139, 0, 0, 0.15);
-    padding: 30px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-}
 
-.section {
-    padding: 25px;
-    border-radius: 12px;
-    background-color: var(--bg-cream);
-    margin-bottom: 20px;
-    border: 1px solid var(--brand-gold);
-    box-shadow: 0 4px 15px rgba(230, 190, 138, 0.2);
-}
+/* .section now handled by .m-card in common.css */
 
 h2 {
     font-size: 1.5rem;
@@ -76,66 +34,7 @@ strong {
     color: var(--primary-color);
 }
 
-#order-summary {
-    grid-column: 2;
-    grid-row: 1 / span 2;
-}
-
-#items-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.order-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid var(--brand-gold);
-    font-size: 1rem;
-}
-
-.order-item:last-child {
-    border-bottom: none;
-}
-
-.item-info {
-    color: var(--muted-brown);
-    flex: 1;
-}
-
-.item-name {
-    font-weight: 600;
-    color: var(--primary-color);
-}
-
-.item-quantity {
-    color: var(--muted-brown);
-    font-size: 0.9rem;
-}
-
-.total-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.1rem;
-    font-weight: 600;
-    padding: 15px 0;
-    margin-top: 15px;
-    border-top: 2px solid var(--primary-color);
-}
-
-.total-amount {
-    color: var(--primary-color) !important;
-    font-size: 1.4rem;
-    font-weight: 700;
-}
-
-.shipping-free {
-    color: #2E7D32 !important;
-    font-weight: 600;
-}
+/* Grand totals handled by .m-total-bar in common.css */
 
 .payment-option {
     margin: 15px 0;

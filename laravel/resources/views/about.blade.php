@@ -8,7 +8,7 @@
 
 @section('content')
     <!-- NỘI DUNG GIỚI THIỆU -->
-    <main>
+    <div class="app-container py-5">
         <h1 class="page-title">Về Tiệm bánh Morico</h1>
 
         <div class="intro-header">
@@ -60,5 +60,5 @@
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 @endsection

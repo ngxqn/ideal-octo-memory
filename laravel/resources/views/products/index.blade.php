@@ -7,7 +7,11 @@
 @endsection
 
 @section('content')
-    <div class="main-content">
+    <div class="app-container py-5">
+        <h1 class="page-title">Sản phẩm bánh Trung thu</h1>
+        <p class="page-subtitle mb-5">Thưởng thức hương vị Tết Trung thu truyền thống với những chiếc bánh thơm ngon</p>
+
+        <div class="main-content">
         <!-- SIDEBAR FILTER -->
         <aside class="filter-sidebar">
             <form action="{{ route('products.index') }}" method="GET">
@@ -31,22 +35,20 @@
                     <h3>Khoảng Giá</h3>
                     <div class="price-input-group">
                         <input type="number" name="min_price" value="{{ request('min_price') }}" placeholder="Từ" class="price-input">
-                        <div class="price-separator">-</div>
+                        <div class="price-separator">|</div>
                         <input type="number" name="max_price" value="{{ request('max_price') }}" placeholder="Đến" class="price-input">
                     </div>
                 </div>
 
                 <div class="filter-buttons">
-                    <button type="submit" class="filter-btn filter-apply-btn">Áp dụng</button>
-                    <a href="{{ route('products.index') }}" class="filter-btn filter-reset-btn text-center text-decoration-none">Đặt lại</a>
+                    <button type="submit" class="m-btn m-btn-primary w-100">Áp dụng</button>
+                    <a href="{{ route('products.index') }}" class="m-btn m-btn-outline w-100">Đặt lại</a>
                 </div>
             </form>
         </aside>
 
         <!-- PRODUCTS AREA -->
         <main class="products-area">
-            <h1 class="page-title">Sản phẩm bánh Trung thu</h1>
-            <p class="page-subtitle">Thưởng thức hương vị Tết Trung thu truyền thống với những chiếc bánh thơm ngon</p>
             
             @if(request('search'))
                 <div class="search-results-info text-center mb-4">
@@ -57,30 +59,26 @@
             <div class="products-grid" id="product-list">
                 @forelse($products as $product)
                     <div class="product-card">
+                        <div class="m-badge m-badge-category category-badge">{{ $product->category->name }}</div>
                         @if($product->stock_quantity <= 0)
-                            <div class="stock-badge">Hết hàng</div>
+                            <div class="m-badge m-badge-out stock-badge">Hết hàng</div>
                         @endif
 
-                        <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="product-img" onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
-                        
-                        <h3>{{ $product->name }}</h3>
+                        <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none color-inherit">
+                            <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="product-img" onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
+                            <h3>{{ $product->name }}</h3>
+                        </a>
                         
                         <div class="description">
                             {!! Str::limit(strip_tags($product->description), 100) !!}
                         </div>
                         
-                        <div class="price-container">
+                        <div class="product-actions mt-auto">
                             <span class="price">{{ number_format($product->sell_price, 0, ',', '.') }}&nbsp;₫</span>
-                        </div>
-                        
-                        <div class="product-actions">
-                            <a href="{{ route('products.show', $product->id) }}" class="action-icon">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <button class="action-icon btn-add-to-cart" 
+                            <button class="m-btn-cart btn-add-to-cart" 
                                     data-id="{{ $product->id }}"
-                                    {{ $product->stock_quantity <= 0 ? 'disabled' : '' }}
-                                    style="{{ $product->stock_quantity <= 0 ? 'opacity:0.5; cursor:not-allowed;' : '' }}">
+                                    title="Thêm vào giỏ hàng"
+                                    {{ $product->stock_quantity <= 0 ? 'disabled' : '' }}>
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </button>
                         </div>
@@ -90,7 +88,7 @@
                         <p style="color: #5a2d0c; font-size: 18px; margin-bottom: 20px;">
                             Không tìm thấy sản phẩm nào phù hợp.
                         </p>
-                        <a href="{{ route('products.index') }}" class="btn btn-primary" style="background-color: #8B0000; border: none;">Hiển thị tất cả sản phẩm</a>
+                        <a href="{{ route('products.index') }}" class="m-btn m-btn-primary">Hiển thị tất cả sản phẩm</a>
                     </div>
                 @endforelse
             </div>

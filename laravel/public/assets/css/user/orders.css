@@ -1,0 +1,28 @@
+/* Info Boxes (Order Detail Info Cards) */
+.m-info-card {
+    background: #fdfdfd;
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    padding: 20px;
+    height: 100%;
+    transition: var(--transition);
+}
+
+.m-info-card h3 {
+    font-family: 'Mona Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 12px;
+}
+
+.m-info-card p {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: #666;
+}

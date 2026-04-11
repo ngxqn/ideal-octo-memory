@@ -63,7 +63,7 @@
 /* ===== ABOUT SECTION ===== */
 .about {
     text-align: center;
-    padding: 60px 100px;
+    padding: 60px 0;
 }
 
 .about h2 {
@@ -86,7 +86,7 @@
     }
 
     .about {
-        padding: 50px 80px;
+        padding: 50px 0;
     }
 }
 
@@ -105,7 +105,7 @@
     }
 
     .about {
-        padding: 40px 60px;
+        padding: 40px 0;
     }
 
     .about h2 {

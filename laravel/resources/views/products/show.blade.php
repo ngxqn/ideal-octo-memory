@@ -7,23 +7,31 @@
 @endsection
 
 @section('content')
-    <div class="product-detail-container">
+    <div class="product-detail-container app-container py-5">
+        <nav class="m-breadcrumb">
+            <a href="{{ route('home') }}">Trang chủ</a>
+            <span class="separator">/</span>
+            <a href="{{ route('products.index', ['category' => $product->category_id]) }}">{{ $product->category->name }}</a>
+            <span class="separator">/</span>
+            <span class="current">{{ $product->name }}</span>
+        </nav>
+
         <div id="product-content">
             <div class="product-detail">
-                <div class="product-image">
-                    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
+                <div class="m-card p-0 overflow-hidden text-center mb-0" style="border-width: 1px;">
+                    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="w-100 h-100 object-fit-cover" onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
                 </div>
 
                 <div class="product-info">
                     <h1>{{ $product->name }}</h1>
-                    <div class="product-tag">Trọng lượng: 150g</div>
+                    <div class="product-tag">Khối lượng: 150g</div>
                                   
                     <div class="price-section">
                         <span class="original-price">{{ number_format($product->sell_price, 0, ',', '.') }}&nbsp;₫</span>
                     </div>
 
                     <div class="quantity-section">
-                        <span class="quantity-label">Số Lượng</span>
+                        <span class="quantity-label">Số lượng</span>
                         <div class="quantity-controls">
                             <input type="number" class="quantity-input" id="quantity" value="1" min="1" max="{{ $product->stock_quantity }}">
                             <span class="stock-info"> {{ $product->stock_quantity }} sản phẩm có sẵn</span>
@@ -32,23 +40,23 @@
                     </div>
 
                     <div class="action-buttons">
-                        <button class="btn-add-cart" id="btn-add-cart" data-id="{{ $product->id }}" {{ $product->stock_quantity <= 0 ? 'disabled' : '' }}>
-                            Thêm Vào Giỏ Hàng
+                        <button class="m-btn m-btn-primary py-3" id="btn-add-cart" data-id="{{ $product->id }}" {{ $product->stock_quantity <= 0 ? 'disabled' : '' }}>
+                            Thêm vào giỏ hàng
                         </button>
-                        <button class="btn-buy-now" id="btn-buy-now" data-id="{{ $product->id }}" {{ $product->stock_quantity <= 0 ? 'disabled' : '' }}>
-                            Mua Ngay
+                        <button class="m-btn m-btn-cta py-3" id="btn-buy-now" data-id="{{ $product->id }}" {{ $product->stock_quantity <= 0 ? 'disabled' : '' }}>
+                            Mua ngay
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div class="product-details-section">
-                <h2 class="section-title">Mô Tả</h2>
+            <div class="m-card">
+                <h2 class="m-card-title">Mô tả</h2>
                 <div class="description-label">
                     {!! $product->description !!}
                 </div>
 
-                <h2 class="section-title">Thông Tin Sản Phẩm</h2>
+                <h2 class="m-card-title mt-5">Thông tin sản phẩm</h2>
                 <div class="details-grid" id="product-details">
                     <div class="detail-label">Mã sản phẩm:</div>
                     <div class="detail-value">{{ $product->sku }}</div>
@@ -63,23 +71,36 @@
                     <div class="detail-value">Xem trên bao bì sản phẩm</div>
                 </div>
 
-                <h2 class="section-title">Hướng dẫn sử dụng</h2>
+                <h2 class="m-card-title mt-5">Hướng dẫn sử dụng</h2>
                 <p>Thưởng thức trực tiếp hoặc kèm trà nhài để tăng hương vị.</p>
               
-                <h2 class="section-title">Hướng dẫn bảo quản</h2>
+                <h2 class="m-card-title mt-5">Hướng dẫn bảo quản</h2>
                 <p>Giữ bánh trong hộp kín, tránh ánh nắng trực tiếp.</p>
             </div>
 
             @if($relatedProducts->count() > 0)
-                <div class="related-products">
-                    <h2>CÓ THỂ BẠN QUAN TÂM</h2>
+                <div class="m-card">
+                    <h2 class="m-card-title justify-content-center">CÓ THỂ BẠN QUAN TÂM</h2>
                     <div class="related-grid" id="related-products">
                         @foreach($relatedProducts as $related)
-                            <div class="related-product-card">
-                                <img src="{{ asset($related->image) }}" alt="{{ $related->name }}" onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
-                                <h4>{{ $related->name }}</h4>
-                                <div class="price">{{ number_format($related->sell_price, 0, ',', '.') }}&nbsp;₫</div>
-                                <a href="{{ route('products.show', $related->id) }}" class="view-detail-btn">Xem Chi Tiết</a>
+                            <div class="related-product-card position-relative">
+                                <div class="m-badge m-badge-category category-badge">{{ $related->category->name }}</div>
+                                @if($related->stock_quantity <= 0)
+                                    <div class="m-badge m-badge-out stock-badge">Hết hàng</div>
+                                @endif
+                                <a href="{{ route('products.show', $related->id) }}" class="text-decoration-none color-inherit">
+                                    <img src="{{ asset($related->image) }}" alt="{{ $related->name }}" class="w-100 object-fit-cover rounded-3 mb-3" onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
+                                    <h3 class="mb-3">{{ $related->name }}</h3>
+                                </a>
+                                <div class="product-actions mt-auto d-flex justify-content-between align-items-center">
+                                    <span class="price">{{ number_format($related->sell_price, 0, ',', '.') }}&nbsp;₫</span>
+                                    <button class="m-btn-cart btn-add-to-cart" 
+                                            data-id="{{ $related->id }}"
+                                            title="Thêm vào giỏ hàng"
+                                            {{ $related->stock_quantity <= 0 ? 'disabled' : '' }}>
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                    </button>
+                                </div>
                             </div>
                         @endforeach
                     </div>

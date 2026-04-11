@@ -3,47 +3,39 @@
 @section('title', 'Chi Tiết Đơn Hàng - MORICO')
 
 @section('styles')
-<style>
-    .order-detail-container { background: #fff; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); padding: 30px; margin-top: 30px; }
-    .status-badge { padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; }
-    .status-pending { background: #fff3cd; color: #856404; }
-    .status-confirmed { background: #d1ecf1; color: #0c5460; }
-    .status-delivered { background: #d4edda; color: #155724; }
-    .status-cancelled { background: #f8d7da; color: #721c24; }
-    .info-box { background: #f8f9fa; border-radius: 10px; padding: 20px; height: 100%; }
-    .info-box h3 { font-size: 1.1rem; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px; color: var(--primary-color); }
-    .order-table th { border-top: none; background: #f8f9fa; }
-    .item-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
-    .total-section { max-width: 400px; margin-left: auto; }
-    .total-row { display: flex; justify-content: space-between; padding: 10px 0; font-weight: bold; }
-    .grand-total { font-size: 1.5rem; color: var(--primary-color); border-top: 2px solid #ddd; margin-top: 10px; padding-top: 15px; }
-</style>
+<link rel="stylesheet" href="{{ asset('assets/css/user/orders.css') }}">
 @endsection
 
 @section('content')
-<div class="container py-5">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-decoration-none">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('orders.index') }}" class="text-decoration-none">Lịch sử mua hàng</a></li>
-            <li class="breadcrumb-item active">Chi tiết đơn hàng #{{ $order->id }}</li>
-        </ol>
+<div class="app-container py-5">
+    <nav class="m-breadcrumb">
+        <a href="{{ route('home') }}">Trang chủ</a>
+        <span class="separator">/</span>
+        <a href="{{ route('orders.index') }}">Lịch sử mua hàng</a>
+        <span class="separator">/</span>
+        <span class="current">Chi tiết đơn hàng #{{ $order->id }}</span>
     </nav>
 
-    <div class="order-detail-container">
+    <div class="mt-4 pt-0 text-start">
+        <a href="{{ route('orders.index') }}" class="m-btn-link">
+            <i class="fas fa-arrow-left me-2"></i> Quay lại lịch sử mua hàng
+        </a>
+    </div>  
+
+    <div class="m-card mt-3">
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
             <div>
-                <h1 class="h3 mb-1">Chi tiết đơn hàng #{{ $order->id }}</h1>
-                <span class="text-muted">Ngày đặt: {{ $order->created_at->format('d/m/Y H:i:s') }}</span>
+                <h2 class="m-card-title border-0 mb-0">Chi tiết đơn hàng #{{ $order->id }}</h2>
+                <span class="text-muted"><i class="far fa-calendar-alt me-1"></i> Ngày đặt: {{ $order->created_at->format('d/m/Y H:i:s') }}</span>
             </div>
             <div class="text-end">
-                <span class="status-badge status-{{ $order->status }} shadow-sm">
+                <span class="m-badge m-badge-{{ $order->status }}">
                     @php
                         $statusMap = [
-                            'pending' => 'CHỜ XÁC NHẬN',
-                            'confirmed' => 'ĐÃ XÁC NHẬN',
-                            'delivered' => 'ĐÃ GIAO THÀNH CÔNG',
-                            'cancelled' => 'ĐÃ HỦY',
+                            'pending' => 'Chờ xác nhận',
+                            'confirmed' => 'Đã xác nhận',
+                            'delivered' => 'Đã giao thành công',
+                            'cancelled' => 'Đã hủy',
                         ];
                     @endphp
                     {{ $statusMap[$order->status] ?? strtoupper($order->status) }}
@@ -51,18 +43,17 @@
             </div>
         </div>
 
-        <div class="row g-4 mb-5">
+        <div class="row g-4 mb-4">
             <div class="col-md-6">
-                <div class="info-box border shadow-sm">
-                    <h3><i class="fas fa-user me-2"></i> Thông tin khách hàng</h3>
+                <div class="m-info-card">
+                    <h3><i class="fas fa-user text-primary"></i> Thông tin người nhận</h3>
                     <p class="mb-2"><strong>Họ tên:</strong> {{ $order->receiver_name }}</p>
                     <p class="mb-2"><strong>Số điện thoại:</strong> {{ $order->receiver_phone }}</p>
-                    <p class="mb-0"><strong>Ghi chú:</strong> <span class="fst-italic text-muted">{{ $order->note ?: '(Không có)' }}</span></p>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="info-box border shadow-sm">
-                    <h3><i class="fas fa-truck me-2"></i> Thông tin giao hàng & Thanh toán</h3>
+                <div class="m-info-card">
+                    <h3><i class="fas fa-truck text-primary"></i> Giao hàng & thanh toán</h3>
                     <p class="mb-2"><strong>Địa chỉ:</strong> {{ "{$order->shipping_address}, {$order->shipping_commune}, {$order->shipping_city}" }}</p>
                     <p class="mb-0"><strong>Thanh toán:</strong> 
                         <strong>
@@ -74,14 +65,20 @@
                     </p>
                 </div>
             </div>
+            <div class="col-md-12">
+                <div class="m-info-card">
+                    <p class="mb-0"><strong>Ghi chú:</strong> <span class="fst-italic text-muted">{{ $order->note ?: '(Không có)' }}</span></p>
+                </div>
+            </div>
         </div>
+        
 
-        <div class="table-responsive mb-4">
-            <table class="table order-table align-middle">
+        <div class="table-responsive mb-0">
+            <table class="m-table align-middle">
                 <thead>
                     <tr>
-                        <th>Sản phẩm</th>
-                        <th class="text-center">Đơn giá</th>
+                        <th style="width: 50%;">Sản phẩm</th>
+                        <th class="text-end">Đơn giá</th>
                         <th class="text-center">Số lượng</th>
                         <th class="text-end">Thành tiền</th>
                     </tr>
@@ -90,41 +87,46 @@
                     @foreach($order->orderDetails as $detail)
                     <tr>
                         <td>
-                            <div class="d-flex align-items-center gap-3">
-                                <img src="{{ asset($detail->product ? $detail->product->image : 'assets/image/products/default.png') }}" 
-                                     class="item-img border shadow-sm"
-                                     onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
-                                <span class="fw-bold">{{ $detail->product_name }}</span>
-                            </div>
+                            @if($detail->product)
+                                <a href="{{ route('products.show', $detail->product->id) }}" class="text-decoration-none color-inherit">
+                                    <div class="item-details">
+                                        <img src="{{ asset($detail->product->image) }}" 
+                                             class="item-img"
+                                             onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
+                                        <span class="fw-bold text-dark">{{ $detail->product_name }}</span>
+                                    </div>
+                                </a>
+                            @else
+                                <div class="item-details">
+                                    <img src="{{ asset('assets/image/products/default.png') }}" class="item-img">
+                                    <span class="fw-bold text-dark">{{ $detail->product_name }}</span>
+                                </div>
+                            @endif
                         </td>
-                        <td class="text-center">{{ number_format($detail->unit_price, 0, ',', '.') }}&nbsp;₫</td>
-                        <td class="text-center">x{{ $detail->quantity }}</td>
-                        <td class="text-end fw-bold">{{ number_format($detail->subtotal, 0, ',', '.') }}&nbsp;₫</td>
+                        <td class="text-end fw-bold text-muted">{{ number_format($detail->unit_price, 0, ',', '.') }}&nbsp;₫</td>
+                        <td class="text-center fw-bold">×{{ $detail->quantity }}</td>
+                        <td class="text-end fw-bold text-primary">{{ number_format($detail->subtotal, 0, ',', '.') }}&nbsp;₫</td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
 
-        <div class="total-section ms-auto">
-            <div class="total-row">
-                <span class="text-muted">Tổng tiền hàng:</span>
-                <span>{{ number_format($order->total_amount, 0, ',', '.') }}&nbsp;₫</span>
+        <div class="m-total-bar mt-0">
+            <div class="ms-auto d-flex flex-column align-items-end gap-2" style="min-width: 300px;">
+                <div class="d-flex justify-content-between w-100 mb-2">
+                    <span class="text-muted">Tổng tiền hàng:</span>
+                    <span class="fw-bold">{{ number_format($order->total_amount, 0, ',', '.') }}&nbsp;₫</span>
+                </div>
+                <div class="d-flex justify-content-between w-100 mb-3">
+                    <span class="text-muted">Phí vận chuyển:</span>
+                    <span class="text-success fw-bold">Miễn phí</span>
+                </div>
+                <div class="m-grand-total border-top pt-4 w-100">
+                    <small>TỔNG THANH TOÁN:</small>
+                    {{ number_format($order->total_amount, 0, ',', '.') }}&nbsp;₫
+                </div>
             </div>
-            <div class="total-row">
-                <span class="text-muted">Phí vận chuyển:</span>
-                <span class="text-success fw-bold">Miễn phí</span>
-            </div>
-            <div class="total-row grand-total">
-                <span>TỔNG THANH TOÁN:</span>
-                <span>{{ number_format($order->total_amount, 0, ',', '.') }}&nbsp;₫</span>
-            </div>
-        </div>
-
-        <div class="mt-5 pt-3 border-top text-center">
-            <a href="{{ route('orders.index') }}" class="btn btn-outline-morico px-5 py-2">
-                <i class="fas fa-arrow-left me-2"></i> Quay lại lịch sử mua hàng
-            </a>
         </div>
     </div>
 </div>

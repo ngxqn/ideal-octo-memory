@@ -1,12 +1,11 @@
 /* ===== NỘI DUNG GIỚI THIỆU ===== */
 main {
-    max-width: 1100px;
     margin: 0 auto;
     font-size: 20px;
     color: var(--text-dark);
     line-height: 1.8;
     text-align: justify;
-    padding: 15px 25px 25px;
+    /* padding: 15px 25px 25px; */
 }
 
 
@@ -31,9 +30,9 @@ main {
     width: 48%;
     height: 320px;
     object-fit: cover;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    border: 3px solid var(--primary-hover);
+    border-radius: var(--m-radius-md);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    border: var(--m-border);
     flex-shrink: 0;
 }
 

@@ -7,81 +7,96 @@
 @endsection
 
 @section('content')
-    <h1 class="page-title">Giỏ hàng của bạn</h1>
-    
-    <div id="cart-container">
-        @if($cart->cartItems->count() > 0)
-            <div class="cart-header">
-                <div>Sản phẩm</div>
-                <div>Đơn giá</div>
-                <div>Số lượng</div>
-                <div>Tổng tiền</div>
-                <div>Thao tác</div>
-            </div>
-        @endif
+    <div class="app-container py-5">
+        <nav class="m-breadcrumb">
+            <a href="{{ route('home') }}">Trang chủ</a>
+            <span class="separator">/</span>
+            <span class="current">Giỏ hàng</span>
+        </nav>
 
-        <div id="cart-items-list">
-            @forelse($cart->cartItems as $item)
-                <div class="cart-item" data-id="{{ $item->id }}" data-stock="{{ $item->product->stock_quantity }}" data-price="{{ $item->product->sell_price }}">
-                    <div class="item-details">
-                        <img src="{{ asset($item->product->image) }}" alt="{{ $item->product->name }}" 
-                             onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
-                        <span>{{ $item->product->name }}</span>
-                    </div>
-
-                    <div class="item-unit-price">
-                        {{ number_format($item->product->sell_price, 0, ',', '.') }}&nbsp;₫
-                    </div>
-
-                    <div class="quantity-control">
-                        <button class="btn-qty-minus {{ $item->quantity <= 1 ? 'btn-disabled' : '' }}" data-id="{{ $item->id }}"><i class="fa-solid fa-minus"></i></button>
-                        <input type="number" class="qty-input" value="{{ $item->quantity }}" min="1" max="{{ $item->product->stock_quantity }}" data-id="{{ $item->id }}">
-                        <button class="btn-qty-plus {{ $item->quantity >= $item->product->stock_quantity ? 'btn-disabled' : '' }}" data-id="{{ $item->id }}"><i class="fa-solid fa-plus"></i></button>
-                    </div>
-
-                    <div class="item-total-price">
-                        <span class="item-total-price">{{ number_format($item->product->sell_price * $item->quantity, 0, ',', '.') }}&nbsp;₫</span>
-                    </div>
-
-                    <div class="remove-btn-container">
-                        <button class="remove-btn" data-id="{{ $item->id }}">
-                            <i class="fa-regular fa-trash-can"></i>
-                        </button>
-                    </div>
-                </div>
-            @empty
-                <div class="empty-cart">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <p>Giỏ hàng của bạn đang trống</p>
-                    <a href="{{ route('products.index') }}" 
-                       style="display: inline-block; margin-top: 15px; padding: 10px 20px; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 5px;">
-                       Tiếp tục mua sắm
-                    </a>
-                </div>
-            @endforelse
-        </div>
+        <h1 class="page-title">Giỏ hàng của bạn</h1>
+        <p class="page-subtitle">Kiểm tra lại các sản phẩm trước khi thanh toán</p>
 
         @if($cart->cartItems->count() > 0)
-            <div class="summary-box" id="summary-box">
-                <div class="summary-row">
-                    <span class="total-label">Tổng cộng:</span>
-                    <span class="total-amount" id="final-total">
-                        {{ number_format($total, 0, ',', '.') }}&nbsp;₫
-                    </span>
+            <div class="m-card p-0 overflow-hidden" style="border: none; background: transparent; box-shadow: none;">
+                <div class="table-responsive">
+                    <table class="m-table align-middle">
+                        <thead>
+                            <tr>
+                                <th style="width: 45%;">Sản phẩm</th>
+                                <th class="text-end">Đơn giá</th>
+                                <th class="text-center">Số lượng</th>
+                                <th class="text-end">Số tiền</th>
+                                <th class="text-end">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cart-items-list">
+                            @foreach($cart->cartItems as $item)
+                                <tr class="cart-item" data-id="{{ $item->id }}" data-stock="{{ $item->product->stock_quantity }}" data-price="{{ $item->product->sell_price }}">
+                                    <td>
+                                        <a href="{{ route('products.show', $item->product->id) }}" class="text-decoration-none color-inherit">
+                                            <div class="item-details">
+                                                <img src="{{ asset($item->product->image) }}" 
+                                                     alt="{{ $item->product->name }}" 
+                                                     class="item-img"
+                                                     onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
+                                                <span>{{ $item->product->name }}</span>
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <td class="text-end fw-bold text-muted">
+                                        {{ number_format($item->product->sell_price, 0, ',', '.') }}&nbsp;₫
+                                    </td>
+                                    <td>
+                                        <div class="quantity-control justify-content-center">
+                                            <button class="m-btn-soft btn-qty-minus {{ $item->quantity <= 1 ? 'btn-disabled' : '' }}" data-id="{{ $item->id }}"><i class="fa-solid fa-minus"></i></button>
+                                            <input type="number" class="qty-input" value="{{ $item->quantity }}" min="1" max="{{ $item->product->stock_quantity }}" data-id="{{ $item->id }}">
+                                            <button class="m-btn-soft btn-qty-plus {{ $item->quantity >= $item->product->stock_quantity ? 'btn-disabled' : '' }}" data-id="{{ $item->id }}"><i class="fa-solid fa-plus"></i></button>
+                                        </div>
+                                    </td>
+                                    <td class="text-end fw-bold text-primary">
+                                        <span class="item-total-price">{{ number_format($item->product->sell_price * $item->quantity, 0, ',', '.') }}&nbsp;₫</span>
+                                    </td>
+                                    <td class="text-end">
+                                        <button class="remove-btn" data-id="{{ $item->id }}" title="Xóa khỏi giỏ hàng">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-                <div class="checkout-group">
-                    <a href="{{ route('checkout.index') }}" class="order-btn" style="text-decoration: none; display: block; text-align: center;">
-                        Thanh toán
-                    </a>
+
+                <div class="m-total-bar">
+                    <div>
+                        <a href="{{ route('products.index') }}" class="m-btn-link">
+                            <i class="fa-solid fa-arrow-left me-2"></i>Tiếp tục mua hàng
+                        </a>
+                    </div>
+                    <div class="d-flex flex-column align-items-end gap-3">
+                        <div class="m-grand-total">
+                            <small>TỔNG CỘNG:</small>
+                            <span id="final-total">{{ number_format($total, 0, ',', '.') }}&nbsp;₫</span>
+                        </div>
+                        <a href="{{ route('checkout.index') }}" class="m-btn m-btn-primary px-5 py-3">
+                            <i class="fa-solid fa-check-circle me-2"></i>Tiến hành thanh toán
+                        </a>
+                    </div>
                 </div>
             </div>
+        @else
+            <div class="m-card text-center py-5">
+                <div class="mb-4">
+                    <i class="fa-solid fa-cart-shopping fa-4x text-muted opacity-25"></i>
+                </div>
+                <h3 class="h4 text-muted mb-3">Giỏ hàng của bạn đang trống</h3>
+                <p class="text-muted mb-4">Hãy khám phá những chiếc bánh thơm ngon của Morico nhé!</p>
+                <a href="{{ route('products.index') }}" class="m-btn m-btn-primary px-5">
+                   Bắt đầu mua sắm
+                </a>
+            </div>
         @endif
-
-        <div>
-            <a href="{{ route('products.index') }}" class="continue-shopping">
-                <i class="fa-solid fa-arrow-left me-2"></i>Tiếp tục mua hàng
-            </a>
-        </div>
     </div>
 @endsection
 

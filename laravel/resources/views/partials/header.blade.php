@@ -55,8 +55,8 @@
                     </div>
                 @else
                     <div class="auth-buttons" style="display: flex; gap: 10px;">
-                        <a href="{{ route('login') }}" class="auth-btn sign-in-btn">Đăng nhập</a>
-                        <a href="{{ route('register') }}" class="auth-btn sign-up-btn">Đăng ký</a>
+                        <a href="{{ route('login') }}" class="m-btn m-btn-light-outline px-3 py-1">Đăng nhập</a>
+                        <a href="{{ route('register') }}" class="m-btn m-btn-light px-3 py-1">Đăng ký</a>
                     </div>
                 @endauth
             </div>

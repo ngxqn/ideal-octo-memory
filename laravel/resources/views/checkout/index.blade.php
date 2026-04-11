@@ -4,31 +4,28 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('assets/css/user/checkout.css') }}">
-<style>
-    .payment-option { margin-bottom: 10px; padding: 10px; border: 1px solid #eee; border-radius: 5px; cursor: pointer; }
-    .payment-option:hover { background: #f9f9f9; }
-    .payment-option input { margin-right: 10px; }
-    .section h2 { border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px; font-size: 1.5rem; }
-    .order-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #eee; }
-    .total-row { display: flex; justify-content: space-between; padding: 10px 0; font-weight: bold; }
-    .total-amount { color: var(--primary-color); font-size: 1.2rem; }
-</style>
 @endsection
 
 @section('content')
-<div class="container py-5">
-    <div class="header text-center mb-5">
-        <h1 class="page-title">Thanh toán đơn hàng</h1>
-        <div class="page-subtitle text-muted">Hoàn tất đơn hàng của bạn một cách dễ dàng và an toàn</div>
-    </div>
+<div class="app-container py-5">
+    <nav class="m-breadcrumb">
+        <a href="{{ route('home') }}">Trang chủ</a>
+        <span class="separator">/</span>
+        <a href="{{ route('cart.index') }}">Giỏ hàng</a>
+        <span class="separator">/</span>
+        <span class="current">Thanh toán</span>
+    </nav>
+
+    <h1 class="page-title">Thanh toán đơn hàng</h1>
+    <p class="page-subtitle">Hoàn tất đơn hàng của bạn một cách dễ dàng và an toàn</p>    
 
     <form action="{{ route('checkout.store') }}" method="POST" id="checkout-form">
         @csrf
         <div class="row g-4">
             <!-- Thông tin nhận hàng -->
             <div class="col-lg-7">
-                <div id="shipping-info" class="section p-4 border rounded shadow-sm bg-white">
-                    <h2><i class="fas fa-truck me-2"></i> Thông tin nhận hàng</h2>
+                <div id="shipping-info" class="m-card">
+                    <h2 class="m-card-title"><i class="fas fa-truck text-primary"></i> Thông tin nhận hàng</h2>
                     
                     <div class="row g-3">
                         <div class="col-md-6">
@@ -61,14 +58,18 @@
 
             <!-- Chi tiết đơn hàng & Thanh toán -->
             <div class="col-lg-5">
-                <div id="order-summary" class="section p-4 border rounded shadow-sm bg-white">
-                    <h2><i class="fas fa-receipt me-2"></i> Chi tiết Đơn hàng</h2>
+                <div id="order-summary" class="m-card">
+                    <h2 class="m-card-title"><i class="fas fa-receipt text-primary"></i> Chi tiết Đơn hàng</h2>
                     
                     <div class="items-list mb-4">
                         @foreach($cart->cartItems as $item)
-                        <div class="order-item">
-                            <div class="item-info">
-                                <div class="fw-bold">{{ $item->product->name }}</div>
+                        <div class="m-card p-3 mb-2 d-flex align-items-center gap-3" style="border-width: 1px; box-shadow: none;">
+                            <img src="{{ asset($item->product->image) }}" 
+                                 class="item-img" 
+                                 style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;"
+                                 onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
+                            <div class="flex-grow-1">
+                                <div class="fw-bold text-dark">{{ $item->product->name }}</div>
                                 <div class="text-muted small">Số lượng: {{ $item->quantity }}</div>
                             </div>
                             <span class="fw-bold text-primary">
@@ -78,19 +79,21 @@
                         @endforeach
                     </div>
 
-                    <div class="total-row">
-                        <span>Tổng tiền hàng:</span>
-                        <span id="sub-total">{{ number_format($total, 0, ',', '.') }}&nbsp;₫</span>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Tổng tiền hàng:</span>
+                        <span id="sub-total" class="fw-bold">{{ number_format($total, 0, ',', '.') }}&nbsp;₫</span>
                     </div>
 
-                    <div class="total-row border-0">
-                        <span>Phí vận chuyển:</span>
+                    <div class="d-flex justify-content-between mb-4">
+                        <span class="text-muted">Phí vận chuyển:</span>
                         <span class="text-success fw-bold">Miễn phí</span>
                     </div>
 
-                    <div class="total-row mt-3 pt-3 border-top border-2 border-primary">
-                        <span class="fs-5">TỔNG THANH TOÁN:</span>
-                        <span class="total-amount fs-4" id="final-total">{{ number_format($total, 0, ',', '.') }}&nbsp;₫</span>
+                    <div class="m-total-bar mt-0 pt-4">
+                        <div class="m-grand-total w-100">
+                            <small>TỔNG THANH TOÁN:</small>
+                            <span id="final-total" class="fs-3">{{ number_format($total, 0, ',', '.') }}&nbsp;₫</span>
+                        </div>
                     </div>
 
                     <div class="mt-5">
@@ -116,7 +119,7 @@
                         <div class="alert alert-danger">{{ $errors->first('checkout') }}</div>
                     @endif
 
-                    <button type="submit" class="btn btn-morico btn-lg w-100 py-3 mt-3 fw-bold shadow">
+                    <button type="submit" class="m-btn m-btn-primary w-100 py-3 mt-3 shadow">
                         <i class="fas fa-check-circle me-2"></i> XÁC NHẬN ĐẶT HÀNG
                     </button>
 
