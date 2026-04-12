@@ -24,10 +24,10 @@ return new class extends Migration
             // sell_price (GENERATED COLUMN) will be added via DB statement
             $table->integer('stock_quantity')->default(0);
             $table->integer('low_stock_threshold')->default(10);
-            $table->boolean('is_deleted')->default(0)->index('ix_products_is_deleted');
+            $table->boolean('is_hidden')->default(0)->index('ix_products_is_hidden');
             $table->timestamps();
 
-            $table->index(['category_id', 'is_deleted'], 'ix_products_category_active');
+            $table->index(['category_id', 'is_hidden'], 'ix_products_category_active');
         });
 
         // Add GENERATED STORED column

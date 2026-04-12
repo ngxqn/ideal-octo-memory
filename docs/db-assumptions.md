@@ -94,23 +94,23 @@ WHERE product_id = X AND created_at <= T;
 **Vấn đề:** Yêu cầu phân định "chưa phát sinh giao dịch thì xóa hẳn, có giao dịch thì ẩn". 
 
 **Giả định & Giải pháp (Soft-Delete Check):**
-- Cả `products` (Sản phẩm) và `categories` (Danh mục) đều có cột `is_deleted` (Boolean).
-- **Hoạt động Độc lập (Không Cascade):** Trạng thái `is_deleted` của bảng Category và bảng Product hoạt động hoàn toàn độc lập, không tự động trigger xóa lan truyền từ Category xuống Product trong Database.
+- Cả `products` (Sản phẩm) và `categories` (Danh mục) đều có cột `is_hidden` (Boolean).
+- **Hoạt động Độc lập (Không Cascade):** Trạng thái `is_hidden` của bảng Category và bảng Product hoạt động hoàn toàn độc lập, không tự động trigger ẩn lan truyền từ Category xuống Product trong Database.
 - **Ranh giới kiểm tra (Delete Check):**
   - **Sản phẩm (`products`):** Bị coi là "đã phát sinh nghiệp vụ" NẾU có bất kỳ record nào trong `inventory_logs` với `reference_type != 'product_init'`.
-  - **Danh mục (`categories`):** Bị coi là "đang được sử dụng" NẾU có ít nhất 1 Sản phẩm (`products`) **chưa bị soft delete (`is_deleted = 0`)** đang tham chiếu tới nó.
+  - **Danh mục (`categories`):** Bị coi là "đang được sử dụng" NẾU có ít nhất 1 Sản phẩm (`products`) **đang ở trạng thái hiển thị (`is_hidden = 0`)** đang tham chiếu tới nó.
 - Khi Admin bấm Xóa:
   - **Đối với Sản phẩm (`products`):**
     - Chưa từng có Log giao dịch: Chạy lệnh `DELETE FROM ... WHERE id = X` (Xóa Cứng).
-    - Đã có Log giao dịch: Chạy lệnh `UPDATE ... SET is_deleted = 1 WHERE id = X` (Xóa Mềm).
+    - Đã có Log giao dịch: Chạy lệnh `UPDATE ... SET is_hidden = 1 WHERE id = X` (Ẩn đi).
   - **Đối với Danh mục (`categories`):**
     - Không còn sản phẩm nào tham chiếu tới: Chạy lệnh `DELETE FROM ... WHERE id = X` (Xóa Cứng).
-    - Vẫn còn sản phẩm tham chiếu tới: Chạy lệnh `UPDATE ... SET is_deleted = 1 WHERE id = X` (Xóa Mềm).
+    - Vẫn còn sản phẩm tham chiếu tới: Chạy lệnh `UPDATE ... SET is_hidden = 1 WHERE id = X` (Ẩn đi).
 - **Điều Kiện Hiển Thị Frontend (End-User):**
-  - Để một Sản Phẩm hiển thị ra ngoài cửa hàng cho khách thấy, nó phải thỏa mãn cả 2 điều kiện: `products.is_deleted = 0` **VÀ** `categories.is_deleted = 0` (Dựa trên câu lệnh `JOIN`).
+  - Để một Sản Phẩm hiển thị ra ngoài cửa hàng cho khách thấy, nó phải thỏa mãn cả 2 điều kiện: `products.is_hidden = 0` **VÀ** `categories.is_hidden = 0` (Dựa trên câu lệnh `JOIN`).
 - **Liên Đới Ẩn/Hiện Categories:**
-  - Nếu một Category bị đổi thành Soft Delete, các Product bên trong cấu trúc Dữ liệu **KHÔNG bị đổi** cột `is_deleted`. Tuy nhiên, do điều kiện hiển thị bị rớt (`categories.is_deleted = 1`), các Product đó tự động bị **ẩn khỏi UI**.
-  - Khi Category đó được Restore (Khôi phục), các Product bên trong sẽ tự động nhảy hiển thị lại với điều kiện bản thân status của `products.is_deleted` lúc đó phải là 0.
+  - Nếu một Category bị đổi thành Ẩn (`is_hidden = 1`), các Product bên trong cấu trúc Dữ liệu **KHÔNG bị đổi** cột `is_hidden`. Tuy nhiên, do điều kiện hiển thị bị rớt (`categories.is_hidden = 1`), các Product đó tự động bị **ẩn khỏi UI**.
+  - Khi Category đó được hiển thị lại (Restore/Unhide), các Product bên trong sẽ tự động nhảy hiển thị lại với điều kiện bản thân status của `products.is_hidden` lúc đó phải là 0.
 
 ---
 

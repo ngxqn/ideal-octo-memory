@@ -44,8 +44,8 @@ class CartService
             $cart = $this->getCartForUser($user);
             $product = $this->productRepo->find($productId);
 
-            if (!$product || $product->is_deleted) {
-                throw new Exception("Sản phẩm không tồn tại hoặc đã bị xóa.");
+            if (!$product || $product->is_hidden) {
+                throw new Exception("Sản phẩm không tồn tại hoặc đang bị ẩn.");
             }
 
             if ($product->stock_quantity < $quantity) {

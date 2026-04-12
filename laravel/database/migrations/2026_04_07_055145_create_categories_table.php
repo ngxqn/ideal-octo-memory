@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100)->unique('uq_categories_name');
-            $table->boolean('is_deleted')->default(0)->index('ix_categories_is_deleted');
+            $table->boolean('is_hidden')->default(0)->index('ix_categories_is_hidden');
             $table->timestamps();
         });
     }

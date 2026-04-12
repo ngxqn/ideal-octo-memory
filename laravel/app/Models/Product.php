@@ -20,7 +20,7 @@ class Product extends Model
         // 'sell_price' is intentionally omitted because it is a GENERATED COLUMN
         'stock_quantity',
         'low_stock_threshold',
-        'is_deleted',
+        'is_hidden',
     ];
 
     protected function casts(): array
@@ -31,7 +31,7 @@ class Product extends Model
             'sell_price' => 'decimal:2',
             'stock_quantity' => 'integer',
             'low_stock_threshold' => 'integer',
-            'is_deleted' => 'boolean',
+            'is_hidden' => 'boolean',
         ];
     }
 
@@ -43,14 +43,14 @@ class Product extends Model
 
     public function scopeActive($query)
     {
-        return $query->where('products.is_deleted', 0);
+        return $query->where('products.is_hidden', 0);
     }
 
     public function scopeVisible($query)
     {
-        return $query->where('products.is_deleted', 0)
+        return $query->where('products.is_hidden', 0)
                      ->join('categories', 'products.category_id', '=', 'categories.id')
-                     ->where('categories.is_deleted', 0)
+                     ->where('categories.is_hidden', 0)
                      ->select('products.*');
     }
 

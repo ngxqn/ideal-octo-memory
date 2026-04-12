@@ -115,7 +115,7 @@ Phân loại sản phẩm. Hỗ trợ soft delete khi còn sản phẩm tham chi
 |-----|------|-----------|----------|-------|
 | `id` | BIGINT UNSIGNED | PK, AUTO_INCREMENT | NOT NULL | |
 | `name` | VARCHAR(100) | UNIQUE | NOT NULL | Tên danh mục |
-| `is_deleted` | TINYINT(1) | DEFAULT 0 | NOT NULL | Soft delete flag |
+| `is_hidden` | TINYINT(1) | DEFAULT 0 | NOT NULL | Soft delete flag |
 | `created_at` | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | NOT NULL | |
 | `updated_at` | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP ON UPDATE | NOT NULL | |
 
@@ -139,11 +139,11 @@ Thực thể trung tâm của hệ thống. Lưu thông tin mô tả, giá hiệ
 | `sell_price` | DECIMAL(15,2) | GENERATED STORED | NOT NULL | Giá bán tự tính = base_price × (1 + profit_margin/100) |
 | `stock_quantity` | INT | DEFAULT 0 | NOT NULL | Tồn kho hiện tại (cache, realtime) |
 | `low_stock_threshold` | INT | DEFAULT 10 | NOT NULL | Ngưỡng cảnh báo sắp hết hàng |
-| `is_deleted` | TINYINT(1) | DEFAULT 0 | NOT NULL | Soft delete flag |
+| `is_hidden` | TINYINT(1) | DEFAULT 0 | NOT NULL | Soft delete flag |
 | `created_at` | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | NOT NULL | |
 | `updated_at` | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP ON UPDATE | NOT NULL | |
 
-**Indexes:** `uq_products_sku(sku)`, `ix_products_category_active(category_id, is_deleted)`, `ix_products_is_deleted(is_deleted)`, `ix_products_sell_price(sell_price)`
+**Indexes:** `uq_products_sku(sku)`, `ix_products_category_active(category_id, is_hidden)`, `ix_products_is_hidden(is_hidden)`, `ix_products_sell_price(sell_price)`
 
 **Ghi chú:**
 - `base_price`, `profit_margin`, `sell_price` chỉ phản ánh **trạng thái hiện tại**. Giá quá khứ được lưu tại `order_details` và `goods_receipt_details`.
@@ -328,7 +328,7 @@ erDiagram
     categories {
         BIGINT_UNSIGNED id PK
         VARCHAR_100 name UK
-        TINYINT is_deleted
+        TINYINT is_hidden
         TIMESTAMP created_at
         TIMESTAMP updated_at
     }
@@ -346,7 +346,7 @@ erDiagram
         DECIMAL sell_price
         INT stock_quantity
         INT low_stock_threshold
-        TINYINT is_deleted
+        TINYINT is_hidden
         TIMESTAMP created_at
         TIMESTAMP updated_at
     }
@@ -513,7 +513,7 @@ SELECT
 FROM products p
 LEFT JOIN inventory_logs il ON p.id = il.product_id
     AND il.created_at BETWEEN '2026-01-01' AND '2026-01-31 23:59:59'
-WHERE p.is_deleted = 0
+WHERE p.is_hidden = 0
 GROUP BY p.id, p.name, p.stock_quantity;
 ```
 
@@ -540,7 +540,7 @@ WHERE product_id = :id AND reference_type != 'product_init';
 -- Nếu COUNT > 0 thì SOFT DELETE, ngược lại HARD DELETE
 SELECT COUNT(*) AS active_products
 FROM products
-WHERE category_id = :id AND is_deleted = 0;
+WHERE category_id = :id AND is_hidden = 0;
 ```
 
 **Hiển thị sản phẩm cho khách hàng (Front-end):**
@@ -550,10 +550,10 @@ WHERE category_id = :id AND is_deleted = 0;
 SELECT p.*
 FROM products p
 INNER JOIN categories c ON p.category_id = c.id
-WHERE p.is_deleted = 0 AND c.is_deleted = 0;
+WHERE p.is_hidden = 0 AND c.is_hidden = 0;
 ```
 
-> **Liên đới ẩn/hiện:** Khi Category bị soft delete, Product bên trong vẫn giữ nguyên `is_deleted = 0`, nhưng tự động ẩn khỏi UI nhờ điều kiện JOIN. Khi restore Category, Product hiện lại mà không cần thao tác gì thêm.
+> **Liên đới ẩn/hiện:** Khi Category bị soft delete, Product bên trong vẫn giữ nguyên `is_hidden = 0`, nhưng tự động ẩn khỏi UI nhờ điều kiện JOIN. Khi restore Category, Product hiện lại mà không cần thao tác gì thêm.
 
 ---
 
@@ -630,7 +630,7 @@ DB::transaction(function () use ($product, $importQty, $importPrice) {
 SELECT id, name, stock_quantity, low_stock_threshold
 FROM products
 WHERE stock_quantity <= low_stock_threshold
-  AND is_deleted = 0;
+  AND is_hidden = 0;
 ```
 
 Cột `low_stock_threshold` trên từng sản phẩm cho phép admin đặt ngưỡng riêng biệt.

@@ -39,7 +39,7 @@ class ProductController extends Controller
         // withQueryString() is crucial for maintaining filters across pages
         $products = $query->paginate(6)->withQueryString();
         
-        $categories = Category::where('is_deleted', 0)->get();
+        $categories = Category::active()->get();
 
         return view('products.index', compact('products', 'categories'));
     }

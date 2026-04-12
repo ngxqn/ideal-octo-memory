@@ -299,14 +299,14 @@
     <script>
         // DATA MANAGEMENT
         let products = JSON.parse(localStorage.getItem('morico_products')) || [
-            { id: 1, code: "SP001", name: "Bánh Trung Thu Golden Plum", price: 189000, cost: 120000, thumbnail: "../assets/image/product/banh-trung-thu-golden-plum.png", category: "ngot", stock: 25, status: "active", is_deleted: 0 },
-            { id: 2, code: "SP002", name: "Bánh Trung Thu Hotate XO Mixed Nuts", price: 139000, cost: 90000, thumbnail: "../assets/image/product/banh-trung-thu-hotate-xo-mixed-nuts.png", category: "man", stock: 12, status: "active", is_deleted: 0 }
+            { id: 1, code: "SP001", name: "Bánh Trung Thu Golden Plum", price: 189000, cost: 120000, thumbnail: "../assets/image/product/banh-trung-thu-golden-plum.png", category: "ngot", stock: 25, status: "active", is_hidden: 0 },
+            { id: 2, code: "SP002", name: "Bánh Trung Thu Hotate XO Mixed Nuts", price: 139000, cost: 90000, thumbnail: "../assets/image/product/banh-trung-thu-hotate-xo-mixed-nuts.png", category: "man", stock: 12, status: "active", is_hidden: 0 }
         ];
 
         let categories = JSON.parse(localStorage.getItem('morico_categories')) || [
-            { id: 'ngot', name: 'Bánh Ngọt', status: 'active', is_deleted: 0 },
-            { id: 'man', name: 'Bánh Mặn', status: 'active', is_deleted: 0 },
-            { id: 'chay', name: 'Bánh Chay', status: 'active', is_deleted: 0 }
+            { id: 'ngot', name: 'Bánh Ngọt', status: 'active', is_hidden: 0 },
+            { id: 'man', name: 'Bánh Mặn', status: 'active', is_hidden: 0 },
+            { id: 'chay', name: 'Bánh Chay', status: 'active', is_hidden: 0 }
         ];
 
         let currentEditingProductId = null;
@@ -326,9 +326,9 @@
                     const term = this.value.toLowerCase().trim();
                     const activeTab = document.querySelector('.nav-link.active').id;
                     if (activeTab === 'products-tab-btn') {
-                        renderProductTable(products.filter(p => !p.is_deleted && (p.name.toLowerCase().includes(term) || p.code.toLowerCase().includes(term))));
+                        renderProductTable(products.filter(p => !p.is_hidden && (p.name.toLowerCase().includes(term) || p.code.toLowerCase().includes(term))));
                     } else {
-                        renderCategoryTable(categories.filter(c => !c.is_deleted && (c.name.toLowerCase().includes(term) || c.id.toLowerCase().includes(term))));
+                        renderCategoryTable(categories.filter(c => !c.is_hidden && (c.name.toLowerCase().includes(term) || c.id.toLowerCase().includes(term))));
                     }
                 });
             }
@@ -353,8 +353,8 @@
         function renderCategoryStats() {
             const container = document.getElementById('category-stats');
             container.innerHTML = '';
-            categories.filter(c => !c.is_deleted).forEach(cat => {
-                const count = products.filter(p => p.category === cat.id && !p.is_deleted).length;
+            categories.filter(c => !c.is_hidden).forEach(cat => {
+                const count = products.filter(p => p.category === cat.id && !p.is_hidden).length;
                 const card = document.createElement('div');
                 card.className = 'category-stat-card bg-white rounded p-3 border-start border-4 border-warning shadow-sm flex-fill';
                 card.style.minWidth = '180px';
@@ -367,11 +367,11 @@
             });
         }
 
-        function renderCategoryTable(list = categories.filter(c => !c.is_deleted)) {
+        function renderCategoryTable(list = categories.filter(c => !c.is_hidden)) {
             const tbody = document.getElementById('category-table-body');
             tbody.innerHTML = '';
             list.forEach(cat => {
-                const count = products.filter(p => p.category === cat.id && !p.is_deleted).length;
+                const count = products.filter(p => p.category === cat.id && !p.is_hidden).length;
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><code>${cat.id}</code></td>
@@ -412,7 +412,7 @@
             const status = document.getElementById('category-status-select').value;
             if (!id || !name) return alert('Nhập đủ thông tin');
 
-            if (!currentEditingCategoryId) categories.push({ id, name, status, is_deleted: 0 });
+            if (!currentEditingCategoryId) categories.push({ id, name, status, is_hidden: 0 });
             else {
                 const idx = categories.findIndex(c => c.id === currentEditingCategoryId);
                 categories[idx] = { ...categories[idx], name, status };
@@ -423,17 +423,17 @@
         }
 
         function deleteCategory(id) {
-            if (products.some(p => p.category === id && !p.is_deleted)) return alert('Vẫn còn SP thuộc loại này');
+            if (products.some(p => p.category === id && !p.is_hidden)) return alert('Vẫn còn SP thuộc loại này');
             if (confirm('Xác nhận xóa?')) {
                 const idx = categories.findIndex(c => c.id === id);
-                categories[idx].is_deleted = 1;
+                categories[idx].is_hidden = 1;
                 saveDataToStorage();
                 refreshCatalogueUI();
             }
         }
 
         // PRODUCT LOGIC
-        function renderProductTable(list = products.filter(p => !p.is_deleted)) {
+        function renderProductTable(list = products.filter(p => !p.is_hidden)) {
             const tbody = document.getElementById('product-table-body');
             tbody.innerHTML = '';
             list.forEach(p => {
@@ -510,7 +510,7 @@
                 status: document.getElementById('product-status').value,
                 description: document.getElementById('product-desc').value.trim(),
                 thumbnail: document.getElementById('product-image').value.trim(),
-                is_deleted: 0
+                is_hidden: 0
             };
 
             // Validation: Required fields
@@ -523,7 +523,7 @@
 
             // Check for duplicate product code
             const isDuplicate = products.some(p => 
-                !p.is_deleted && 
+                !p.is_hidden && 
                 p.code.toLowerCase() === data.code.toLowerCase() && 
                 p.id !== currentEditingProductId
             );
@@ -548,7 +548,7 @@
         function deleteProduct(id) {
             if (confirm('Xóa SP này?')) {
                 const idx = products.findIndex(p => p.id === id);
-                products[idx].is_deleted = 1;
+                products[idx].is_hidden = 1;
                 saveDataToStorage();
                 refreshCatalogueUI();
             }
@@ -557,11 +557,11 @@
         function updateCategoryDropdown() {
             const sel = document.getElementById('product-category');
             if (!sel) return;
-            sel.innerHTML = categories.filter(c => !c.is_deleted && c.status === 'active').map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+            sel.innerHTML = categories.filter(c => !c.is_hidden && c.status === 'active').map(c => `<option value="${c.id}">${c.name}</option>`).join('');
         }
 
         function filterByCat(id) {
-            renderProductTable(products.filter(p => !p.is_deleted && p.category === id));
+            renderProductTable(products.filter(p => !p.is_hidden && p.category === id));
             bootstrap.Tab.getInstance(document.getElementById('products-tab-btn')).show();
         }
 

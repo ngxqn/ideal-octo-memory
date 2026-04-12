@@ -62,7 +62,7 @@ class OrderService
                 // Must lock row to check true stock securely
                 $lockedProduct = $this->productRepo->findWithStock($item->product_id);
 
-                if (!$lockedProduct || $lockedProduct->is_deleted || $lockedProduct->stock_quantity < $item->quantity) {
+                if (!$lockedProduct || $lockedProduct->is_hidden || $lockedProduct->stock_quantity < $item->quantity) {
                     throw new Exception("Sản phẩm '{$lockedProduct->name}' không đủ số lượng trong kho.");
                 }
 

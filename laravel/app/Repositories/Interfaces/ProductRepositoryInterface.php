@@ -8,7 +8,7 @@ use App\Models\Product;
 interface ProductRepositoryInterface
 {
     /**
-     * Retrieve all active products (is_deleted = 0).
+     * Retrieve all active products (is_hidden = 0).
      *
      * @return Collection
      */

@@ -45,7 +45,7 @@ CREATE INDEX ix_users_role ON users (role);
 CREATE TABLE categories (
     id          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     name        VARCHAR(100)    NOT NULL,
-    is_deleted  TINYINT(1)      NOT NULL DEFAULT 0,
+    is_hidden   TINYINT(1)      NOT NULL DEFAULT 0,
     created_at  TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at  TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
@@ -53,7 +53,7 @@ CREATE TABLE categories (
     CONSTRAINT uq_categories_name UNIQUE (name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE INDEX ix_categories_is_deleted ON categories (is_deleted);
+CREATE INDEX ix_categories_is_hidden ON categories (is_hidden);
 
 -- ------------------------------------------------------------
 -- 3. products — Sản phẩm
@@ -72,7 +72,7 @@ CREATE TABLE products (
                             (ROUND(base_price * (1 + profit_margin / 100), 2)) STORED,
     stock_quantity      INT             NOT NULL DEFAULT 0,
     low_stock_threshold INT             NOT NULL DEFAULT 10,
-    is_deleted          TINYINT(1)      NOT NULL DEFAULT 0,
+    is_hidden           TINYINT(1)      NOT NULL DEFAULT 0,
     created_at          TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at          TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
@@ -85,8 +85,8 @@ CREATE TABLE products (
         CHECK (stock_quantity >= 0)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE INDEX ix_products_category_active ON products (category_id, is_deleted);
-CREATE INDEX ix_products_is_deleted ON products (is_deleted);
+CREATE INDEX ix_products_category_active ON products (category_id, is_hidden);
+CREATE INDEX ix_products_is_hidden ON products (is_hidden);
 CREATE INDEX ix_products_sell_price ON products (sell_price);
 
 -- ------------------------------------------------------------

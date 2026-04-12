@@ -10,19 +10,19 @@ class Category extends Model
 
     protected $fillable = [
         'name',
-        'is_deleted',
+        'is_hidden',
     ];
 
     protected function casts(): array
     {
         return [
-            'is_deleted' => 'boolean',
+            'is_hidden' => 'boolean',
         ];
     }
 
     public function scopeActive($query)
     {
-        return $query->where('is_deleted', 0);
+        return $query->where('is_hidden', 0);
     }
 
     public function products()

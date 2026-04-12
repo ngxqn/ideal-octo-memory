@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 class ProductRepository implements ProductRepositoryInterface
 {
     /**
-     * Retrieve all active products (is_deleted = 0) using the scopeActive.
+     * Retrieve all active products (is_hidden = 0) using the scopeActive.
      *
      * @return Collection
      */
