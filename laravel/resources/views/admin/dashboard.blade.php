@@ -25,24 +25,24 @@
 @section('content')
 <div class="row g-4 mb-4">
     <div class="col-sm-6 col-lg-3">
-        <div class="card stat-card shadow-sm border p-4">
+        <a href="{{ route('admin.catalogue.index') }}" class="card stat-card shadow-sm border p-4">
             <h2>{{ $totalProducts }}</h2><span>Sản phẩm</span>
-        </div>
+        </a>
     </div>
     <div class="col-sm-6 col-lg-3">
-        <div class="card stat-card shadow-sm border p-4">
+        <a href="{{ route('admin.orders.index') }}" class="card stat-card shadow-sm border p-4">
             <h2>{{ $totalOrders }}</h2><span>Đơn hàng</span>
-        </div>
+        </a>
     </div>
     <div class="col-sm-6 col-lg-3">
-        <div class="card stat-card shadow-sm border p-4">
+        <a href="{{ route('admin.orders.index', ['status' => 'pending']) }}" class="card stat-card shadow-sm border p-4">
             <h2>{{ $pendingOrders }}</h2><span>Chờ xử lý</span>
-        </div>
+        </a>
     </div>
     <div class="col-sm-6 col-lg-3">
-        <div class="card stat-card shadow-sm border p-4">
+        <a href="{{ route('admin.orders.index') }}" class="card stat-card shadow-sm border p-4">
             <h2>{{ number_format($totalRevenue, 0, ',', '.') }} ₫</h2><span>Doanh thu</span>
-        </div>
+        </a>
     </div>
 </div>
 
