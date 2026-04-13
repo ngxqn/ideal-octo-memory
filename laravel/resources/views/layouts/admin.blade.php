@@ -51,23 +51,22 @@
             <!-- Main Content -->
             <main class="main-content">
                 @if(session('success'))
-                    <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 mb-4" role="alert">
-                        <i class="fa-solid fa-check-circle me-2"></i>
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            showNotification("{{ session('success') }}", 'success');
+                        });
+                    </script>
                 @endif
 
                 @if($errors->any())
-                    <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0 mb-4" role="alert">
-                        <i class="fa-solid fa-triangle-exclamation me-2"></i>
-                        <ul class="mb-0 d-inline-block">
-                            @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            @php
+                                $allErrors = implode(' ', $errors->all());
+                            @endphp
+                            showNotification("{{ $allErrors }}", 'danger');
+                        });
+                    </script>
                 @endif
 
                 @yield('content')

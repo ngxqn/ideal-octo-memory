@@ -406,5 +406,28 @@
         const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
         modal.show();
     }
+
+    // --- Tab Persistence Logic ---
+    document.addEventListener('DOMContentLoaded', function() {
+        const STORAGE_KEY = 'admin_catalogue_active_tab';
+        const tabList = [].slice.call(document.querySelectorAll('button[data-bs-toggle="tab"]'));
+        
+        // 1. Restore Tab on Load
+        const activeTabId = localStorage.getItem(STORAGE_KEY);
+        if (activeTabId) {
+            const tabButton = document.getElementById(activeTabId);
+            if (tabButton) {
+                const tab = new bootstrap.Tab(tabButton);
+                tab.show();
+            }
+        }
+
+        // 2. Track Tab Changes
+        tabList.forEach(tabEl => {
+            tabEl.addEventListener('shown.bs.tab', function(event) {
+                localStorage.setItem(STORAGE_KEY, event.target.id);
+            });
+        });
+    });
 </script>
 @endsection
