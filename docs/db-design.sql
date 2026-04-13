@@ -237,12 +237,14 @@ CREATE TABLE inventory_logs (
     id              BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     product_id      BIGINT UNSIGNED NOT NULL,
     change_amount   INT             NOT NULL,
+    unit_price      DECIMAL(15, 2)  NOT NULL DEFAULT 0.00,
     reference_type  ENUM('product_init', 'goods_receipt', 'order_placed', 'order_cancelled') NOT NULL,
     reference_id    BIGINT UNSIGNED NOT NULL,
     created_at      TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT pk_inventory_logs PRIMARY KEY (id),
     CONSTRAINT chk_inventory_change_nonzero CHECK (change_amount != 0),
+    CONSTRAINT chk_inventory_logs_unit_price CHECK (unit_price >= 0),
     CONSTRAINT fk_inventory_logs_products
         FOREIGN KEY (product_id) REFERENCES products (id)
         ON UPDATE CASCADE ON DELETE RESTRICT

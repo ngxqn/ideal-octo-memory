@@ -11,7 +11,7 @@ Trước khi tiến hành vẽ sơ đồ ERD chi tiết, danh sách dưới đâ
 **Giả định & Giải pháp (Snapshot Pattern):**
 - Trong bảng `orders` (Đơn đặt hàng) / `order_details` (Chi tiết đơn hàng): Tại thời điểm khách hàng ấn "Đặt hàng", toàn bộ giá bán hiện hành lúc đó sẽ được **lưu cứng (snapshot)** vào dòng `order_details`. Giá này hoàn toàn độc lập với bảng `products`. Dù Admin có lên giá sản phẩm sau đó thì hóa đơn cũ của khách vẫn không bị ảnh hưởng.
 - Trong bảng `goods_receipts` (Phiếu nhập) / `goods_receipt_details` (Chi tiết phiếu nhập): Giá nhập của lô hàng cũng được **lưu cứng** tương tự.
-- Bảng `products` sẽ lưu: `base_price` (giá nhập bình quân hiện tại), `profit_margin` (% lợi nhuận), và `sell_price` (giá bán tính từ giá bình quân). Các con số này chỉ mô tả **trạng thái hiện tại** của sản phẩm. `sell_price` được triển khai dưới dạng **GENERATED COLUMN** (MySQL Stored) — tự động tính lại khi `base_price` hoặc `profit_margin` thay đổi và được làm tròn **0 chữ số thập phân (chuẩn VND)**. **Application Layer không được `UPDATE sell_price` trực tiếp.**
+- Bảng `products` sẽ lưu: `base_price` (giá nhập bình quân hiện tại theo WAC), `profit_margin` (% lợi nhuận), và `sell_price` (giá bán tính từ giá bình quân). Các con số này chỉ mô tả **trạng thái hiện tại** của sản phẩm. `sell_price` được triển khai dưới dạng **GENERATED COLUMN** (MySQL Stored). **Application Layer không được `UPDATE sell_price` trực tiếp.** Lịch sử ghi nhận giá trị biến đổi Tồn Kho (WAC) sẽ được lưu vết kèm `unit_price` trên hệ thống bảng `inventory_logs`.
 
 ---
 
@@ -26,17 +26,10 @@ Hệ thống sử dụng mô hình kết hợp giữa **Cache Hiệu Năng** và
 - **Bảng `products.stock_quantity`** lưu tồn kho hiện tại để phục vụ kiểm tra realtime (operational stock).
 - **Bảng `inventory_logs`** là sổ cái lịch sử, dùng để audit và tái cấu trúc tồn kho tại mọi thời điểm trong quá khứ (inventory ledger).
 
-### 2.2. Quy ước "Init Log" (Bắt buộc)
-Để bảng Ledger luôn đầy đủ và không cần phụ thuộc vào giá trị khởi tạo lưu ở nơi khác, hệ thống áp dụng quy ước:
-- Khi một sản phẩm được tạo mới, Backend **bắt buộc** phải thực hiện theo trình tự sau trong cùng một **Database Transaction**:
-  1. **Bước 1:** `INSERT` vào bảng `products` với `stock_quantity = {initial_stock}`. Việc này nhằm khai sinh sản phẩm và lấy được `id` (Primary Key).
-  2. **Bước 2:** `INSERT` vào bảng `inventory_logs` một bản ghi gốc (initial state) sử dụng `id` vừa nhận được:
-     - `product_id = {id}`
-     - `change_amount = +{initial_stock}`
-     - `reference_type = 'product_init'`
-     - `reference_id = {id}` (Dùng chính ID sản phẩm làm tham chiếu cho dòng khởi tạo)
-     - `created_at = {thời điểm tạo sản phẩm}`
-- **Lưu ý:** Đây là điều kiện cần để công thức tính tồn kho quá khứ hoạt động chính xác. Trình tự này đảm bảo Ledger luôn có điểm bắt đầu gắn liền với một bản ghi `products` hợp lệ.
+### 2.2. Quy ước "First Inbound"
+Để đảm bảo Tồn kho luôn đi đôi với một Giá nhập nhất quán (nguồn gốc dữ liệu tài chính chính xác), hệ thống thống nhất triệt tiêu hoàn toàn khả năng gán trị số đầu kì ảo:
+- Khi một sản phẩm được tạo mới, nó sẽ tự động bị giam ở: `stock_quantity = 0` và `base_price = 0`. DB không ghi thêm bất kỳ `inventory_logs` tạm nào.
+- Thông số chỉ có thể được nhảy lên khi có phát sinh **Nhập Hàng Lần Đầu (First Goods Receipt)**. Phiếu nhập này đảm nhận việc tạo dòng Ledger đầu tiên và châm nhiên liệu (giá, tồn kho) cho Hệ thống WAC (Weighted Average Cost).
 
 ### 2.3. Nguyên tắc Đồng bộ & Transaction
 - **Nguyên tắc cập nhật:** Mọi thao tác làm thay đổi tồn kho (Tạo đơn, Hủy đơn, Nhập hàng) bắt buộc phải cập nhật **đồng thời cả 2 nơi**: vừa `UPDATE stock_quantity` (Cache) vừa `INSERT` dòng mới vào `inventory_logs` (Ledger).
@@ -49,7 +42,7 @@ SELECT SUM(change_amount)
 FROM inventory_logs
 WHERE product_id = X AND created_at <= T;
 ```
-- **Lưu ý:** Nhờ có dòng `init`, kết quả `SUM` sẽ phản ánh đúng tổng lượng hàng tồn từ lúc khai sinh đến thời điểm T mà không cần cộng thêm bất kỳ tham số nào khác.
+- **Lưu ý:** Kết quả `SUM` sẽ phản ánh đúng tổng lượng hàng tồn từ lúc khai sinh đến thời điểm T mà không cần cộng thêm bất kỳ tham số nào khác. Tương tự, nếu muốn tính Giá Vốn WAC, chúng ta sẽ lật lịch sử để tái hiện giá theo lượng nhập xuất.
 
 ### 2.5. Luồng Tồn Kho (Inventory Flow)
 - **Khi Khách tạo đơn (`Pending`):** Trừ trực tiếp vào `products.stock_quantity` **ngay lập tức** và ghi `inventory_logs` (số âm) để giữ chỗ (reservation) hàng hóa, tránh bán lố.

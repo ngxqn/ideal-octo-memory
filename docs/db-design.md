@@ -287,18 +287,21 @@ Ghi nhận **mọi** biến động tồn kho (±). Đây là nguồn dữ liệ
 |-----|------|-----------|----------|-------|
 | `id` | BIGINT UNSIGNED | PK, AUTO_INCREMENT | NOT NULL | |
 | `product_id` | BIGINT UNSIGNED | FK → products(id) | NOT NULL | Sản phẩm bị biến động |
-| `change_amount` | INT | CHECK (≠0) | NOT NULL | Số lượng thay đổi (+nhập/init, −xuất) |
+| `change_amount` | INT | CHECK (≠0) | NOT NULL | Số lượng thay đổi (+nhập, −xuất) |
+| `unit_price` | DECIMAL(15,2) | CHECK (≥0) | NOT NULL | Giá trị snapshot (giá nhập khi Inbound, giá vốn khi Outbound) |
 | `reference_type` | ENUM('product_init','goods_receipt','order_placed','order_cancelled') | | NOT NULL | Loại nghiệp vụ gây biến động |
 | `reference_id` | BIGINT UNSIGNED | | NOT NULL | ID bản ghi gốc (product/goods_receipt/order) |
 | `created_at` | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP | NOT NULL | Thời điểm biến động |
 
 **Indexes:** `ix_inventory_logs_product_id(product_id)`, `ix_inventory_logs_product_created(product_id, created_at)`, `ix_inventory_logs_reference(reference_type, reference_id)`, `ix_inventory_logs_created_at(created_at)`
 
+**Constraints:** `chk_inventory_change_nonzero` (change_amount != 0), `chk_inventory_logs_unit_price` (unit_price >= 0)
+
 **Ghi chú về `reference_type`:**
 
 | Giá trị | Trigger | `change_amount` | `reference_id` trỏ tới |
 |---------|---------|-----------------|------------------------|
-| `product_init` | Tạo SP mới | + (SL khởi tạo) | `products.id` |
+| `product_init` | Tạo SP mới (Legacy) | + (Luật cũ - Đã bãi bỏ) | `products.id` |
 | `goods_receipt` | Hoàn thành phiếu nhập | + (SL nhập) | `goods_receipts.id` |
 | `order_placed` | Khách đặt đơn (Pending) | − (SL đặt) | `orders.id` |
 | `order_cancelled` | Hủy đơn hàng | + (SL hoàn) | `orders.id` |
@@ -417,6 +420,7 @@ erDiagram
         BIGINT_UNSIGNED id PK
         BIGINT_UNSIGNED product_id FK
         INT change_amount
+        DECIMAL unit_price
         ENUM reference_type
         BIGINT_UNSIGNED reference_id
         TIMESTAMP created_at
@@ -480,7 +484,7 @@ FROM inventory_logs
 WHERE product_id = 5 AND created_at <= '2026-01-15 23:59:59';
 ```
 
-Nhờ quy ước **Init Log** (mỗi sản phẩm khi tạo đều có dòng `product_init`), `SUM(change_amount)` luôn ra con số tồn kho chính xác mà không cần bất kỳ tham số bổ sung nào.
+Nhờ quy ước **First Inbound** (mọi sản phẩm phải có phiếu nhập đầu tiên để xác định giá và tồn), `SUM(change_amount)` luôn ra con số tồn kho chính xác mà không cần bất kỳ tham số bổ sung nào. Tương tự, nếu muốn tính Giá Vốn WAC, chúng ta có snapshot `unit_price` ngay tại Ledger.
 
 ---
 
@@ -531,7 +535,7 @@ GROUP BY p.id, p.name, p.stock_quantity;
 -- Nếu COUNT > 0 thì SOFT DELETE, ngược lại HARD DELETE
 SELECT COUNT(*) AS has_transactions
 FROM inventory_logs
-WHERE product_id = :id AND reference_type != 'product_init';
+WHERE product_id = :id;
 ```
 
 **Kiểm tra danh mục có sản phẩm tham chiếu không:**
@@ -608,10 +612,11 @@ DB::transaction(function () use ($product, $importQty, $importPrice) {
         'stock_quantity'  => $product->stock_quantity + $importQty,
     ]);
 
-    // 3. Ghi inventory_logs (ledger)
+    // 3. Ghi inventory_logs (ledger) kèm snapshot unit_price
     InventoryLog::create([
         'product_id'     => $product->id,
         'change_amount'  => $importQty,
+        'unit_price'     => $importPrice,
         'reference_type' => 'goods_receipt',
         'reference_id'   => $goodsReceipt->id,
     ]);
@@ -695,5 +700,5 @@ Script sau chạy được trực tiếp trên MySQL 8.0+: [db-design.sql](db-de
 | 7 | `order_details` | 8 | Dòng sản phẩm trong đơn (snapshot giá) |
 | 8 | `goods_receipts` | 6 | Phiếu nhập hàng |
 | 9 | `goods_receipt_details` | 6 | Dòng sản phẩm nhập (snapshot giá nhập) |
-| 10 | `inventory_logs` | 6 | Sổ cái biến động tồn kho |
+| 10 | `inventory_logs` | 7 | Sổ cái biến động tồn kho |
 | | **Tổng** | **10 bảng** | |

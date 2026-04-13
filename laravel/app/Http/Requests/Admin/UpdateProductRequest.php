@@ -26,11 +26,9 @@ class UpdateProductRequest extends FormRequest
             ],
             'name' => 'required|string|max:200',
             'description' => 'nullable|string',
-            'base_price' => 'required|numeric|min:0',
             'profit_margin' => 'required|numeric|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'supplier' => 'nullable|string|max:200',
-            'stock_quantity' => 'nullable|integer|min:0',
             'low_stock_threshold' => 'nullable|integer|min:0',
             'is_hidden' => 'nullable|boolean',
         ];

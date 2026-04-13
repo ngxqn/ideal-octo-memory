@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Services\InventoryService;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class ProductSeeder extends Seeder
 {
@@ -132,15 +133,63 @@ class ProductSeeder extends Seeder
                 // Prepare data for InventoryService
                 $data = $p;
                 $data['category_id'] = $category->id;
-                unset($data['category_slug']);
+                // Chặn không đẩy thẳng Gía/Tồn vào Model nữa
+                $initialBasePrice = $data['base_price'];
+                $initialStock = $data['stock_quantity'];
+                unset($data['category_slug'], $data['base_price'], $data['stock_quantity']);
 
                 $product = Product::where('sku', $p['sku'])->first();
                 if ($product) {
                     $product->update($data);
                 } else {
-                    $this->inventoryService->createProduct($data);
+                    $product = $this->inventoryService->createProduct($data);
+                }
+
+                // Thực hiện giả lập Phiếu Nhập để nâng WAC và Tồn kho hợp lệ nếu chưa có
+                if ($initialStock > 0 && $product->stock_quantity == 0) {
+                    $this->simulateGoodsReceipt($product, $initialStock, $initialBasePrice);
                 }
             }
         }
+    }
+
+    /**
+     * Helper phụ trợ: Tạo Goods Receipt nháp để mồi dữ liệu WAC và Ledger
+     * đúng theo Pipeline thay vì sửa thẳng cột.
+     */
+    private function simulateGoodsReceipt(Product $product, int $quantity, float $importPrice)
+    {
+        // 1. Tạo phiếu nhập
+        $receiptId = DB::table('goods_receipts')->insertGetId([
+            'created_by' => 1, // Assume Admin ID = 1
+            'status' => 'completed',
+            'note' => 'Initial WAC Seeding',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // 2. Tạo chi tiết phiếu nhập
+        DB::table('goods_receipt_details')->insert([
+            'goods_receipt_id' => $receiptId,
+            'product_id' => $product->id,
+            'quantity' => $quantity,
+            'import_price' => $importPrice,
+            'created_at' => now(),
+        ]);
+
+        // 3. Cập nhật base_price vào Products (WAC = Mới * do trước đó đang là 0)
+        // new_base_price = ((0 * 0) + ($quantity * $importPrice)) / (0 + $quantity) = $importPrice
+        $product->update([
+            'base_price' => $importPrice
+        ]);
+
+        // 4. Update ledger và cache thông qua Service
+        $this->inventoryService->adjustStock(
+            $product->id,
+            $quantity,
+            'goods_receipt',
+            $receiptId,
+            $importPrice
+        );
     }
 }

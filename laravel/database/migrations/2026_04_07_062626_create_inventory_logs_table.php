@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained('products')->cascadeOnUpdate()->restrictOnDelete();
             $table->integer('change_amount');
+            $table->decimal('unit_price', 15, 2)->default(0.00);
             $table->enum('reference_type', ['product_init', 'goods_receipt', 'order_placed', 'order_cancelled']);
             $table->unsignedBigInteger('reference_id');
             $table->timestamp('created_at')->useCurrent();
@@ -28,7 +29,8 @@ return new class extends Migration
         // Add CHECK constraint
         \Illuminate\Support\Facades\DB::statement("
             ALTER TABLE inventory_logs 
-            ADD CONSTRAINT chk_inventory_change_nonzero CHECK (change_amount != 0)
+            ADD CONSTRAINT chk_inventory_change_nonzero CHECK (change_amount != 0),
+            ADD CONSTRAINT chk_inventory_logs_unit_price CHECK (unit_price >= 0)
         ");
     }
 

@@ -32,8 +32,7 @@ class InventoryService
     }
 
     /**
-     * Tự động tạo Product và lưu "Init Log" vào Inventory Ledger (nếu stock > 0).
-     * Bọc trong DB::transaction để bảo toàn ACID (Rule 2.2).
+     * Tự động tạo Product (với stock = 0, base_price = 0 theo luật WAC First Inbound).
      *
      * @param array $data Dữ liệu khởi tạo sản phẩm
      * @return Product
@@ -42,25 +41,14 @@ class InventoryService
     public function createProduct(array $data): Product
     {
         return DB::transaction(function () use ($data) {
-            // Bước 1: Khai sinh sản phẩm qua Repository (Rule 1.1 + Rule 2.2).
-            // Eloquent sẽ tự throw QueryException nếu thất bại do Mass Assignment hoặc Schema constraint.
+            // Đảm bảo sản phẩm sinh ra luôn trắng tinh theo chuẩn tài chính
+            $data['base_price'] = 0;
+            $data['stock_quantity'] = 0;
+
             $product = $this->productRepo->create($data);
 
             if (!$product || !$product->id) {
                 throw new Exception("Lỗi: Không thể khởi tạo sản phẩm mới qua Repository.");
-            }
-
-            $initialStock = (int) ($data['stock_quantity'] ?? 0);
-
-            // Bước 2: Bắt buộc tuân thủ Rule 2.2 "Init Log", tuy nhiên bảng inventory_logs có CHECK (change_amount != 0).
-            // Do đó chúng ta chỉ log vào sổ cái nếu số lượng ban đầu thực sự lớn hơn 0.
-            if ($initialStock > 0) {
-                $this->inventoryLogRepo->createEntry([
-                    'product_id' => $product->id,
-                    'change_amount' => $initialStock,
-                    'reference_type' => 'product_init',
-                    'reference_id' => $product->id, // Dùng chính ID sản phẩm làm tham chiếu
-                ]);
             }
 
             return $product;
@@ -74,23 +62,25 @@ class InventoryService
      * @param int $delta Số lượng thay đổi (dương là cộng, âm là trừ)
      * @param string $refType Loại sự kiện (order_placed, order_cancelled, goods_receipt)
      * @param int $refId ID đơn hàng/phiếu nhập tham chiếu
+     * @param float $unitPrice Lịch sử đơn giá (Giá nhận WAC lúc nhập, hoặc giá vốn lúc xuất)
      * @return void
      * @throws Exception
      */
-    public function adjustStock(int $productId, int $delta, string $refType, int $refId): void
+    public function adjustStock(int $productId, int $delta, string $refType, int $refId, float $unitPrice = 0.00): void
     {
         if ($delta === 0) {
             return;
         }
 
-        DB::transaction(function () use ($productId, $delta, $refType, $refId) {
+        DB::transaction(function () use ($productId, $delta, $refType, $refId, $unitPrice) {
             // Bước 1: Trừ trực tiếp vào products.stock_quantity (CHECK constraint sẽ chặn nếu < 0)
             $this->productRepo->adjustStock($productId, $delta);
 
-            // Bước 2: Sinh thêm một dòng inventory_logs mới để giữ chỗ
+            // Bước 2: Sinh thêm một dòng inventory_logs mới để giữ chỗ với snapshot unit price
             $this->inventoryLogRepo->createEntry([
                 'product_id' => $productId,
                 'change_amount' => $delta,
+                'unit_price' => $unitPrice,
                 'reference_type' => $refType,
                 'reference_id' => $refId,
             ]);
@@ -123,7 +113,8 @@ class InventoryService
                     $detail->product_id, 
                     $detail->quantity, 
                     'order_cancelled', 
-                    $order->id
+                    $order->id,
+                    $detail->unit_price
                 );
             }
             

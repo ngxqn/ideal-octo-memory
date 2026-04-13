@@ -214,7 +214,7 @@
                 </div>
                 <div class="modal-body p-4">
                     <div class="row g-3">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <label class="form-label fw-bold small">Tên sản phẩm <span class="text-danger">*</span></label>
                             <input type="text" name="name" id="p_name" class="form-control" required placeholder="Ví dụ: Bánh thập cẩm gà quay">
                         </div>
@@ -232,13 +232,6 @@
                             </select>
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label fw-bold small">Giá nhập (Base Price) <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <input type="number" name="base_price" id="p_base_price" class="form-control" required min="0">
-                                <span class="input-group-text">₫</span>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
                             <label class="form-label fw-bold small">Lợi nhuận (%) <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <input type="number" name="profit_margin" id="p_profit_margin" class="form-control" required min="0" step="0.01">
@@ -246,8 +239,15 @@
                             </div>
                         </div>
                         <div class="col-md-4">
+                            <label class="form-label fw-bold small">Giá nhập (Base Price) <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <input type="number" id="p_base_price" class="form-control bg-light" readonly value="0">
+                                <span class="input-group-text">₫</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <label class="form-label fw-bold small">Tồn kho ban đầu</label>
-                            <input type="number" name="stock_quantity" id="p_stock_quantity" class="form-control" min="0" value="0">
+                            <input type="number" id="p_stock_quantity" class="form-control bg-light" readonly value="0">
                         </div>
                         <div class="col-12">
                             <label class="form-label fw-bold small">Mô tả sản phẩm</label>
@@ -349,7 +349,8 @@
         if (mode === 'add') {
             title.textContent = 'Thêm Sản phẩm mới';
             form.action = "{{ route('admin.catalogue.products.store') }}";
-            document.getElementById('p_stock_quantity').disabled = false;
+            document.getElementById('p_base_price').value = 0;
+            document.getElementById('p_stock_quantity').value = 0;
         } else {
             title.textContent = 'Chỉnh sửa Sản phẩm';
             form.action = "{{ route('admin.catalogue.products.update', ':id') }}".replace(':id', data.id);
@@ -364,8 +365,7 @@
             document.getElementById('p_description').value = data.description || '';
             document.getElementById('p_is_hidden').checked = data.is_hidden;
             
-            // Disable stock quantity in edit (should use inventory adjustments)
-            document.getElementById('p_stock_quantity').disabled = true;
+            // Stock and base price are readonly views
             document.getElementById('p_stock_quantity').value = data.stock_quantity;
             
             if (data.image) {

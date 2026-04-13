@@ -66,7 +66,7 @@
                                 <i class="fa-solid fa-save"></i> Lưu
                             </button>
                             <button class="btn btn-secondary btn-sm" onclick="resetPrice({{ $product->id }})">
-                                <i class="fa-solid fa-undo"></i> Reset
+                                <i class="fa-solid fa-undo"></i> Đặt lại
                             </button>
                         </td>
                     </tr>
