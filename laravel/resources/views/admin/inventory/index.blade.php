@@ -8,73 +8,77 @@
 @section('content')
 
 <!-- Báo Cáo Tồn Kho Hiện Tại -->
-<div class="card shadow-sm border-0 mb-4">
-    <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0">
-        <h3 class="h5 mb-0 fw-bold text-secondary text-uppercase small letter-spacing-1">
-            <i class="fa-solid fa-box-open me-2 text-primary"></i> Báo Cáo Tồn Kho Hiện Tại
-        </h3>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle border-top mt-2">
-                <thead class="table-light">
-                    <tr>
-                        <th style="width: 10%;">Mã SP</th>
-                        <th style="width: 25%;">Tên Bánh</th>
-                        <th style="width: 15%;">Loại</th>
-                        <th class="text-center" style="width: 10%;">Tồn kho</th>
-                        <th class="text-center" style="width: 15%;">Trạng thái</th>
-                        <th class="text-center" style="width: 15%;">Cập nhật cuối</th>
-                        <th class="text-center" style="width: 10%;">Hành động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($products as $product)
-                        @php
-                            $isOutOfStock = $product->stock_quantity <= 0;
-                            $isLowStock = $product->stock_quantity <= $product->low_stock_threshold;
-                            
-                            $rowClass = '';
-                            if ($isOutOfStock) $rowClass = 'table-danger';
-                            elseif ($isLowStock) $rowClass = 'table-warning';
-                        @endphp
-                        <tr class="{{ $rowClass }}">
-                            <td class="fw-bold text-primary small">{{ $product->sku }}</td>
-                            <td>
-                                <span class="fw-medium">{{ $product->name }}</span>
-                                @if($product->is_hidden)
-                                    <span class="badge bg-secondary ms-1 small">Ẩn</span>
-                                @endif
-                            </td>
-                            <td class="small">{{ $product->category->name }}</td>
-                            <td class="text-center fw-bold {{ $isLowStock ? 'text-danger' : '' }}">
-                                {{ number_format($product->stock_quantity) }}
-                            </td>
-                            <td class="text-center">
-                                @if($isOutOfStock)
-                                    <span class="badge bg-danger rounded-pill">HẾT HÀNG</span>
-                                @elseif($isLowStock)
-                                    <span class="badge bg-warning text-dark rounded-pill">SẮP HẾT ( < {{ $product->low_stock_threshold }})</span>
-                                @else
-                                    <span class="badge bg-success rounded-pill">Bình thường</span>
-                                @endif
-                            </td>
-                            <td class="text-center small text-muted">
-                                {{ $product->updated_at ? $product->updated_at->format('d/m/Y H:i') : 'N/A' }}
-                            </td>
-                            <td class="text-center">
-                                <a href="{{ route('admin.goods-receipts.index') }}" class="btn btn-outline-primary btn-sm px-2 py-0" title="Nhập hàng qua PO">
-                                    <i class="fa-solid fa-truck-loading small"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7" class="text-center py-4 text-muted">Không có dữ liệu sản phẩm.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+<div class="accordion mb-4 shadow-sm border-0" id="accordionStockStatus">
+    <div class="accordion-item border">
+        <h2 class="accordion-header">
+            <button class="accordion-button fw-bold text-secondary text-uppercase small letter-spacing-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseStockStatus" aria-expanded="true">
+                <i class="fa-solid fa-box-open me-2 text-primary"></i> Báo Cáo Tồn Kho Hiện Tại
+            </button>
+        </h2>
+        <div id="collapseStockStatus" class="accordion-collapse collapse show">
+            <div class="accordion-body bg-white">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle border-top mt-2">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 10%;">Mã SP</th>
+                                <th style="width: 25%;">Tên Bánh</th>
+                                <th style="width: 15%;">Loại</th>
+                                <th class="text-center" style="width: 10%;">Tồn kho</th>
+                                <th class="text-center" style="width: 15%;">Trạng thái</th>
+                                <th class="text-center" style="width: 15%;">Cập nhật cuối</th>
+                                <th class="text-center" style="width: 10%;">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($products as $product)
+                                @php
+                                    $isOutOfStock = $product->stock_quantity <= 0;
+                                    $isLowStock = $product->stock_quantity <= $product->low_stock_threshold;
+                                    
+                                    $rowClass = '';
+                                    if ($isOutOfStock) $rowClass = 'table-danger';
+                                    elseif ($isLowStock) $rowClass = 'table-warning';
+                                @endphp
+                                <tr class="{{ $rowClass }}">
+                                    <td class="fw-bold text-primary small">{{ $product->sku }}</td>
+                                    <td>
+                                        <span class="fw-medium">{{ $product->name }}</span>
+                                        @if($product->is_hidden)
+                                            <span class="badge bg-secondary ms-1 small">Ẩn</span>
+                                        @endif
+                                    </td>
+                                    <td class="small">{{ $product->category->name }}</td>
+                                    <td class="text-center fw-bold {{ $isLowStock ? 'text-danger' : '' }}">
+                                        {{ number_format($product->stock_quantity) }}
+                                    </td>
+                                    <td class="text-center">
+                                        @if($isOutOfStock)
+                                            <span class="badge bg-danger rounded-pill">HẾT HÀNG</span>
+                                        @elseif($isLowStock)
+                                            <span class="badge bg-warning text-dark rounded-pill">SẮP HẾT ( < {{ $product->low_stock_threshold }})</span>
+                                        @else
+                                            <span class="badge bg-success rounded-pill">Bình thường</span>
+                                        @endif
+                                    </td>
+                                    <td class="text-center small text-muted">
+                                        {{ $product->updated_at ? $product->updated_at->format('d/m/Y H:i') : 'N/A' }}
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{{ route('admin.goods-receipts.index') }}" class="btn btn-outline-primary btn-sm px-2 py-0" title="Nhập hàng qua PO">
+                                            <i class="fa-solid fa-truck-loading small"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center py-4 text-muted">Không có dữ liệu sản phẩm.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -149,112 +153,116 @@
 </div>
 
 <!-- Nhật Ký Biến Động Kho (Ledger) -->
-<div class="card shadow-sm border-0 mb-4">
-    <div class="card-header bg-transparent border-bottom-0 pt-3 pb-0">
-        <h3 class="h5 mb-0 fw-bold text-secondary text-uppercase small letter-spacing-1">
-            <i class="fa-solid fa-history me-2 text-primary"></i> Nhật Ký Biến Động Kho (Ledger)
-        </h3>
-    </div>
-    <div class="card-body">
-        <!-- Bộ lọc Ledger -->
-        <form method="GET" action="{{ route('admin.inventory.index') }}" class="row g-2 mb-4 align-items-end">
-            <div class="col-md-3">
-                <label class="form-label small fw-bold">Sản phẩm:</label>
-                <select name="product_id" class="form-select form-select-sm">
-                    <option value="">-- Tất cả --</option>
-                    @foreach($products as $p)
-                        <option value="{{ $p->id }}" {{ request('product_id') == $p->id ? 'selected' : '' }}>
-                            {{ $p->name }} ({{ $p->sku }})
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label class="form-label small fw-bold">Loại biến động:</label>
-                <select name="ref_type" class="form-select form-select-sm">
-                    <option value="">-- Tất cả --</option>
-                    <option value="product_init" {{ request('ref_type') == 'product_init' ? 'selected' : '' }}>Khởi tạo</option>
-                    <option value="goods_receipt" {{ request('ref_type') == 'goods_receipt' ? 'selected' : '' }}>Nhập hàng (PO)</option>
-                    <option value="order_placed" {{ request('ref_type') == 'order_placed' ? 'selected' : '' }}>Xuất hàng (Order)</option>
-                    <option value="order_cancelled" {{ request('ref_type') == 'order_cancelled' ? 'selected' : '' }}>Hoàn kho (Hủy đơn)</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label class="form-label small fw-bold">Từ ngày:</label>
-                <input type="date" name="start_date" class="form-control form-control-sm" value="{{ request('start_date') }}">
-            </div>
-            <div class="col-md-2">
-                <label class="form-label small fw-bold">Đến ngày:</label>
-                <input type="date" name="end_date" class="form-control form-control-sm" value="{{ request('end_date') }}">
-            </div>
-            <div class="col-md-3 d-flex gap-1 mt-auto">
-                <button type="submit" class="btn btn-primary btn-sm flex-grow-1 fw-bold">Tìm kiếm</button>
-                <a href="{{ route('admin.inventory.index') }}" class="btn btn-secondary btn-sm flex-grow-1 fw-bold">Đặt lại</a>
-            </div>
-        </form>
+<div class="accordion mb-4 shadow-sm border-0" id="accordionLedger">
+    <div class="accordion-item border">
+        <h2 class="accordion-header">
+            <button class="accordion-button fw-bold text-secondary text-uppercase small letter-spacing-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLedger" aria-expanded="true">
+                <i class="fa-solid fa-history me-2 text-primary"></i> Nhật Ký Biến Động Kho (Ledger)
+            </button>
+        </h2>
+        <div id="collapseLedger" class="accordion-collapse collapse show">
+            <div class="accordion-body bg-white">
+                <!-- Bộ lọc Ledger -->
+                <form method="GET" action="{{ route('admin.inventory.index') }}" class="row g-2 mb-4 align-items-end">
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Sản phẩm:</label>
+                        <select name="product_id" class="form-select form-select-sm">
+                            <option value="">-- Tất cả --</option>
+                            @foreach($products as $p)
+                                <option value="{{ $p->id }}" {{ request('product_id') == $p->id ? 'selected' : '' }}>
+                                    {{ $p->name }} ({{ $p->sku }})
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-bold">Loại biến động:</label>
+                        <select name="ref_type" class="form-select form-select-sm">
+                            <option value="">-- Tất cả --</option>
+                            <option value="product_init" {{ request('ref_type') == 'product_init' ? 'selected' : '' }}>Khởi tạo</option>
+                            <option value="goods_receipt" {{ request('ref_type') == 'goods_receipt' ? 'selected' : '' }}>Nhập hàng (PO)</option>
+                            <option value="order_placed" {{ request('ref_type') == 'order_placed' ? 'selected' : '' }}>Xuất hàng (Order)</option>
+                            <option value="order_cancelled" {{ request('ref_type') == 'order_cancelled' ? 'selected' : '' }}>Hoàn kho (Hủy đơn)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-bold">Từ ngày:</label>
+                        <input type="date" name="start_date" class="form-control form-control-sm" value="{{ request('start_date') }}">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-bold">Đến ngày:</label>
+                        <input type="date" name="end_date" class="form-control form-control-sm" value="{{ request('end_date') }}">
+                    </div>
+                    <div class="col-md-3 d-flex gap-1 mt-auto">
+                        <button type="submit" class="btn btn-primary btn-sm flex-grow-1 fw-bold">Tìm kiếm</button>
+                        <a href="{{ route('admin.inventory.index') }}" class="btn btn-secondary btn-sm flex-grow-1 fw-bold">Đặt lại</a>
+                    </div>
+                </form>
 
-        <div class="table-responsive">
-            <table class="table table-sm table-hover align-middle border-top">
-                <thead class="table-light">
-                    <tr>
-                        <th style="width: 15%;">Thời gian</th>
-                        <th style="width: 20%;">Sản phẩm</th>
-                        <th class="text-center" style="width: 15%;">Loại</th>
-                        <th class="text-center" style="width: 15%;">Biến động</th>
-                        <th class="text-end" style="width: 15%;">Đơn giá (Log)</th>
-                        <th style="width: 20%;">Tham chiếu</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($logs as $log)
-                        @php
-                            $refText = [
-                                'product_init' => ['text' => 'Khởi tạo', 'class' => 'bg-secondary'],
-                                'goods_receipt' => ['text' => 'Nhập hàng', 'class' => 'bg-success'],
-                                'order_placed' => ['text' => 'Xuất hàng', 'class' => 'bg-danger'],
-                                'order_cancelled' => ['text' => 'Hoàn kho', 'class' => 'bg-info text-dark'],
-                            ];
-                            $r = $refText[$log->reference_type] ?? ['text' => $log->reference_type, 'class' => 'bg-light text-dark'];
-                            
-                            $isPositive = $log->change_amount > 0;
-                        @endphp
-                        <tr>
-                            <td class="small text-muted">{{ $log->created_at->format('d/m/Y H:i:s') }}</td>
-                            <td class="fw-bold">{{ $log->product->name }}</td>
-                            <td class="text-center">
-                                <span class="badge {{ $r['class'] }} small">{{ $r['text'] }}</span>
-                            </td>
-                            <td class="text-center fw-bold {{ $isPositive ? 'text-success' : 'text-danger' }}">
-                                {{ $isPositive ? '+' : '' }}{{ $log->change_amount }}
-                            </td>
-                            <td class="text-end small">
-                                @if($log->unit_price > 0)
-                                    {{ number_format($log->unit_price, 0, ',', '.') }} ₫
-                                @else
-                                    -
-                                @endif
-                            </td>
-                            <td class="small text-muted">
-                                @if($log->reference_type == 'goods_receipt')
-                                    PN{{ str_pad($log->reference_id, 5, '0', STR_PAD_LEFT) }}
-                                @elseif(in_array($log->reference_type, ['order_placed', 'order_cancelled']))
-                                    MD{{ str_pad($log->reference_id, 5, '0', STR_PAD_LEFT) }}
-                                @else
-                                    #{{ $log->reference_id }}
-                                @endif
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="text-center py-4 text-muted">Chưa có nhật ký biến động kho.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover align-middle border-top">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 15%;">Thời gian</th>
+                                <th style="width: 20%;">Sản phẩm</th>
+                                <th class="text-center" style="width: 15%;">Loại</th>
+                                <th class="text-center" style="width: 15%;">Biến động</th>
+                                <th class="text-end" style="width: 15%;">Đơn giá (Log)</th>
+                                <th style="width: 20%;">Tham chiếu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($logs as $log)
+                                @php
+                                    $refText = [
+                                        'product_init' => ['text' => 'Khởi tạo', 'class' => 'bg-secondary'],
+                                        'goods_receipt' => ['text' => 'Nhập hàng', 'class' => 'bg-success'],
+                                        'order_placed' => ['text' => 'Xuất hàng', 'class' => 'bg-danger'],
+                                        'order_cancelled' => ['text' => 'Hoàn kho', 'class' => 'bg-info text-dark'],
+                                    ];
+                                    $r = $refText[$log->reference_type] ?? ['text' => $log->reference_type, 'class' => 'bg-light text-dark'];
+                                    
+                                    $isPositive = $log->change_amount > 0;
+                                @endphp
+                                <tr>
+                                    <td class="small text-muted">{{ $log->created_at->format('d/m/Y H:i:s') }}</td>
+                                    <td class="fw-bold">{{ $log->product->name }}</td>
+                                    <td class="text-center">
+                                        <span class="badge {{ $r['class'] }} small">{{ $r['text'] }}</span>
+                                    </td>
+                                    <td class="text-center fw-bold {{ $isPositive ? 'text-success' : 'text-danger' }}">
+                                        {{ $isPositive ? '+' : '' }}{{ $log->change_amount }}
+                                    </td>
+                                    <td class="text-end small">
+                                        @if($log->unit_price > 0)
+                                            {{ number_format($log->unit_price, 0, ',', '.') }}&nbsp;₫
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                    <td class="small text-muted">
+                                        @if($log->reference_type == 'goods_receipt')
+                                            PN{{ str_pad($log->reference_id, 5, '0', STR_PAD_LEFT) }}
+                                        @elseif(in_array($log->reference_type, ['order_placed', 'order_cancelled']))
+                                            MD{{ str_pad($log->reference_id, 5, '0', STR_PAD_LEFT) }}
+                                        @else
+                                            #{{ $log->reference_id }}
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-muted">Chưa có nhật ký biến động kho.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
 
-        <div class="mt-4 d-flex justify-content-center">
-            {{ $logs->links('pagination::bootstrap-5') }}
+                <div class="mt-4 d-flex justify-content-center">
+                    {{ $logs->links('pagination::bootstrap-5') }}
+                </div>
+            </div>
         </div>
     </div>
 </div>

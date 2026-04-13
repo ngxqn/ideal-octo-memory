@@ -50,7 +50,7 @@
                                     return $item->quantity * $item->import_price;
                                 });
                             @endphp
-                            {{ number_format($total, 0, ',', '.') }} ₫
+                            {{ number_format($total, 0, ',', '.') }}&nbsp;₫
                         </td>
                         <td class="text-center">
                             @if($receipt->status === 'completed')
@@ -127,7 +127,7 @@
                                     <option value="" data-base="0">-- Tìm & chọn sản phẩm --</option>
                                     @foreach($products as $product)
                                         <option value="{{ $product->id }}" data-name="{{ htmlspecialchars($product->name) }}" data-base="{{ $product->base_price }}">
-                                            {{ $product->sku }} - {{ $product->name }} | Giá nhập hiện tại: {{ number_format($product->base_price, 0, ',', '.') }} ₫
+                                            {{ $product->sku }} - {{ $product->name }} | Giá nhập hiện tại: {{ number_format($product->base_price, 0, ',', '.') }}&nbsp;₫
                                         </option>
                                     @endforeach
                                 </select>
@@ -165,7 +165,7 @@
                         <tfoot class="table-light fw-bold">
                             <tr>
                                 <td colspan="4" class="text-end fs-6">Tổng cộng phiếu:</td>
-                                <td class="text-end text-danger fs-5" id="form-total-cost">0 ₫</td>
+                                <td class="text-end text-danger fs-5" id="form-total-cost">0&nbsp;₫</td>
                                 <td id="tf-action"></td>
                             </tr>
                         </tfoot>

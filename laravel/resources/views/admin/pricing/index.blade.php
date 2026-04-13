@@ -42,7 +42,7 @@
                             <span class="badge bg-light text-dark border">{{ $product->category->name ?? 'N/A' }}</span>
                         </td>
                         <td class="text-end text-danger fw-bold" id="base_price_{{ $product->id }}" data-value="{{ $product->base_price }}">
-                            {{ number_format($product->base_price, 0, ',', '.') }} ₫
+                            {{ number_format($product->base_price, 0, ',', '.') }}&nbsp;₫
                         </td>
                         <td class="text-center">
                             <div class="input-group input-group-sm justify-content-center">
@@ -59,7 +59,7 @@
                             </div>
                         </td>
                         <td class="text-end fw-bold" id="sell_price_{{ $product->id }}">
-                            {{ number_format($product->sell_price, 0, ',', '.') }} ₫
+                            {{ number_format($product->sell_price, 0, ',', '.') }}&nbsp;₫
                         </td>
                         <td class="text-center">
                             <button class="btn btn-primary btn-sm me-1" onclick="savePrice({{ $product->id }})">

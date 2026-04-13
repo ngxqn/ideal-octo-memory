@@ -106,7 +106,7 @@
                             <td class="small text-truncate" title="{{ $order->shipping_address }}" style="max-width: 120px;">{{ $order->shipping_address }}</td>
                             <td class="small text-truncate" title="{{ $order->shipping_commune }}" style="max-width: 120px;">{{ $order->shipping_commune }}</td>
                             <td class="small">{{ $order->shipping_city }}</td>
-                            <td class="fw-bold text-danger small">{{ number_format($order->total_amount, 0, ',', '.') }} ₫</td>
+                            <td class="fw-bold text-danger small">{{ number_format($order->total_amount, 0, ',', '.') }}&nbsp;₫</td>
                             <td class="small text-muted">{{ $order->created_at->format('d/m/Y H:i') }}</td>
                             <td class="text-center"><span class="badge {{ $s['class'] }} small">{{ $s['text'] }}</span></td>
                             <td class="text-end">
@@ -325,8 +325,8 @@
                     <td class="text-muted">${index + 1}</td>
                     <td class="fw-bold text-primary">${d.product_name}</td>
                     <td class="text-center">${d.quantity}</td>
-                    <td class="text-end">${formatter.format(d.unit_price)} ₫</td>
-                    <td class="text-end fw-bold">${formatter.format(d.subtotal)} ₫</td>
+                    <td class="text-end">${formatter.format(d.unit_price)}&nbsp;₫</td>
+                    <td class="text-end fw-bold">${formatter.format(d.subtotal)}&nbsp;₫</td>
                 </tr>
             `;
         });
