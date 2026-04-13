@@ -64,8 +64,8 @@
                             'shipping_commune' => ['label' => 'Phường/Xã/Đặc khu', 'width' => '12%'],
                             'shipping_city' => ['label' => 'Tỉnh/TP', 'width' => '9%'],
                             'total_amount' => ['label' => 'Tổng tiền', 'width' => '9%'],
-                            'status' => ['label' => 'Trạng thái', 'width' => '12%'],
                             'created_at' => ['label' => 'Ngày đặt', 'width' => '10%'],
+                            'status' => ['label' => 'Trạng thái', 'width' => '12%'],
                         ];
                     @endphp
                     <tr>
