@@ -116,6 +116,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
         Route::put('/orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.update-status');
 
+        Route::get('/inventory/report', [InventoryController::class, 'report'])->name('inventory.report');
         Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
 
         Route::get('/users', [UserController::class, 'index'])->name('users.index');

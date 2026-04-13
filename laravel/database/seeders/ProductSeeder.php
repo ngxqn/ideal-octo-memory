@@ -44,7 +44,7 @@ class ProductSeeder extends Seeder
                 'image' => 'products/banh-trung-thu-golden-plum.png',
                 'base_price' => 120000,
                 'profit_margin' => 57.5,
-                'stock_quantity' => 25,
+                'stock_quantity' => 200,
                 'supplier' => 'Nhà cung cấp Kirin',
             ],
             [
@@ -55,7 +55,7 @@ class ProductSeeder extends Seeder
                 'image' => 'products/banh-trung-thu-hotate-xo-mixed-nuts.png',
                 'base_price' => 90000,
                 'profit_margin' => 54.4,
-                'stock_quantity' => 12,
+                'stock_quantity' => 200,
                 'supplier' => 'Hải sản Biển Đông',
             ],
             [
@@ -66,7 +66,7 @@ class ProductSeeder extends Seeder
                 'image' => 'products/banh-trung-thu-matcha.png',
                 'base_price' => 65000,
                 'profit_margin' => 52.3,
-                'stock_quantity' => 40,
+                'stock_quantity' => 200,
                 'supplier' => 'Trà xanh Uji',
             ],
             [
@@ -77,7 +77,7 @@ class ProductSeeder extends Seeder
                 'image' => 'products/banh-trung-thu-murasaki-imo.png',
                 'base_price' => 75000,
                 'profit_margin' => 53.3,
-                'stock_quantity' => 30,
+                'stock_quantity' => 200,
                 'supplier' => 'Nông trại Đà Lạt',
             ],
             [
@@ -88,7 +88,7 @@ class ProductSeeder extends Seeder
                 'image' => 'products/banh-trung-thu-mushroom-mixed-nuts.png',
                 'base_price' => 85000,
                 'profit_margin' => 51.7,
-                'stock_quantity' => 18,
+                'stock_quantity' => 200,
                 'supplier' => 'Nấm sạch Việt',
             ],
             [
@@ -99,7 +99,7 @@ class ProductSeeder extends Seeder
                 'image' => 'products/banh-trung-thu-pink-nocturne.png',
                 'base_price' => 70000,
                 'profit_margin' => 50,
-                'stock_quantity' => 50,
+                'stock_quantity' => 200,
                 'supplier' => 'Nhà cung cấp Kirin',
             ],
             [
@@ -121,7 +121,7 @@ class ProductSeeder extends Seeder
                 'image' => 'products/banh-trung-thu-xoi-gac.png',
                 'base_price' => 65000,
                 'profit_margin' => 46.1,
-                'stock_quantity' => 35,
+                'stock_quantity' => 200,
                 'supplier' => 'Nông trại Đà Lạt',
             ]
         ];

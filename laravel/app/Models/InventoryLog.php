@@ -13,6 +13,7 @@ class InventoryLog extends Model
     protected $fillable = [
         'product_id',
         'change_amount',
+        'unit_price',
         'reference_type',
         'reference_id',
     ];
@@ -21,6 +22,7 @@ class InventoryLog extends Model
     {
         return [
             'change_amount' => 'integer',
+            'unit_price' => 'decimal:2',
         ];
     }
 

@@ -106,11 +106,13 @@ class OrderService
                 ]);
 
                 // Gọi tới InventoryService để xử lý Trừ Kho + Ghi Log
+                // Pass the snapshot unit_price (5th arg) so the ledger records the actual selling price.
                 $this->inventoryService->adjustStock(
                     $data['product_id'],
                     -$data['quantity'],
                     'order_placed',
-                    $order->id
+                    $order->id,
+                    $data['unit_price']  // Snapshot Selling Price → ledger unit_price
                 );
             }
 

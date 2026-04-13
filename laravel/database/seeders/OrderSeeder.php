@@ -45,14 +45,19 @@ class OrderSeeder extends Seeder
             $selectedProducts = $products->random(min($numItems, $products->count()));
             
             foreach ($selectedProducts as $product) {
-                // Ensure stock is sufficient for seeding
-                $product->stock_quantity = 999;
-                $product->save();
+                // Skip products with no stock — rely on genuine ProductSeeder stock
+                if ($product->stock_quantity <= 0) {
+                    continue;
+                }
+
+                // Cap quantity to what is actually in stock to avoid stock-underflow exceptions
+                $maxQty = min(5, $product->stock_quantity);
+                $qty    = rand(1, $maxQty);
 
                 CartItem::create([
-                    'cart_id' => $cart->id,
+                    'cart_id'    => $cart->id,
                     'product_id' => $product->id,
-                    'quantity' => rand(1, 5)
+                    'quantity'   => $qty,
                 ]);
             }
 
