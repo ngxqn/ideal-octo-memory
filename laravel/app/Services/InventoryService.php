@@ -62,28 +62,33 @@ class InventoryService
      * @param int $delta Số lượng thay đổi (dương là cộng, âm là trừ)
      * @param string $refType Loại sự kiện (order_placed, order_cancelled, goods_receipt)
      * @param int $refId ID đơn hàng/phiếu nhập tham chiếu
-     * @param float $unitPrice Lịch sử đơn giá (Giá nhận WAC lúc nhập, hoặc giá vốn lúc xuất)
+     * @param float|null $unitPrice Đơn giá (nếu có, để lưu vết vào ledger)
      * @return void
      * @throws Exception
      */
-    public function adjustStock(int $productId, int $delta, string $refType, int $refId, float $unitPrice = 0.00): void
+    public function adjustStock(int $productId, int $delta, string $refType, int $refId, float $unitPrice = null): void
     {
         if ($delta === 0) {
             return;
         }
 
         DB::transaction(function () use ($productId, $delta, $refType, $refId, $unitPrice) {
-            // Bước 1: Trừ trực tiếp vào products.stock_quantity (CHECK constraint sẽ chặn nếu < 0)
+            // Bước 1: Trừ trực tiếp hoặc cộng vào products.stock_quantity (CHECK constraint sẽ chặn nếu < 0)
             $this->productRepo->adjustStock($productId, $delta);
 
-            // Bước 2: Sinh thêm một dòng inventory_logs mới để giữ chỗ với snapshot unit price
-            $this->inventoryLogRepo->createEntry([
+            // Bước 2: Sinh thêm một dòng inventory_logs mới để giữ chỗ hoặc ghi nhận nhập
+            $entryData = [
                 'product_id' => $productId,
                 'change_amount' => $delta,
-                'unit_price' => $unitPrice,
                 'reference_type' => $refType,
                 'reference_id' => $refId,
-            ]);
+            ];
+            
+            if ($unitPrice !== null) {
+                $entryData['unit_price'] = $unitPrice;
+            }
+
+            $this->inventoryLogRepo->createEntry($entryData);
         });
     }
 

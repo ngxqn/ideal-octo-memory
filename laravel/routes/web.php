@@ -109,6 +109,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/goods-receipts', [GoodsReceiptController::class, 'store'])->name('goods-receipts.store');
         Route::get('/goods-receipts/{goodsReceipt}', [GoodsReceiptController::class, 'show'])->name('goods-receipts.show');
         Route::put('/goods-receipts/{goodsReceipt}', [GoodsReceiptController::class, 'update'])->name('goods-receipts.update');
+        Route::delete('/goods-receipts/{goodsReceipt}', [GoodsReceiptController::class, 'destroy'])->name('goods-receipts.destroy');
         Route::put('/goods-receipts/{goodsReceipt}/complete', [GoodsReceiptController::class, 'complete'])->name('goods-receipts.complete');
 
         Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
