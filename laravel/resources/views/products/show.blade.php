@@ -19,7 +19,7 @@
         <div id="product-content">
             <div class="product-detail">
                 <div class="m-card p-0 overflow-hidden text-center mb-0" style="border-width: 1px;">
-                    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="w-100 h-100 object-fit-cover" onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-100 h-100 object-fit-cover" onerror="this.src='{{ asset('storage/products/default.png') }}'">
                 </div>
 
                 <div class="product-info">
@@ -89,7 +89,7 @@
                                     <div class="m-badge m-badge-out stock-badge">Hết hàng</div>
                                 @endif
                                 <a href="{{ route('products.show', $related->id) }}" class="text-decoration-none color-inherit">
-                                    <img src="{{ asset($related->image) }}" alt="{{ $related->name }}" class="w-100 object-fit-cover rounded-3 mb-3" onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
+                                    <img src="{{ asset('storage/' . $related->image) }}" alt="{{ $related->name }}" class="w-100 object-fit-cover rounded-3 mb-3" onerror="this.src='{{ asset('storage/products/default.png') }}'">
                                     <h3 class="mb-3">{{ $related->name }}</h3>
                                 </a>
                                 <div class="product-actions mt-auto d-flex justify-content-between align-items-center">

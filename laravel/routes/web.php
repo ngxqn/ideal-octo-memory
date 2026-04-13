@@ -95,10 +95,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/catalogue/products', [CatalogueController::class, 'storeProduct'])->name('catalogue.products.store');
         Route::put('/catalogue/products/{product}', [CatalogueController::class, 'updateProduct'])->name('catalogue.products.update');
         Route::delete('/catalogue/products/{product}', [CatalogueController::class, 'destroyProduct'])->name('catalogue.products.destroy');
+        Route::patch('/catalogue/products/{product}/toggle', [CatalogueController::class, 'toggleProductVisibility'])->name('catalogue.products.toggle');
         
         Route::post('/catalogue/categories', [CatalogueController::class, 'storeCategory'])->name('catalogue.categories.store');
         Route::put('/catalogue/categories/{category}', [CatalogueController::class, 'updateCategory'])->name('catalogue.categories.update');
         Route::delete('/catalogue/categories/{category}', [CatalogueController::class, 'destroyCategory'])->name('catalogue.categories.destroy');
+        Route::patch('/catalogue/categories/{category}/toggle', [CatalogueController::class, 'toggleCategoryVisibility'])->name('catalogue.categories.toggle');
 
         Route::get('/pricing', [PricingController::class, 'index'])->name('pricing.index');
         Route::put('/pricing/{product}', [PricingController::class, 'update'])->name('pricing.update');

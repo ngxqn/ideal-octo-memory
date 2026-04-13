@@ -75,8 +75,50 @@
         </div>
     </div>
 
+    <!-- Notification Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+        <!-- Toasts will be injected by JavaScript -->
+    </div>
+
     <script src="{{ asset('assets/vendor/bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js') }}"></script>
     <script>
+        /**
+         * Global Notification Helper using Bootstrap Toasts
+         */
+        function showNotification(message, type = 'success') {
+            const container = document.querySelector('.toast-container');
+            if (!container) return;
+
+            const toastId = 'toast-' + Date.now();
+            let bgClass = 'text-bg-success';
+            if (type === 'error' || type === 'danger') bgClass = 'text-bg-danger';
+            if (type === 'warning') bgClass = 'text-bg-warning';
+            if (type === 'info') bgClass = 'text-bg-info';
+            
+            const toastHtml = `
+                <div id="${toastId}" class="toast align-items-center border-0 ${bgClass}" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            ${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            `;
+
+            container.insertAdjacentHTML('beforeend', toastHtml);
+
+            const toastEl = document.getElementById(toastId);
+            if (!toastEl) return;
+
+            const bs = window.bootstrap || bootstrap;
+            if (bs && bs.Toast) {
+                const toast = new bs.Toast(toastEl, { delay: 3000 });
+                toast.show();
+                toastEl.addEventListener('hidden.bs.toast', () => { toastEl.remove(); });
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const toggle = document.getElementById('sidebarToggle');
             const body = document.body;

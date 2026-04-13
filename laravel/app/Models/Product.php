@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -62,6 +63,16 @@ class Product extends Model
     public function inventoryLogs()
     {
         return $this->hasMany(InventoryLog::class);
+    }
+
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
+
+    public function goodsReceiptDetails()
+    {
+        return $this->hasMany(GoodsReceiptDetail::class);
     }
 
     public function cartItems()

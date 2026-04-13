@@ -90,15 +90,15 @@
                             @if($detail->product)
                                 <a href="{{ route('products.show', $detail->product->id) }}" class="text-decoration-none color-inherit">
                                     <div class="item-details">
-                                        <img src="{{ asset($detail->product->image) }}" 
+                                        <img src="{{ asset('storage/' . $detail->product->image) }}" 
                                              class="item-img"
-                                             onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
+                                             onerror="this.src='{{ asset('storage/products/default.png') }}'">
                                         <span class="fw-bold text-dark">{{ $detail->product_name }}</span>
                                     </div>
                                 </a>
                             @else
                                 <div class="item-details">
-                                    <img src="{{ asset('assets/image/products/default.png') }}" class="item-img">
+                                    <img src="{{ asset('storage/products/default.png') }}" class="item-img">
                                     <span class="fw-bold text-dark">{{ $detail->product_name }}</span>
                                 </div>
                             @endif

@@ -36,10 +36,10 @@
                                     <td>
                                         <a href="{{ route('products.show', $item->product->id) }}" class="text-decoration-none color-inherit">
                                             <div class="item-details">
-                                                <img src="{{ asset($item->product->image) }}" 
+                                                <img src="{{ asset('storage/' . $item->product->image) }}" 
                                                      alt="{{ $item->product->name }}" 
                                                      class="item-img"
-                                                     onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
+                                                     onerror="this.src='{{ asset('storage/products/default.png') }}'">
                                                 <span>{{ $item->product->name }}</span>
                                             </div>
                                         </a>

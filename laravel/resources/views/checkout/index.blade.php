@@ -64,10 +64,10 @@
                     <div class="items-list mb-4">
                         @foreach($cart->cartItems as $item)
                         <div class="m-card p-3 mb-2 d-flex align-items-center gap-3" style="border-width: 1px; box-shadow: none;">
-                            <img src="{{ asset($item->product->image) }}" 
+                            <img src="{{ asset('storage/' . $item->product->image) }}" 
                                  class="item-img" 
                                  style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;"
-                                 onerror="this.src='{{ asset('assets/image/products/default.png') }}'">
+                                 onerror="this.src='{{ asset('storage/products/default.png') }}'">
                             <div class="flex-grow-1">
                                 <div class="fw-bold text-dark">{{ $item->product->name }}</div>
                                 <div class="text-muted small">Số lượng: {{ $item->quantity }}</div>
