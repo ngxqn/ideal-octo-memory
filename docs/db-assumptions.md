@@ -139,3 +139,15 @@ WHERE product_id = X AND created_at <= T;
 | `goods_receipt_details` | `chk_grd_qty` | `quantity >= 1` |
 | `goods_receipt_details` | `chk_grd_price` | `import_price > 0` (giá nhập phải dương) |
 | `inventory_logs` | `chk_inventory_change_nonzero` | `change_amount != 0` (log biến động phải có ý nghĩa) |
+| `products` | (Implicit) | `supplier` is a nullable string for display purposes only. |
+
+---
+
+## 10. Quản Lý Nhà Cung Cấp (Supplier Handling)
+
+**Vấn đề:** Phân định vai trò của thông tin "Nhà cung cấp" trong hệ thống để tránh nhầm lẫn giữa dữ liệu trưng bày và dữ liệu kế toán/kho.
+
+**Giả định & Giải pháp:**
+- **Dữ liệu Hình thức:** Thông tin "Nhà cung cấp" (`products.supplier`) được coi là một thuộc tính tĩnh của Sản phẩm, dùng để hiển thị thông tin nguồn gốc cho khách hàng hoặc admin tham khảo nhanh.
+- **Tách biệt Kho hàng:** Hệ thống quản lý nhập hàng (`goods_receipts`) hoàn toàn không lưu trữ hay ràng buộc với thông tin Nhà cung cấp. Các giao dịch nhập kho chỉ quan tâm đến đối tượng hàng hóa, số lượng và giá vốn (WAC). 
+- **Lý do:** Trong mô hình bán lẻ nhỏ, một sản phẩm thường được nhập từ một nguồn cố định hoặc thông tin NCC không ảnh hưởng đến thuật toán tính giá vốn bình quân (WAC). Việc lược bỏ NCC khỏi phiếu nhập giúp đơn giản hóa quy trình vận hành kho.

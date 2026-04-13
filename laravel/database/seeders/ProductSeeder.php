@@ -43,8 +43,9 @@ class ProductSeeder extends Seeder
                 'description' => 'Tinh tế và mới mẻ, <strong>bánh Trung thu Golden Plum</strong> là sự kết hợp hài hòa giữa vị ngọt của mận vàng và lớp vỏ bánh nướng thơm mềm. Mang đến trải nghiệm vị giác quen mà lạ.',
                 'image' => 'products/banh-trung-thu-golden-plum.png',
                 'base_price' => 120000,
-                'profit_margin' => 57.5, // (189-120)/120 = 57.5% -> sell_price 189,000
+                'profit_margin' => 57.5,
                 'stock_quantity' => 25,
+                'supplier' => 'Nhà cung cấp Kirin',
             ],
             [
                 'category_slug' => 'man',
@@ -53,8 +54,9 @@ class ProductSeeder extends Seeder
                 'description' => 'Phá cách độc đáo, <strong>bánh Hotate XO Mixed Nuts</strong> mang vị mận đậm đà của sốt sò điệp XO cay nhẹ cùng sự bùi béo của các loại hạt dinh dưỡng.',
                 'image' => 'products/banh-trung-thu-hotate-xo-mixed-nuts.png',
                 'base_price' => 90000,
-                'profit_margin' => 54.4, // (139-90)/90 = 54.4% -> sell_price ~139,000
+                'profit_margin' => 54.4,
                 'stock_quantity' => 12,
+                'supplier' => 'Hải sản Biển Đông',
             ],
             [
                 'category_slug' => 'ngot',
@@ -63,8 +65,9 @@ class ProductSeeder extends Seeder
                 'description' => '<strong>Bánh Trung thu Matcha</strong> mang đậm hương vị thanh mát của trà xanh Nhật Bản. Hương thơm nhẹ, vị ngọt dịu hòa quyện matcha tinh tế.',
                 'image' => 'products/banh-trung-thu-matcha.png',
                 'base_price' => 65000,
-                'profit_margin' => 52.3, // (99-65)/65 = 52.3% -> sell_price ~99,000
+                'profit_margin' => 52.3,
                 'stock_quantity' => 40,
+                'supplier' => 'Trà xanh Uji',
             ],
             [
                 'category_slug' => 'ngot',
@@ -73,8 +76,9 @@ class ProductSeeder extends Seeder
                 'description' => '<strong>Bánh Trung thu Murasaki Imo</strong> mang sắc tím dịu dàng của khoai lang Nhật Bản. Nhân khoai dẻo mịn, thơm nhẹ vị ngọt tự nhiên.',
                 'image' => 'products/banh-trung-thu-murasaki-imo.png',
                 'base_price' => 75000,
-                'profit_margin' => 53.3, // (115-75)/75 = 53.3% -> sell_price ~115,000
+                'profit_margin' => 53.3,
                 'stock_quantity' => 30,
+                'supplier' => 'Nông trại Đà Lạt',
             ],
             [
                 'category_slug' => 'chay',
@@ -83,8 +87,9 @@ class ProductSeeder extends Seeder
                 'description' => 'Lựa chọn thanh đạm và dinh dưỡng cho người ăn chay. Hương thơm của nấm hòa quyện cùng vị bùi béo của các loại hạt.',
                 'image' => 'products/banh-trung-thu-mushroom-mixed-nuts.png',
                 'base_price' => 85000,
-                'profit_margin' => 51.7, // (129-85)/85 = 51.7% -> sell_price ~129,000
+                'profit_margin' => 51.7,
                 'stock_quantity' => 18,
+                'supplier' => 'Nấm sạch Việt',
             ],
             [
                 'category_slug' => 'ngot',
@@ -93,8 +98,9 @@ class ProductSeeder extends Seeder
                 'description' => 'Vị ngọt thanh, bùi béo của hạt sen hòa cùng mùi thơm nhẹ của dừa non, tạo cảm giác mềm mịn dễ chịu.',
                 'image' => 'products/banh-trung-thu-pink-nocturne.png',
                 'base_price' => 70000,
-                'profit_margin' => 50, // (105-70)/70 = 50% -> sell_price ~105,000
+                'profit_margin' => 50,
                 'stock_quantity' => 50,
+                'supplier' => 'Nhà cung cấp Kirin',
             ],
             [
                 'category_slug' => 'man',
@@ -103,8 +109,9 @@ class ProductSeeder extends Seeder
                 'description' => 'Vị mặn ngọt hài hòa, nhân đậu đỏ bùi quyện cùng trứng muối tan chảy, trọn vị truyền thống và hiện đại.',
                 'image' => 'products/banh-trung-thu-takesumi-orange.png',
                 'base_price' => 80000,
-                'profit_margin' => 56.2, // (125-80)/80 = 56.2% -> sell_price ~125,000
-                'stock_quantity' => 0, // Out of stock as in original
+                'profit_margin' => 56.2,
+                'stock_quantity' => 0,
+                'supplier' => 'Nhà cung cấp Kirin',
             ],
             [
                 'category_slug' => 'ngot',
@@ -113,8 +120,9 @@ class ProductSeeder extends Seeder
                 'description' => 'Màu đỏ tự nhiên từ gấc, tượng trưng cho may mắn. Hương thơm của nếp quyện cùng vị ngọt nhẹ của đậu xanh và dừa.',
                 'image' => 'products/banh-trung-thu-xoi-gac.png',
                 'base_price' => 65000,
-                'profit_margin' => 46.1, // (95-65)/65 = 46.1% -> sell_price ~95,000
+                'profit_margin' => 46.1,
                 'stock_quantity' => 35,
+                'supplier' => 'Nông trại Đà Lạt',
             ]
         ];
 

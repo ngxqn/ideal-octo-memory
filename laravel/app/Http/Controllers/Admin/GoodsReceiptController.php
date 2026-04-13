@@ -35,7 +35,6 @@ class GoodsReceiptController extends Controller
         try {
             $data = $request->validated();
             $receiptData = [
-                'supplier' => $data['supplier'],
                 'note' => $data['note'] ?? null,
                 'status' => $data['status']
             ];
@@ -69,7 +68,6 @@ class GoodsReceiptController extends Controller
         try {
             $data = $request->validated();
             $receiptData = [
-                'supplier' => $data['supplier'],
                 'note' => $data['note'] ?? null,
                 'status' => $data['status']
             ];

@@ -19,7 +19,6 @@
                 <thead class="table-light">
                     <tr>
                         <th>Mã Phiếu</th>
-                        <th>Nhà cung cấp</th>
                         <th>Ngày tạo</th>
                         <th>Mặt hàng</th>
                         <th>Ghi chú</th>
@@ -32,7 +31,6 @@
                     @forelse($receipts as $receipt)
                     <tr>
                         <td class="fw-bold text-primary">PN{{ str_pad($receipt->id, 3, '0', STR_PAD_LEFT) }}</td>
-                        <td>{{ $receipt->supplier }}</td>
                         <td>{{ $receipt->created_at->format('d/m/Y H:i') }}</td>
                         <td>
                             @if($receipt->details->count() > 0)
@@ -82,7 +80,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="8" class="text-center py-5 text-muted">
+                        <td colspan="7" class="text-center py-5 text-muted">
                             <i class="fa-solid fa-folder-open fs-1 opacity-25 mb-3 d-block"></i>
                             Chưa có phiếu nhập hàng nào.
                         </td>
@@ -106,11 +104,7 @@
                 <input type="hidden" id="form-receipt-id" value="">
                 
                 <div class="row g-3 mb-4">
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold small">Nhà cung cấp <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="form-supplier" placeholder="Nhập tên nhà cung cấp..." required>
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <label class="form-label fw-bold small">Trạng thái lưu</label>
                         <select class="form-select" id="form-status">
                             <option value="draft">Bản nháp (Chưa cộng tồn kho)</option>
@@ -371,13 +365,11 @@
 
     function resetForm() {
         document.getElementById('form-receipt-id').value = '';
-        document.getElementById('form-supplier').value = '';
         document.getElementById('form-note').value = '';
         document.getElementById('form-status').value = 'draft';
         tempItems = [];
         isReadOnly = false;
         
-        document.getElementById('form-supplier').disabled = false;
         document.getElementById('form-note').disabled = false;
         document.getElementById('form-status').disabled = false;
         document.getElementById('item-input-section').style.display = 'block';
@@ -399,7 +391,6 @@
         modalMode = 'view';
         document.getElementById('receiptModalTitle').innerHTML = `Chi tiết phiếu nhập PN${String(id).padStart(3, '0')}`;
         
-        document.getElementById('form-supplier').disabled = true;
         document.getElementById('form-note').disabled = true;
         document.getElementById('form-status').disabled = true;
         document.getElementById('item-input-section').style.display = 'none';
@@ -465,7 +456,6 @@
             const data = await res.json();
             if (data.success) {
                 const r = data.receipt;
-                document.getElementById('form-supplier').value = r.supplier;
                 document.getElementById('form-note').value = r.note || '';
                 document.getElementById('form-status').value = r.status;
                 
@@ -479,7 +469,6 @@
 
                 if (r.status === 'completed') {
                     isReadOnly = true;
-                    document.getElementById('form-supplier').disabled = true;
                     document.getElementById('form-note').disabled = true;
                     document.getElementById('form-status').disabled = true;
                     document.getElementById('item-input-section').style.display = 'none';
@@ -500,11 +489,9 @@
 
     async function saveReceipt() {
         const id = document.getElementById('form-receipt-id').value;
-        const supplier = document.getElementById('form-supplier').value;
         const note = document.getElementById('form-note').value;
         const status = document.getElementById('form-status').value;
         
-        if (!supplier) { showToast("Nhà cung cấp không được để trống.", "warning"); return; }
         if (tempItems.length === 0) { showToast("Phải có ít nhất 1 sản phẩm trong phiếu nhập.", "warning"); return; }
         
         if (status === 'completed') {
@@ -514,7 +501,6 @@
         }
 
         const payload = {
-            supplier: supplier,
             note: note,
             status: status,
             items: tempItems.map(i => ({

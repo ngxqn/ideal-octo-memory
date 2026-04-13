@@ -14,7 +14,6 @@ class UpdateGoodsReceiptRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'supplier' => 'required|string|max:150',
             'status' => 'required|in:draft,completed',
             'note' => 'nullable|string',
             'items' => 'required|array|min:1',

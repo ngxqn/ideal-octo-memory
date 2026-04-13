@@ -249,6 +249,10 @@
                             <label class="form-label fw-bold small">Tồn kho ban đầu</label>
                             <input type="number" id="p_stock_quantity" class="form-control bg-light" readonly value="0">
                         </div>
+                        <div class="col-md-12">
+                            <label class="form-label fw-bold small">Nhà cung cấp</label>
+                            <input type="text" name="supplier" id="p_supplier" class="form-control" placeholder="Ví dụ: Công ty TNHH Thực phẩm ABC">
+                        </div>
                         <div class="col-12">
                             <label class="form-label fw-bold small">Mô tả sản phẩm</label>
                             <textarea name="description" id="p_description" class="form-control" rows="3"></textarea>
@@ -351,6 +355,7 @@
             form.action = "{{ route('admin.catalogue.products.store') }}";
             document.getElementById('p_base_price').value = 0;
             document.getElementById('p_stock_quantity').value = 0;
+            document.getElementById('p_supplier').value = '';
         } else {
             title.textContent = 'Chỉnh sửa Sản phẩm';
             form.action = "{{ route('admin.catalogue.products.update', ':id') }}".replace(':id', data.id);
@@ -364,6 +369,7 @@
             document.getElementById('p_profit_margin').value = data.profit_margin;
             document.getElementById('p_description').value = data.description || '';
             document.getElementById('p_is_hidden').checked = data.is_hidden;
+            document.getElementById('p_supplier').value = data.supplier || '';
             
             // Stock and base price are readonly views
             document.getElementById('p_stock_quantity').value = data.stock_quantity;
