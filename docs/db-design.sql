@@ -68,8 +68,8 @@ CREATE TABLE products (
     supplier            VARCHAR(200)    NULL,
     base_price          DECIMAL(15, 2)  NOT NULL DEFAULT 0.00,
     profit_margin       DECIMAL(5, 2)   NOT NULL DEFAULT 0.00,
-    sell_price          DECIMAL(15, 2)  GENERATED ALWAYS AS
-                            (ROUND(base_price * (1 + profit_margin / 100), 2)) STORED,
+    sell_price          DECIMAL(15, 0)  GENERATED ALWAYS AS
+                            (ROUND(base_price * (1 + profit_margin / 100), 0)) STORED,
     stock_quantity      INT             NOT NULL DEFAULT 0,
     low_stock_threshold INT             NOT NULL DEFAULT 10,
     is_hidden           TINYINT(1)      NOT NULL DEFAULT 0,

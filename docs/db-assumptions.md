@@ -11,7 +11,7 @@ Trước khi tiến hành vẽ sơ đồ ERD chi tiết, danh sách dưới đâ
 **Giả định & Giải pháp (Snapshot Pattern):**
 - Trong bảng `orders` (Đơn đặt hàng) / `order_details` (Chi tiết đơn hàng): Tại thời điểm khách hàng ấn "Đặt hàng", toàn bộ giá bán hiện hành lúc đó sẽ được **lưu cứng (snapshot)** vào dòng `order_details`. Giá này hoàn toàn độc lập với bảng `products`. Dù Admin có lên giá sản phẩm sau đó thì hóa đơn cũ của khách vẫn không bị ảnh hưởng.
 - Trong bảng `goods_receipts` (Phiếu nhập) / `goods_receipt_details` (Chi tiết phiếu nhập): Giá nhập của lô hàng cũng được **lưu cứng** tương tự.
-- Bảng `products` sẽ lưu: `base_price` (giá nhập bình quân hiện tại), `profit_margin` (% lợi nhuận), và `sell_price` (giá bán tính từ giá bình quân). Các con số này chỉ mô tả **trạng thái hiện tại** của sản phẩm. `sell_price` được triển khai dưới dạng **GENERATED COLUMN** (MySQL Stored) — tự động tính lại khi `base_price` hoặc `profit_margin` thay đổi. **Application Layer không được `UPDATE sell_price` trực tiếp.**
+- Bảng `products` sẽ lưu: `base_price` (giá nhập bình quân hiện tại), `profit_margin` (% lợi nhuận), và `sell_price` (giá bán tính từ giá bình quân). Các con số này chỉ mô tả **trạng thái hiện tại** của sản phẩm. `sell_price` được triển khai dưới dạng **GENERATED COLUMN** (MySQL Stored) — tự động tính lại khi `base_price` hoặc `profit_margin` thay đổi và được làm tròn **0 chữ số thập phân (chuẩn VND)**. **Application Layer không được `UPDATE sell_price` trực tiếp.**
 
 ---
 

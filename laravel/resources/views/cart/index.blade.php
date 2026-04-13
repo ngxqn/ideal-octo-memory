@@ -147,7 +147,7 @@
 
         // Hàm định dạng tiền tệ Việt Nam
         function formatCurrency(amount) {
-            return new Intl.NumberFormat('vi-VN').format(amount) + '\u00A0₫';
+            return new Intl.NumberFormat('vi-VN', { maximumFractionDigits: 0 }).format(amount) + '\u00A0₫';
         }
 
         // Cập nhật tổng giỏ hàng locally

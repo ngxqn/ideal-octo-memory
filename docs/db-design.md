@@ -136,7 +136,7 @@ Thực thể trung tâm của hệ thống. Lưu thông tin mô tả, giá hiệ
 | `supplier` | VARCHAR(200) | | YES | Nhà cung cấp (mang tính hình thức) |
 | `base_price` | DECIMAL(15,2) | DEFAULT 0.00 | NOT NULL | Giá nhập bình quân gia quyền hiện tại |
 | `profit_margin` | DECIMAL(5,2) | DEFAULT 0.00 | NOT NULL | % Tỷ lệ lợi nhuận (VD: 20.00 = 20%) |
-| `sell_price` | DECIMAL(15,2) | GENERATED STORED | NOT NULL | Giá bán tự tính = base_price × (1 + profit_margin/100) |
+| `sell_price` | DECIMAL(15,0) | GENERATED STORED | NOT NULL | Giá bán tự tính = base_price × (1 + profit_margin/100) (được làm tròn 0) |
 | `stock_quantity` | INT | DEFAULT 0 | NOT NULL | Tồn kho hiện tại (cache, realtime) |
 | `low_stock_threshold` | INT | DEFAULT 10 | NOT NULL | Ngưỡng cảnh báo sắp hết hàng |
 | `is_hidden` | TINYINT(1) | DEFAULT 0 | NOT NULL | Soft delete flag |
@@ -605,7 +605,6 @@ DB::transaction(function () use ($product, $importQty, $importPrice) {
     // 2. Cập nhật products (cache)
     $product->update([
         'base_price'      => round($newBase, 2),
-        'sell_price'      => round($newSell, 2),
         'stock_quantity'  => $product->stock_quantity + $importQty,
     ]);
 

@@ -29,7 +29,7 @@ class Product extends Model
         return [
             'base_price' => 'decimal:2',
             'profit_margin' => 'decimal:2',
-            'sell_price' => 'decimal:2',
+            'sell_price' => 'integer',
             'stock_quantity' => 'integer',
             'low_stock_threshold' => 'integer',
             'is_hidden' => 'boolean',

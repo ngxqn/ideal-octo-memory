@@ -33,7 +33,7 @@ return new class extends Migration
         // Add GENERATED STORED column
         \Illuminate\Support\Facades\DB::statement("
             ALTER TABLE products 
-            ADD sell_price DECIMAL(15, 2) GENERATED ALWAYS AS (ROUND(base_price * (1 + profit_margin / 100), 2)) STORED 
+            ADD sell_price DECIMAL(15, 0) GENERATED ALWAYS AS (ROUND(base_price * (1 + profit_margin / 100), 0)) STORED 
             AFTER profit_margin
         ");
 
