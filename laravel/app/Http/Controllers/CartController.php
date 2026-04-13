@@ -54,7 +54,7 @@ class CartController extends Controller
         ]);
 
         try {
-            $product = \App\Models\Product::visible()->find($request->product_id);
+            $product = \App\Models\Product::visible()->where('products.id', $request->product_id)->first();
             if (!$product) {
                 throw new Exception('Sản phẩm không khả dụng hoặc đã bị ẩn.');
             }

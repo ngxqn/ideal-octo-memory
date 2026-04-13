@@ -24,15 +24,15 @@ class ProductController extends Controller
 
         // 2. Search by Name
         if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $query->where('products.name', 'like', '%' . $request->search . '%');
         }
 
         // 3. Price Range Filtering
         if ($request->filled('min_price')) {
-            $query->where('sell_price', '>=', $request->min_price);
+            $query->where('products.sell_price', '>=', $request->min_price);
         }
         if ($request->filled('max_price')) {
-            $query->where('sell_price', '<=', $request->max_price);
+            $query->where('products.sell_price', '<=', $request->max_price);
         }
 
         // 4. Pagination (6 products per page as per plan)
@@ -49,12 +49,12 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::visible()->findOrFail($id);
+        $product = Product::visible()->where('products.id', $id)->firstOrFail();
         
         // Fetch related products (same category, excluding self)
         $relatedProducts = Product::visible()
-            ->where('category_id', $product->category_id)
-            ->where('id', '!=', $product->id)
+            ->where('products.category_id', $product->category_id)
+            ->where('products.id', '!=', $product->id)
             ->limit(4)
             ->get();
 
