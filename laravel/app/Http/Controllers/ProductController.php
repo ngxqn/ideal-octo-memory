@@ -13,7 +13,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Product::active();
+        $query = Product::visible();
 
         // 1. Basic Filtering by Category Slug
         if ($request->filled('category')) {
@@ -49,10 +49,10 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::active()->findOrFail($id);
+        $product = Product::visible()->findOrFail($id);
         
         // Fetch related products (same category, excluding self)
-        $relatedProducts = Product::active()
+        $relatedProducts = Product::visible()
             ->where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
             ->limit(4)

@@ -62,6 +62,10 @@ class CatalogueController extends Controller
     public function updateProduct(UpdateProductRequest $request, Product $product)
     {
         $data = $request->validated();
+        
+        if (!isset($data['is_hidden'])) {
+            $data['is_hidden'] = 0;
+        }
 
         if ($request->hasFile('image')) {
             // Delete old image if it exists in storage

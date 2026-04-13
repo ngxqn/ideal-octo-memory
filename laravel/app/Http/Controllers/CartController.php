@@ -22,8 +22,22 @@ class CartController extends Controller
     public function index()
     {
         $cart = $this->cartService->getCartForUser(Auth::user());
-        $cart->load('cartItems.product');
+        $cart->load('cartItems.product.category');
         
+        $hasRemovedItems = false;
+        foreach ($cart->cartItems as $item) {
+            if (!$item->product || $item->product->is_hidden || ($item->product->category && $item->product->category->is_hidden)) {
+                $this->cartService->removeFromCart($item->id);
+                $hasRemovedItems = true;
+            }
+        }
+        
+        if ($hasRemovedItems) {
+            $cart->refresh();
+            $cart->load('cartItems.product.category');
+            session()->flash('warning', 'Một số sản phẩm trong giỏ hàng không còn khả dụng và đã được tự động loại bỏ.');
+        }
+
         $total = $this->cartService->getCartTotal($cart);
 
         return view('cart.index', compact('cart', 'total'));
@@ -40,6 +54,11 @@ class CartController extends Controller
         ]);
 
         try {
+            $product = \App\Models\Product::visible()->find($request->product_id);
+            if (!$product) {
+                throw new Exception('Sản phẩm không khả dụng hoặc đã bị ẩn.');
+            }
+
             $this->cartService->addToCart(
                 Auth::user(),
                 $request->product_id,

@@ -61,6 +61,8 @@
                                     <div class="fw-bold text-dark">{{ $product->name }}</div>
                                     @if($product->is_hidden)
                                         <span class="badge bg-secondary sx-small">Đã ẩn</span>
+                                    @elseif($product->category && $product->category->is_hidden)
+                                        <span class="badge bg-secondary sx-small">Đã ẩn (theo Loại)</span>
                                     @endif
                                 </td>
                                 <td class="text-start">

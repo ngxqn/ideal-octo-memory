@@ -26,6 +26,12 @@ class CheckoutController extends Controller
             return redirect()->route('cart.index')->with('warning', 'Giỏ hàng của bạn đang trống.');
         }
 
+        foreach ($cart->cartItems as $item) {
+            if (!$item->product || $item->product->is_hidden || ($item->product->category && $item->product->category->is_hidden)) {
+                return redirect()->route('cart.index')->with('warning', 'Giỏ hàng chứa sản phẩm không khả dụng. Vui lòng kiểm tra lại giỏ hàng của bạn.');
+            }
+        }
+
         $total = $cart->cartItems->reduce(function ($carry, $item) {
             return $carry + ($item->product->sell_price * $item->quantity);
         }, 0);
