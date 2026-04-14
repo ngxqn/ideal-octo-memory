@@ -1,0 +1,23 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # 1. PROTECT SENSITIVE FILES
+    # Block access to .env, artisan, and config files
+    <FilesMatch "^\.env|composer\.json|composer\.lock|package\.json|package-lock\.json|artisan|phpunit\.xml">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+
+    # Block access to core Laravel directories
+    RewriteRule ^(app|bootstrap|config|database|resources|routes|storage|tests|vendor)($|/) - [F,L]
+
+    # 2. PROXY TO PUBLIC FOLDER
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Handle Front Controller (Route everything to public/index.php)
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
