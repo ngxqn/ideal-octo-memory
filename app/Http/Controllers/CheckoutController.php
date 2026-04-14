@@ -36,7 +36,9 @@ class CheckoutController extends Controller
             return $carry + ($item->product->sell_price * $item->quantity);
         }, 0);
 
-        return view('checkout.index', compact('user', 'cart', 'total'));
+        $addresses = $user->addresses()->orderBy('is_default', 'desc')->get();
+
+        return view('checkout.index', compact('user', 'cart', 'total', 'addresses'));
     }
 
     public function store(PlaceOrderRequest $request)

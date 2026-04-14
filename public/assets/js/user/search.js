@@ -60,7 +60,7 @@ class SearchManager {
     const item = document.createElement('div');
     item.classList.add('product-item');
     item.innerHTML = `
-      <img src="${product.image}" alt="${product.name}" onerror="this.src='assets/image/products/placeholder.png'">
+      <img src="${product.image}" alt="${product.name}" onerror="this.src='/storage/products/default.png'">
       <div>
         <h4>${product.name}</h4>
         <p>Giá: ${product.price}</p>
@@ -68,7 +68,7 @@ class SearchManager {
     `;
 
     item.addEventListener('click', () => {
-      window.location.href = `pages/product-detail.html?id=${product.id}`;
+      window.location.href = `products/${product.id}`;
     });
 
     return item;
@@ -84,11 +84,15 @@ class SearchManager {
   }
 
   showResults() {
-    this.resultsBox.classList.add('active');
+    if (this.resultsBox) {
+      this.resultsBox.classList.add('active');
+    }
   }
 
   hideResults() {
-    this.resultsBox.classList.remove('active');
+    if (this.resultsBox) {
+      this.resultsBox.classList.remove('active');
+    }
   }
 
   getProducts() {

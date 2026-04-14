@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\UserAddress;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
@@ -14,7 +15,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // 1. Admin account
-        User::updateOrCreate(
+        $admin = User::updateOrCreate(
             ['username' => 'admin'],
             [
                 'password' => 'admin123', // Will be hashed via User model cast
@@ -29,8 +30,20 @@ class UserSeeder extends Seeder
             ]
         );
 
+        // Seed default address for admin
+        UserAddress::updateOrCreate(
+            ['user_id' => $admin->id, 'is_default' => true],
+            [
+                'receiver_name' => $admin->full_name,
+                'receiver_phone' => $admin->phone,
+                'address' => $admin->address,
+                'commune' => $admin->commune,
+                'city' => $admin->city,
+            ]
+        );
+
         // 2. Sample Customer account
-        User::updateOrCreate(
+        $customer = User::updateOrCreate(
             ['username' => 'customer'],
             [
                 'password' => 'user123',
@@ -42,6 +55,18 @@ class UserSeeder extends Seeder
                 'city' => 'Quận 3, TP.HCM',
                 'role' => 'customer',
                 'is_active' => true,
+            ]
+        );
+
+        // Seed default address for customer
+        UserAddress::updateOrCreate(
+            ['user_id' => $customer->id, 'is_default' => true],
+            [
+                'receiver_name' => $customer->full_name,
+                'receiver_phone' => $customer->phone,
+                'address' => $customer->address,
+                'commune' => $customer->commune,
+                'city' => $customer->city,
             ]
         );
     }

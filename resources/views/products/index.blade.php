@@ -65,7 +65,7 @@
                         @endif
 
                         <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none color-inherit">
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="product-img" onerror="this.src='{{ asset('storage/products/default.png') }}'">
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="product-img" onerror="this.onerror=null;this.src='{{ asset('storage/products/default.png') }}'">
                             <h3>{{ $product->name }}</h3>
                         </a>
                         

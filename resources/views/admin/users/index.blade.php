@@ -198,7 +198,9 @@
                     </div>
                     <div class="col-md-6">
                         <label class="form-label small fw-bold">Số điện thoại <span class="text-danger">*</span></label>
-                        <input type="text" name="phone" class="form-control shadow-sm" required placeholder="0901234567">
+                        <input type="tel" name="phone" id="phone" class="form-control shadow-sm" required 
+                               placeholder="0901234567"
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label small fw-bold">Mật khẩu khởi tạo <span class="text-danger">*</span></label>

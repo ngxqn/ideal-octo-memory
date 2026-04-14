@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\UserAddress;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
@@ -93,6 +94,23 @@ class OrderService
                 'total_amount' => $totalAmount,
                 'note' => $shippingData['note'] ?? null,
             ]);
+
+            // Save address for future use if requested
+            if (!empty($shippingData['save_for_future'])) {
+                UserAddress::updateOrCreate(
+                    [
+                        'user_id' => $user->id,
+                        'address' => $shippingData['shipping_address'],
+                        'commune' => $shippingData['shipping_commune'],
+                        'city' => $shippingData['shipping_city'],
+                    ],
+                    [
+                        'receiver_name' => $shippingData['receiver_name'],
+                        'receiver_phone' => $shippingData['receiver_phone'],
+                        'is_default' => false,
+                    ]
+                );
+            }
 
             // 3. Tạo OrderDetail & Trừ kho
             foreach ($itemsData as $data) {

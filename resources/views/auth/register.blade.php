@@ -45,7 +45,9 @@
 
                 <div class="mb-3">
                     <label for="phone" class="form-label fw-bold">Số điện thoại <span class="text-danger">*</span></label>
-                    <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror" id="phone" value="{{ old('phone') }}" placeholder="Nhập số điện thoại" required>
+                    <input type="tel" name="phone" class="form-control @error('phone') is-invalid @enderror" id="phone" value="{{ old('phone') }}" 
+                           placeholder="Nhập số điện thoại" required
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                     <div class="error-text" id="phone_error">Số điện thoại không hợp lệ (10-11 chữ số).</div>
                     @error('phone') <div class="text-danger small">{{ $message }}</div> @enderror
                 </div>

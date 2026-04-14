@@ -10,6 +10,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -29,6 +30,7 @@ use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 |--------------------------------------------------------------------------
 */
 
+Route::get('/home', fn() => redirect()->route('home'));
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
@@ -61,6 +63,10 @@ Route::middleware(['auth', 'role:customer'])->group(function () {
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 
+    Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
+    Route::patch('/addresses/{address}/default', [AddressController::class, 'setDefault'])->name('addresses.set-default');
+    Route::delete('/addresses/{address}', [AddressController::class, 'destroy'])->name('addresses.destroy');
+
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/items', [CartController::class, 'store'])->name('cart.items.store');
     Route::put('/cart/items/{cartItem}', [CartController::class, 'update'])->name('cart.items.update');
@@ -81,6 +87,12 @@ Route::middleware(['auth', 'role:customer'])->group(function () {
 */
 
 Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', function () {
+        if (auth()->check() && auth()->user()->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+        return redirect()->route('admin.login');
+    });
 
     Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AdminAuthController::class, 'login']);
@@ -89,6 +101,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/home', fn() => redirect()->route('admin.dashboard'));
 
         // ── Catalogue Management (Unified Products + Categories) ──
         Route::get('/catalogue', [CatalogueController::class, 'index'])->name('catalogue.index');

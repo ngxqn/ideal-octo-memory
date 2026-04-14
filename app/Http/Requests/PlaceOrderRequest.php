@@ -21,6 +21,7 @@ class PlaceOrderRequest extends FormRequest
             'shipping_city' => 'required|string|max:100',
             'payment_method' => 'required|string|in:cod,transfer,online',
             'note' => 'nullable|string|max:1000',
+            'save_for_future' => 'nullable|boolean',
         ];
     }
 }

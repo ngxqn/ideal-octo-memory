@@ -39,7 +39,7 @@
                                                 <img src="{{ asset('storage/' . $item->product->image) }}" 
                                                      alt="{{ $item->product->name }}" 
                                                      class="item-img"
-                                                     onerror="this.src='{{ asset('storage/products/default.png') }}'">
+                                                     onerror="this.onerror=null;this.src='{{ asset('storage/products/default.png') }}'">
                                                 <span>{{ $item->product->name }}</span>
                                             </div>
                                         </a>

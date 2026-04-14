@@ -92,7 +92,8 @@
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Số điện thoại <span class="text-danger">*</span></label>
-                        <input type="tel" name="phone" class="form-control @error('phone') is-invalid @enderror" id="phone" value="{{ old('phone', $user->phone) }}" disabled required>
+                        <input type="tel" name="phone" class="form-control @error('phone') is-invalid @enderror" id="phone" value="{{ old('phone', $user->phone) }}" 
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')" disabled required>
                         @error('phone') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                     

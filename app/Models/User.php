@@ -62,6 +62,11 @@ class User extends Authenticatable
         return $this->hasMany(GoodsReceipt::class, 'created_by');
     }
 
+    public function addresses()
+    {
+        return $this->hasMany(UserAddress::class);
+    }
+
     /**
      * Disable 'Remember Me' feature.
      */

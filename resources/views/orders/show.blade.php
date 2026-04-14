@@ -92,7 +92,7 @@
                                     <div class="item-details">
                                         <img src="{{ asset('storage/' . $detail->product->image) }}" 
                                              class="item-img"
-                                             onerror="this.src='{{ asset('storage/products/default.png') }}'">
+                                             onerror="this.onerror=null;this.src='{{ asset('storage/products/default.png') }}'">
                                         <span class="fw-bold text-dark">{{ $detail->product_name }}</span>
                                     </div>
                                 </a>

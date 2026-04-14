@@ -42,7 +42,7 @@
                         <span class="user-name d-none d-md-inline">{{ Auth::user()->full_name }}</span>
                     </div>
                     <div class="dropdown" id="userDropdown">
-                        <a href="{{ route('profile.edit') }}">Tài khoản</a>
+                        <a href="{{ route('profile.edit') }}">Hồ sơ cá nhân</a>
                         @if(Auth::user()->role === 'customer')
                             <a href="{{ route('orders.index') }}">Lịch sử mua hàng</a>
                         @else
